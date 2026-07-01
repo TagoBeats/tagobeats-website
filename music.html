@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>TagoBeats: Beat Catalog</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Browse and license the full TagoBeats beat catalog, stream, preview and buy directly via BeatStars.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<style>
+/* latin */
+@font-face {
+  font-family: 'Archivo';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url("fonts/archivo-3babba83.woff2") format('woff2');
+}
+@font-face {
+  font-family: 'Archivo';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("fonts/archivo-3babba83.woff2") format('woff2');
+}
+@font-face {
+  font-family: 'Archivo';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("fonts/archivo-3babba83.woff2") format('woff2');
+}
+@font-face {
+  font-family: 'Archivo';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("fonts/archivo-3babba83.woff2") format('woff2');
+}
+@font-face {
+  font-family: 'Archivo';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url("fonts/archivo-3babba83.woff2") format('woff2');
+}
+@font-face {
+  font-family: 'Space Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("fonts/archivo-4bbe479d.woff2") format('woff2');
+}
+@font-face {
+  font-family: 'Space Mono';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("fonts/archivo-83c0c00d.woff2") format('woff2');
+}
+
+@keyframes tb-fog { 0% { transform: translate3d(0,0,0) scale(1); } 50% { transform: translate3d(4%,-3%,0) scale(1.08); } 100% { transform: translate3d(0,0,0) scale(1); } }
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background:#12100E; color:#ECE7DE; font-family:'Archivo',sans-serif; -webkit-font-smoothing:antialiased; overflow-x:hidden; }
+
+.tb-cta { position: relative; overflow: hidden; transition: transform .3s cubic-bezier(.2,.8,.2,1), box-shadow .3s ease; box-shadow: 0 22px 50px -20px rgba(0,253,220,0.55), 0 10px 26px -12px rgba(0,0,0,0.55); }
+.tb-cta::before { content: ''; position: absolute; top: 0; left: -60%; width: 40%; height: 100%; background: linear-gradient(120deg, transparent, rgba(255,255,255,.6), transparent); transform: skewX(-20deg); transition: left .65s ease; pointer-events: none; }
+.tb-cta:hover { transform: translateY(-3px) scale(1.03); }
+.tb-cta:hover::before { left: 130%; }
+
+.tb-player-frame { border: 1px solid rgba(236,231,222,0.12); border-radius: 10px; background: #1A1815; overflow: hidden; box-shadow: 0 30px 70px -30px rgba(0,0,0,0.7); }
+.tb-player-frame iframe { display: block; width: 100%; border: none; background: #1A1815; }
+
+.tb-menu-btn { display:flex; align-items:center; gap:12px; background:none; border:none; color:#ECE7DE; cursor:pointer; font-family:inherit; padding:8px 0; }
+
+@media (max-width: 640px) {
+  .tb-hide-mobile { display:none !important; }
+}
+</style>
+</head>
+<body>
+
+<div style="position:relative;">
+
+  <div style="position:fixed; inset:0; z-index:0; overflow:hidden; pointer-events:none;">
+    <div style="position:absolute; width:82vw; height:82vw; left:-16%; top:-14%; background:radial-gradient(circle at 50% 50%, rgba(0,253,220,0.075) 0%, rgba(0,253,220,0.05) 22%, rgba(0,253,220,0.025) 42%, transparent 62%); animation:tb-fog 34s ease-in-out infinite; will-change:transform;"></div>
+    <div style="position:absolute; width:72vw; height:72vw; right:-18%; top:38%; background:radial-gradient(circle at 50% 50%, rgba(0,210,196,0.06) 0%, rgba(0,210,196,0.04) 22%, rgba(0,210,196,0.02) 42%, transparent 62%); animation:tb-fog 41s ease-in-out infinite reverse; will-change:transform;"></div>
+    <div style="position:absolute; width:66vw; height:66vw; left:8%; bottom:-22%; background:radial-gradient(circle at 50% 50%, rgba(0,253,220,0.05) 0%, rgba(0,253,220,0.035) 22%, rgba(0,253,220,0.018) 42%, transparent 62%); animation:tb-fog 27s ease-in-out infinite reverse; will-change:transform;"></div>
+  </div>
+
+  <nav style="position:fixed; top:0; left:0; right:0; z-index:50; display:flex; align-items:center; justify-content:space-between; padding:clamp(20px,3vw,34px) clamp(24px,6vw,120px); background:linear-gradient(180deg, rgba(18,16,14,0.9), transparent);">
+    <a href="index.html" style="display:flex; align-items:center; gap:11px; text-decoration:none; color:#ECE7DE;">
+      <span style="width:8px; height:8px; border-radius:50%; background:#00FDDC; display:block;"></span>
+      <span style="font-weight:700; font-size:15px; letter-spacing:0.18em;">TAGOBEATS</span>
+    </a>
+    <div style="display:flex; align-items:center; gap:clamp(18px,3vw,40px);">
+      <a href="index.html#tb-about" class="tb-hide-mobile" style="text-decoration:none; color:rgba(236,231,222,0.7); font-size:13px; letter-spacing:0.14em; font-weight:600;">ABOUT</a>
+      <a href="index.html#tb-contact" class="tb-hide-mobile" style="text-decoration:none; color:rgba(236,231,222,0.7); font-size:13px; letter-spacing:0.14em; font-weight:600;">CONTACT</a>
+      <a href="index.html" class="tb-menu-btn">
+        <span style="font-size:13px; letter-spacing:0.18em; font-weight:600;">HOME</span>
+      </a>
+    </div>
+  </nav>
+
+  <main style="position:relative; z-index:1; padding:clamp(120px,16vh,170px) clamp(20px,6vw,120px) clamp(60px,10vh,110px); min-height:100vh; display:flex; flex-direction:column;">
+
+    <div style="margin-bottom:clamp(28px,4vh,44px); text-align:center;">
+      <div style="font-family:'Space Mono',monospace; font-size:11px; letter-spacing:0.3em; color:#00FDDC; margin-bottom:10px;">TB CATALOG · FULL STORE</div>
+      <h1 style="margin:0; font-size:clamp(38px,7vw,88px); font-weight:800; letter-spacing:-0.04em; line-height:0.92; color:#F2EEE6;">Beat Catalog</h1>
+      <p style="margin:clamp(14px,2vw,22px) auto 0; max-width:560px; font-size:clamp(15px,1.6vw,18px); line-height:1.55; color:rgba(236,231,222,0.6);">Stream, preview and license every TagoBeats release directly below, powered by BeatStars.</p>
+    </div>
+
+    <div class="tb-player-frame" style="width:100%; max-width:1100px; margin:0 auto;">
+      <iframe
+        src="https://player.beatstars.com/?storeId=152587"
+        width="100%"
+        height="800"
+        loading="lazy"
+        title="TagoBeats BeatStars Player"
+        allow="autoplay; encrypted-media"
+      ></iframe>
+    </div>
+
+    <div style="margin-top:clamp(28px,4vh,44px); display:flex; justify-content:center;">
+      <a href="https://www.beatstars.com/tagobeats" target="_blank" rel="noreferrer" class="tb-cta" style="text-decoration:none; color:#0A0908; background:#00FDDC; font-weight:800; font-size:13px; letter-spacing:0.1em; padding:16px 34px; border-radius:2px; display:inline-flex; align-items:center; gap:10px; white-space:nowrap;">
+        VIEW FULL STORE ON BEATSTARS <span style="font-size:16px; line-height:1;">↗</span>
+      </a>
+    </div>
+  </main>
+
+</div>
+</body>
+</html>

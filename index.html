@@ -1,8 +1,22 @@
 <!DOCTYPE html>
-<html class="tb-snap"><head>
-<title>TagoBeats</title>
+<html class="tb-snap" lang="en"><head>
+<title>TagoBeats — Beats & Music Production</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="TagoBeats is a beat catalog and music production studio — stream, preview and license original beats, plus drone photography and studio media.">
+<link rel="canonical" href="https://tagobeats.com/">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta property="og:title" content="TagoBeats — Beats & Music Production">
+<meta property="og:description" content="Stream, preview and license original beats from TagoBeats. Browse the full catalog and studio media.">
+<meta property="og:image" content="https://tagobeats.com/uploads_opt/lake.jpg">
+<meta property="og:url" content="https://tagobeats.com/">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="TagoBeats — Beats & Music Production">
+<meta name="twitter:description" content="Stream, preview and license original beats from TagoBeats. Browse the full catalog and studio media.">
+<meta name="twitter:image" content="https://tagobeats.com/uploads_opt/lake.jpg">
+<link rel="preconnect" href="https://unpkg.com" crossorigin>
+<style>x-dc{display:none;}</style>
 <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
 <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
 <script src="js/dc-runtime.js"></script>
@@ -411,6 +425,8 @@ body { margin: 0; }
 </helmet>
 <div data-screen-label="TagoBeats" style="background:#12100E; color:#ECE7DE; font-family:'Archivo',sans-serif; -webkit-font-smoothing:antialiased; overflow-x:hidden; position:relative;">
 
+  <a href="#tb-main-content" style="position:absolute; left:-9999px; top:0; z-index:100; background:#00FDDC; color:#0A0908; font-weight:700; padding:12px 20px; border-radius:2px; text-decoration:none;" onfocus="this.style.left='12px'; this.style.top='12px';" onblur="this.style.left='-9999px';">Skip to main content</a>
+
   <div style="position:fixed; inset:0; z-index:0; overflow:hidden; pointer-events:none;">
     <div style="position:absolute; width:82vw; height:82vw; left:-16%; top:-14%; background:radial-gradient(circle at 50% 50%, rgba(0,253,220,0.075) 0%, rgba(0,253,220,0.05) 22%, rgba(0,253,220,0.025) 42%, transparent 62%); animation:tb-fog 34s ease-in-out infinite; will-change:transform;"></div>
     <div style="position:absolute; width:72vw; height:72vw; right:-18%; top:38%; background:radial-gradient(circle at 50% 50%, rgba(0,210,196,0.06) 0%, rgba(0,210,196,0.04) 22%, rgba(0,210,196,0.02) 42%, transparent 62%); animation:tb-fog 41s ease-in-out infinite reverse; will-change:transform;"></div>
@@ -434,7 +450,7 @@ body { margin: 0; }
   <sc-if value="{{ menuOpen }}" hint-placeholder-val="{{ false }}">
     <div style="position:fixed; inset:0; z-index:60; background:rgba(13,12,10,0.97); display:flex; flex-direction:column; padding:clamp(24px,4vw,50px) clamp(24px,6vw,120px);">
       <div style="display:flex; justify-content:flex-end;">
-        <button onclick="{{ closeMenu }}" style="background:none; border:none; color:#ECE7DE; font-size:30px; line-height:1; cursor:pointer; padding:8px;">✕</button>
+        <button onclick="{{ closeMenu }}" aria-label="✕ Close menu" style="background:none; border:none; color:#ECE7DE; font-size:30px; line-height:1; cursor:pointer; padding:8px;">✕</button>
       </div>
       <nav style="flex:1; display:flex; flex-direction:column; justify-content:center; gap:clamp(6px,1.2vw,16px);">
         <a onclick="{{ closeMenu }}" href="#tb-hero" style="text-decoration:none; color:#F2EEE6; font-size:clamp(40px,8vw,92px); font-weight:800; letter-spacing:-0.035em; line-height:1.02;">Home</a>
@@ -442,7 +458,7 @@ body { margin: 0; }
         <a onclick="{{ closeMenu }}" href="#tb-about" style="text-decoration:none; color:#F2EEE6; font-size:clamp(40px,8vw,92px); font-weight:800; letter-spacing:-0.035em; line-height:1.02;">About</a>
         <a onclick="{{ closeMenu }}" href="#tb-engineering" style="text-decoration:none; color:#F2EEE6; font-size:clamp(40px,8vw,92px); font-weight:800; letter-spacing:-0.035em; line-height:1.02;">Engineering</a>
         <a onclick="{{ closeMenu }}" href="#tb-media" style="text-decoration:none; color:#F2EEE6; font-size:clamp(40px,8vw,92px); font-weight:800; letter-spacing:-0.035em; line-height:1.02;">Media</a>
-        <a href="https://www.beatstars.com/tagobeats" target="_blank" rel="noreferrer" style="text-decoration:none; color:rgba(236,231,222,0.55); font-size:clamp(26px,4vw,46px); font-weight:300; letter-spacing:-0.01em; line-height:1.3; margin-top:18px;">BeatStars <span style="color:#00FDDC;">↗</span></a>
+        <a href="https://www.beatstars.com/tagobeats" target="_blank" rel="noopener noreferrer" style="text-decoration:none; color:rgba(236,231,222,0.55); font-size:clamp(26px,4vw,46px); font-weight:300; letter-spacing:-0.01em; line-height:1.3; margin-top:18px;">BeatStars <span style="color:#00FDDC;">↗</span></a>
         <a href="mailto:hello@tagobeats.com" style="text-decoration:none; color:rgba(236,231,222,0.55); font-size:clamp(26px,4vw,46px); font-weight:300; letter-spacing:-0.01em; line-height:1.3;">Contact</a>
       </nav>
       <div style="font-family:'Space Mono',monospace; font-size:12px; letter-spacing:0.2em; color:rgba(236,231,222,0.4);">ROBIN BUSSE · AUDIO ENGINEER &amp; PRODUCER · DE</div>
@@ -458,6 +474,7 @@ body { margin: 0; }
     </sc-for>
   </nav>
 
+  <main id="tb-main-content">
   <section id="tb-hero" data-screen-label="Hero" class="tb-snap-section" style="position:relative; z-index:1; min-height:100vh; overflow:hidden; display:flex;">
     <div style="position:absolute; inset:0; z-index:0; overflow:hidden;">
       <div id="hero-texture" style="position:absolute; inset:0; background-size:cover; background-position:center; opacity:0.55; mix-blend-mode:screen;"></div>
@@ -531,7 +548,7 @@ body { margin: 0; }
           <div style="{{ row.revealStyle }}">
             <div ref="{{ row.cardRef }}" onclick="{{ row.onSelect }}" onmouseenter="{{ row.onEnter }}" onmouseleave="{{ row.onLeave }}" onmousemove="{{ row.onMove }}" style="{{ row.cardStyle }}">
               <div style="position:relative; aspect-ratio:1/1; overflow:hidden; border-radius:3px; background:#1A1815;">
-                <img src="{{ row.cover }}" alt="{{ row.title }}" style="{{ row.coverImgStyle }}">
+                <img src="{{ row.cover }}" alt="{{ row.title }}" width="400" height="400" style="{{ row.coverImgStyle }}">
                 <div ref="{{ row.playHitRef }}" onmousemove="{{ row.onPlayMove }}" onmouseleave="{{ row.onPlayLeave }}" style="position:absolute; right:8px; bottom:8px; width:48px; height:48px; display:flex; align-items:center; justify-content:center;">
                   <div ref="{{ row.playBtnRef }}" style="{{ row.playBtnStyle }}">
                     <sc-if value="{{ row.active }}" hint-placeholder-val="{{ false }}">
@@ -599,7 +616,7 @@ body { margin: 0; }
           </div>
           <div style="flex:1; min-width:0; padding:clamp(16px,2.53vh,30px) clamp(23px,2.76vw,37px); display:flex; flex-direction:column; justify-content:center;">
             <h3 style="margin:0; font-size:clamp(23px,2.53vw,32px); font-weight:800; letter-spacing:-0.02em; color:#F2EEE6;">DubCheck</h3>
-            <p style="margin:clamp(7px,1.15vh,12px) 0 0; max-width:560px; font-size:clamp(15px,1.27vw,17px); line-height:1.5; color:rgba(236,231,222,0.55);">Quick mix &amp; master check for your tracks, audiobooks and synchronous track. More details under <a href="https://audio-dubcheck.com" target="_blank" rel="noreferrer" style="color:#00FDDC; font-weight:800; text-decoration:none; border-bottom:1.5px solid rgba(0,253,220,0.45);">audio-dubcheck.com</a></p>
+            <p style="margin:clamp(7px,1.15vh,12px) 0 0; max-width:560px; font-size:clamp(15px,1.27vw,17px); line-height:1.5; color:rgba(236,231,222,0.55);">Quick mix &amp; master check for your tracks, audiobooks and synchronous track. More details under <a href="https://audio-dubcheck.com" target="_blank" rel="noopener noreferrer" style="color:#00FDDC; font-weight:800; text-decoration:none; border-bottom:1.5px solid rgba(0,253,220,0.45);">audio-dubcheck.com</a></p>
           </div>
         </div>
         <div class="tb-proj-grid-2col" style="display:grid; grid-template-columns:repeat(2, 1fr); gap:clamp(14px,2.07vh,23px);">
@@ -636,7 +653,7 @@ body { margin: 0; }
 
     <div style="flex:1; min-height:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:clamp(14px,2vh,22px); border-top:1px solid rgba(236,231,222,0.12); padding-top:clamp(24px,4vh,44px);">
       <div style="position:relative; width:min(90%, 900px); max-height:100%; aspect-ratio:16/9; overflow:hidden; border-radius:4px;">
-        <img src="uploads_opt/lake.jpg" alt="Drone photography — lake" style="width:100%; height:100%; object-fit:cover; display:block;">
+        <img src="uploads_opt/lake.jpg" alt="Drone photography — lake" width="1800" height="1012" style="width:100%; height:100%; object-fit:cover; display:block;">
         <div style="position:absolute; inset:0; background:linear-gradient(to top, rgba(10,9,8,0.55) 0%, transparent 40%);"></div>
       </div>
       <p style="margin:0; max-width:560px; text-align:center; font-size:clamp(16px,1.6vw,20px); line-height:1.5; color:rgba(236,231,222,0.6);">Studio sessions, behind-the-scenes clips and visualizers, coming soon.</p>
@@ -703,13 +720,14 @@ body { margin: 0; }
     <div style="font-family:'Space Mono',monospace; font-size:12px; letter-spacing:0.3em; color:#00FDDC; margin-bottom:18px;">GET IN TOUCH</div>
     <h2 style="margin:0; font-size:clamp(48px,9vw,128px); font-weight:800; letter-spacing:-0.04em; line-height:0.86; color:#F2EEE6;">Contact</h2>
     <a href="mailto:info@tagobeats.com" style="margin-top:clamp(28px,4vw,44px); text-decoration:none; color:#0A0908; background:#00FDDC; font-weight:700; font-size:14px; letter-spacing:0.1em; padding:16px 30px; border-radius:2px;">info@tagobeats.com</a>
-    <a href="https://www.instagram.com/tagobeats/" target="_blank" rel="noreferrer" style="margin-top:22px; text-decoration:none; color:#F2EEE6; font-weight:700; font-size:clamp(16px,1.8vw,20px); letter-spacing:0.02em; display:inline-flex; align-items:center; gap:10px;">@TagoBeats on Instagram <span style="color:#00FDDC;">↗</span></a>
+    <a href="https://www.instagram.com/tagobeats/" target="_blank" rel="noopener noreferrer" style="margin-top:22px; text-decoration:none; color:#F2EEE6; font-weight:700; font-size:clamp(16px,1.8vw,20px); letter-spacing:0.02em; display:inline-flex; align-items:center; gap:10px;">@TagoBeats on Instagram <span style="color:#00FDDC;">↗</span></a>
   </section>
+  </main>
 
   <sc-if value="{{ hasPlayer }}" hint-placeholder-val="{{ false }}">
     <div style="position:fixed; left:0; right:0; bottom:0; z-index:55; background:rgba(18,16,14,0.97); border-top:1px solid rgba(236,231,222,0.12);">
       <div class="tb-player-bar" style="display:flex; align-items:center; gap:clamp(14px,2.4vw,30px); padding:clamp(13px,1.5vw,19px) clamp(18px,6vw,120px);">
-        <button onclick="{{ togglePlay }}" class="tb-player-play" style="flex-shrink:0; width:54px; height:54px; border-radius:50%; background:#00FDDC; border:none; cursor:pointer; display:flex; align-items:center; justify-content:center;">
+        <button onclick="{{ togglePlay }}" class="tb-player-play" aria-label="Play or pause track" style="flex-shrink:0; width:54px; height:54px; border-radius:50%; background:#00FDDC; border:none; cursor:pointer; display:flex; align-items:center; justify-content:center;">
           <sc-if value="{{ playing }}" hint-placeholder-val="{{ false }}">
             <span style="display:flex; gap:5px;"><span style="width:4px; height:16px; background:#0A0908; display:block;"></span><span style="width:4px; height:16px; background:#0A0908; display:block;"></span></span>
           </sc-if>
@@ -717,7 +735,7 @@ body { margin: 0; }
             <span style="display:block; width:0; height:0; border-left:14px solid #0A0908; border-top:9px solid transparent; border-bottom:9px solid transparent; margin-left:3px;"></span>
           </sc-if>
         </button>
-        <img src="{{ player.cover }}" alt="" class="tb-player-cover" style="width:54px; height:54px; object-fit:cover; border-radius:2px; flex-shrink:0;">
+        <img src="{{ player.cover }}" alt="{{ player.title }}" class="tb-player-cover" width="54" height="54" style="width:54px; height:54px; object-fit:cover; border-radius:2px; flex-shrink:0;">
         <div style="flex:1; min-width:0; display:flex; flex-direction:column; gap:9px;">
           <div style="display:flex; align-items:baseline; gap:12px;">
             <span class="tb-player-n" style="font-family:'Space Mono',monospace; font-size:11px; letter-spacing:0.18em; color:#00FDDC;">{{ player.n }}</span>
@@ -731,8 +749,8 @@ body { margin: 0; }
           </div>
         </div>
         <span class="tb-player-time" style="font-family:'Space Mono',monospace; font-size:12px; color:rgba(236,231,222,0.6); white-space:nowrap; flex-shrink:0;">{{ player.cur }} / {{ player.total }}</span>
-        <a href="{{ player.link }}" target="_blank" rel="noreferrer" class="tb-player-buy" style="flex-shrink:0; background:#00FDDC; color:#0A0908; font-weight:700; font-size:13px; letter-spacing:0.08em; text-decoration:none; padding:14px 22px; border-radius:2px; white-space:nowrap;">BUY NOW</a>
-        <button onclick="{{ dismiss }}" style="flex-shrink:0; background:none; border:none; color:rgba(236,231,222,0.5); cursor:pointer; font-size:19px; line-height:1; padding:8px;">✕</button>
+        <a href="{{ player.link }}" target="_blank" rel="noopener noreferrer" class="tb-player-buy" aria-label="Buy Now — {{ player.title }} on BeatStars" style="flex-shrink:0; background:#00FDDC; color:#0A0908; font-weight:700; font-size:13px; letter-spacing:0.08em; text-decoration:none; padding:14px 22px; border-radius:2px; white-space:nowrap;">BUY NOW</a>
+        <button onclick="{{ dismiss }}" aria-label="✕ Dismiss player" style="flex-shrink:0; background:none; border:none; color:rgba(236,231,222,0.5); cursor:pointer; font-size:19px; line-height:1; padding:8px;">✕</button>
       </div>
       <audio ref="{{ audioRef }}" style="display:none;"></audio>
     </div>

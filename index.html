@@ -354,8 +354,9 @@
 @keyframes tb-holoDrift { 0% { filter: hue-rotate(0deg) saturate(1.2); } 50% { filter: hue-rotate(30deg) saturate(1.4); } 100% { filter: hue-rotate(0deg) saturate(1.2); } }
 @keyframes tb-scroll { 0% { transform: translateY(0); opacity: 0; } 30% { opacity: 1; } 100% { transform: translateY(28px); opacity: 0; } }
 @keyframes tb-eq { 0%,100% { transform: scaleY(0.28); } 50% { transform: scaleY(1); } }
-@keyframes tb-ctaGlow { 0%,100% { box-shadow: 0 22px 50px -20px rgba(0,253,220,0.55), 0 10px 26px -12px rgba(0,0,0,0.55); } 50% { box-shadow: 0 22px 60px -12px rgba(0,253,220,0.9), 0 10px 26px -12px rgba(0,0,0,0.55); } }
-.tb-cta { position: relative; overflow: hidden; transition: transform .3s cubic-bezier(.2,.8,.2,1), box-shadow .3s ease; animation: tb-ctaGlow 2.6s ease-in-out infinite; will-change: transform; }
+@keyframes tb-ctaGlow { 0%,100% { opacity: 0.55; } 50% { opacity: 1; } }
+.tb-cta { position: relative; overflow: hidden; transition: transform .3s cubic-bezier(.2,.8,.2,1); box-shadow: 0 22px 50px -20px rgba(0,253,220,0.7), 0 10px 26px -12px rgba(0,0,0,0.55); will-change: transform; }
+.tb-cta::after { content: ''; position: absolute; inset: -14px; border-radius: inherit; box-shadow: 0 0 34px 6px rgba(0,253,220,0.65); animation: tb-ctaGlow 2.6s ease-in-out infinite; will-change: opacity; pointer-events: none; z-index: -1; }
 .tb-cta::before { content: ''; position: absolute; top: 0; left: -60%; width: 40%; height: 100%; background: linear-gradient(120deg, transparent, rgba(255,255,255,.6), transparent); transform: skewX(-20deg); transition: left .65s ease; pointer-events: none; }
 .tb-cta:hover { transform: translateY(-3px) scale(1.04); }
 .tb-cta:hover::before { left: 130%; }
@@ -387,6 +388,8 @@ body { margin: 0; }
   #tb-catalog-grid { grid-template-columns: repeat(3, minmax(0,1fr)) !important; gap: 18px 10px !important; }
   .tb-proj-card { flex-direction: column !important; }
   .tb-proj-grid-2col { grid-template-columns: 1fr !important; }
+  .tb-about-wrap { flex-direction: column !important; text-align: center; }
+  .tb-about-wrap > div:last-child { max-width: 100% !important; }
 }
 
 @media (max-width: 520px) {
@@ -414,7 +417,7 @@ body { margin: 0; }
     <div style="position:absolute; width:66vw; height:66vw; left:8%; bottom:-22%; background:radial-gradient(circle at 50% 50%, rgba(0,253,220,0.05) 0%, rgba(0,253,220,0.035) 22%, rgba(0,253,220,0.018) 42%, transparent 62%); animation:tb-fog 27s ease-in-out infinite reverse; will-change:transform;"></div>
   </div>
 
-  <nav style="position:fixed; top:0; left:0; right:0; z-index:50; display:flex; align-items:center; justify-content:space-between; padding:clamp(20px,3vw,34px) clamp(24px,6vw,120px);">
+  <nav style="position:fixed; top:0; left:0; right:0; z-index:50; display:flex; align-items:center; justify-content:space-between; padding:clamp(20px,3vw,34px) clamp(24px,6vw,120px); background:linear-gradient(to bottom, rgba(18,16,14,0.92) 0%, rgba(18,16,14,0.65) 60%, transparent 100%);">
     <a href="#tb-hero" style="display:flex; align-items:center; gap:11px; text-decoration:none; color:#ECE7DE;">
       <span style="width:8px; height:8px; border-radius:50%; background:#00FDDC; display:block;"></span>
       <span style="font-weight:700; font-size:15px; letter-spacing:0.18em;">TAGOBEATS</span>
@@ -474,7 +477,7 @@ body { margin: 0; }
     <div style="position:relative; z-index:3; flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:80px clamp(24px,6vw,120px) 140px;">
       <div style="position:relative; display:flex; flex-direction:column; align-items:center;">
         <div style="position:relative; display:flex; justify-content:center; align-items:center;">
-          <div onMouseMove="{{ holoOnMove }}" onMouseLeave="{{ holoOnLeave }}" style="--mx:0.5; --my:0.5; position:relative; z-index:1; width:clamp(180px,22vw,300px); height:clamp(180px,22vw,300px); margin-bottom:clamp(18px,2.6vw,30px); border-radius:50%; transform-style:preserve-3d; transform-origin:50% 100%; transform:perspective(1100px) scale(1.35) rotateX(calc((0.5 - var(--my)) * 16deg)) rotateY(calc((var(--mx) - 0.5) * 16deg)); transition:transform .12s ease-out; filter:drop-shadow(0 26px 44px rgba(0,0,0,.55)); cursor:pointer;">
+          <div onMouseMove="{{ holoOnMove }}" onMouseLeave="{{ holoOnLeave }}" style="--mx:0.5; --my:0.5; position:relative; z-index:1; width:clamp(180px,22vw,300px); height:clamp(180px,22vw,300px); margin-bottom:clamp(18px,2.6vw,30px); border-radius:50%; transform-style:preserve-3d; transform-origin:50% 50%; transform:perspective(1100px) scale(1.05) rotateX(calc((0.5 - var(--my)) * 16deg)) rotateY(calc((var(--mx) - 0.5) * 16deg)); transition:transform .12s ease-out; filter:drop-shadow(0 26px 44px rgba(0,0,0,.55)); cursor:pointer;">
             <div style="position:absolute; inset:0; border-radius:50%; background:#0a0b0e; border:clamp(9px,1.4vw,15px) solid #f4f5f7; box-shadow:inset 0 0 0 2px #2c2f36, inset 0 8px 40px rgba(0,0,0,.5), 0 0 0 1px rgba(0,253,220,0.18); overflow:hidden;">
               <div style="position:absolute; inset:0; background:url('uploads_opt/holo-sticker-studio.jpg') center/cover no-repeat;"></div>
               <div style="position:absolute; inset:0; background:radial-gradient(circle at 50% 46%, rgba(8,9,12,.45), rgba(8,9,12,.82) 80%);"></div>
@@ -631,7 +634,11 @@ body { margin: 0; }
       </div>
     </div>
 
-    <div style="flex:1; display:flex; align-items:center; justify-content:center; border-top:1px solid rgba(236,231,222,0.12); padding-top:clamp(24px,4vh,44px);">
+    <div style="flex:1; min-height:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:clamp(14px,2vh,22px); border-top:1px solid rgba(236,231,222,0.12); padding-top:clamp(24px,4vh,44px);">
+      <div style="position:relative; width:min(90%, 900px); max-height:100%; aspect-ratio:16/9; overflow:hidden; border-radius:4px;">
+        <img src="uploads_opt/lake.jpg" alt="Drone photography — lake" style="width:100%; height:100%; object-fit:cover; display:block;">
+        <div style="position:absolute; inset:0; background:linear-gradient(to top, rgba(10,9,8,0.55) 0%, transparent 40%);"></div>
+      </div>
       <p style="margin:0; max-width:560px; text-align:center; font-size:clamp(16px,1.6vw,20px); line-height:1.5; color:rgba(236,231,222,0.6);">Studio sessions, behind-the-scenes clips and visualizers, coming soon.</p>
     </div>
   </section>
@@ -644,8 +651,51 @@ body { margin: 0; }
       </div>
     </div>
 
-    <div style="flex:1; display:flex; align-items:center; justify-content:center; border-top:1px solid rgba(236,231,222,0.12); padding-top:clamp(24px,4vh,44px);">
-      <p style="margin:0; max-width:560px; text-align:center; font-size:clamp(16px,1.6vw,20px); line-height:1.5; color:rgba(236,231,222,0.6);">Audio engineer &amp; producer based in Leipzig, Germany — the sound behind TagoBeats.</p>
+    <div class="tb-about-wrap" style="flex:1; display:flex; align-items:center; gap:clamp(40px,7vw,100px); border-top:1px solid rgba(236,231,222,0.12); padding-top:clamp(24px,4vh,44px);">
+      <div style="flex-shrink:0; display:flex; justify-content:center;">
+        <div onMouseMove="{{ holoOnMove }}" onMouseLeave="{{ holoOnLeave }}" style="--mx:0.5; --my:0.5; position:relative; z-index:1; width:clamp(200px,26vw,340px); height:clamp(200px,26vw,340px); border-radius:50%; transform-style:preserve-3d; transform-origin:50% 50%; transform:perspective(1100px) scale(1.05) rotateX(calc((0.5 - var(--my)) * 16deg)) rotateY(calc((var(--mx) - 0.5) * 16deg)); transition:transform .12s ease-out; filter:drop-shadow(0 26px 44px rgba(0,0,0,.55)); cursor:pointer;">
+          <div style="position:absolute; inset:0; border-radius:50%; background:#0a0b0e; border:clamp(9px,1.4vw,15px) solid #f4f5f7; box-shadow:inset 0 0 0 2px #2c2f36, inset 0 8px 40px rgba(0,0,0,.5), 0 0 0 1px rgba(0,253,220,0.18); overflow:hidden;">
+            <div style="position:absolute; inset:0; background:url('uploads_opt/holo-sticker-studio.jpg') center/cover no-repeat;"></div>
+            <div style="position:absolute; inset:0; background:radial-gradient(circle at 50% 46%, rgba(8,9,12,.45), rgba(8,9,12,.82) 80%);"></div>
+            <div style="position:absolute; inset:0; background:repeating-linear-gradient(118deg,#ff5b8a 0%,#ffb06b 9%,#ffe98a 18%,#7df0ae 27%,#7fdcff 36%,#8e9bff 45%,#d18aff 54%,#ff5b8a 63%); background-size:240% 240%; background-position:calc(var(--mx)*100%) calc(var(--my)*100%); mix-blend-mode:screen; opacity:.3; animation:tb-holoDrift 11s ease-in-out infinite;"></div>
+            <div style="position:absolute; inset:0; background:repeating-linear-gradient(78deg,rgba(255,255,255,.10) 0px,rgba(255,255,255,.10) 1px,transparent 2px,transparent 6px); background-position:calc(var(--mx)*40%) 0; mix-blend-mode:overlay; opacity:.4;"></div>
+            <div style="position:absolute; inset:0; background:radial-gradient(circle at calc(var(--mx)*100%) calc(var(--my)*100%), rgba(255,255,255,.6), rgba(255,255,255,.08) 24%, transparent 46%); mix-blend-mode:screen; opacity:.9;"></div>
+          </div>
+          <svg viewBox="0 0 440 440" style="position:absolute; inset:0; width:100%; height:100%; pointer-events:none;">
+            <defs>
+              <path id="tb-aboutHoloRingTop" d="M 46,220 A 174,174 0 0 1 394,220" fill="none"></path>
+            </defs>
+            <text style="font:700 13px 'Space Mono',monospace; letter-spacing:2px; fill:rgba(255,255,255,.92);"><textPath href="#tb-aboutHoloRingTop" startOffset="50%" text-anchor="middle">IG: @TagoBeats · music@tagobeats.com</textPath></text>
+          </svg>
+          <div style="position:absolute; inset:11%; border-radius:50%; border:1.5px dashed rgba(255,255,255,.32);"></div>
+          <div style="position:absolute; left:0; right:0; bottom:19%; display:flex; justify-content:center; transform:translateZ(28px); pointer-events:none;">
+            <div style="font:700 9px 'Space Mono',monospace; letter-spacing:1.5px; color:#fff; filter:drop-shadow(0 2px 6px rgba(0,0,0,.95)) drop-shadow(0 0 2px rgba(0,0,0,.8));">tagobeats.com</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="flex:1; min-width:0; max-width:640px;">
+        <p style="margin:0 0 clamp(20px,2.6vh,28px); font-size:clamp(16px,1.6vw,20px); line-height:1.6; color:rgba(236,231,222,0.75);">I always loved music, played instruments and was hooked on the idea of how music actually gets produced. I dived into it and never really stopped. What began as self-taught beatmaking turned into a Bachelor of Engineering in Audio Engineering at Hochschule Mittweida, and eventually my own studio just outside Leipzig.</p>
+        <p style="margin:0 0 clamp(28px,3.4vh,36px); font-size:clamp(16px,1.6vw,20px); line-height:1.6; color:rgba(236,231,222,0.75);">Seven years and 300+ tracks later, I still chase that same feeling, mostly in hip-hop and trap, but never saying no to a genre I haven't tried yet. Full production, mixing, mastering, engineering: whatever it takes to get a track sounding exactly the way it should.</p>
+        <div style="display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:18px 28px; border-top:1px solid rgba(236,231,222,0.12); padding-top:clamp(20px,2.6vh,26px);">
+          <div>
+            <div style="font-family:'Space Mono',monospace; font-size:11px; letter-spacing:0.2em; color:#00FDDC; margin-bottom:5px;">EXPERIENCE</div>
+            <div style="font-size:15px; color:#F2EEE6; font-weight:600;">7+ years producing &amp; engineering</div>
+          </div>
+          <div>
+            <div style="font-family:'Space Mono',monospace; font-size:11px; letter-spacing:0.2em; color:#00FDDC; margin-bottom:5px;">CATALOG</div>
+            <div style="font-size:15px; color:#F2EEE6; font-weight:600;">300+ tracks completed</div>
+          </div>
+          <div>
+            <div style="font-family:'Space Mono',monospace; font-size:11px; letter-spacing:0.2em; color:#00FDDC; margin-bottom:5px;">EDUCATION</div>
+            <div style="font-size:15px; color:#F2EEE6; font-weight:600;">B.Eng Audio Engineering, Hochschule Mittweida</div>
+          </div>
+          <div>
+            <div style="font-family:'Space Mono',monospace; font-size:11px; letter-spacing:0.2em; color:#00FDDC; margin-bottom:5px;">BASED</div>
+            <div style="font-size:15px; color:#F2EEE6; font-weight:600;">Own studio near Leipzig, Germany</div>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -653,7 +703,7 @@ body { margin: 0; }
     <div style="font-family:'Space Mono',monospace; font-size:12px; letter-spacing:0.3em; color:#00FDDC; margin-bottom:18px;">GET IN TOUCH</div>
     <h2 style="margin:0; font-size:clamp(48px,9vw,128px); font-weight:800; letter-spacing:-0.04em; line-height:0.86; color:#F2EEE6;">Contact</h2>
     <a href="mailto:info@tagobeats.com" style="margin-top:clamp(28px,4vw,44px); text-decoration:none; color:#0A0908; background:#00FDDC; font-weight:700; font-size:14px; letter-spacing:0.1em; padding:16px 30px; border-radius:2px;">info@tagobeats.com</a>
-    <a href="https://www.instagram.com/tagobeats/" target="_blank" rel="noreferrer" style="margin-top:18px; text-decoration:none; color:rgba(236,231,222,0.6); font-family:'Space Mono',monospace; font-size:13px; letter-spacing:0.14em; display:inline-flex; align-items:center; gap:8px;">Instagram: @TagoBeats <span style="color:#00FDDC;">↗</span></a>
+    <a href="https://www.instagram.com/tagobeats/" target="_blank" rel="noreferrer" style="margin-top:22px; text-decoration:none; color:#F2EEE6; font-weight:700; font-size:clamp(16px,1.8vw,20px); letter-spacing:0.02em; display:inline-flex; align-items:center; gap:10px;">@TagoBeats on Instagram <span style="color:#00FDDC;">↗</span></a>
   </section>
 
   <sc-if value="{{ hasPlayer }}" hint-placeholder-val="{{ false }}">

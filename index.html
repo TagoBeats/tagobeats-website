@@ -364,6 +364,7 @@
 <style>
 @keyframes tb-spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 @keyframes tb-fog { 0% { transform: translate3d(0,0,0) scale(1); } 50% { transform: translate3d(4%,-3%,0) scale(1.08); } 100% { transform: translate3d(0,0,0) scale(1); } }
+::selection { background:#00FDDC; color:#0A0908; }
 @keyframes tb-holoDrift { 0% { filter: hue-rotate(0deg) saturate(1.2); } 50% { filter: hue-rotate(30deg) saturate(1.4); } 100% { filter: hue-rotate(0deg) saturate(1.2); } }
 @keyframes tb-scroll { 0% { transform: translateY(0); opacity: 0; } 30% { opacity: 1; } 100% { transform: translateY(28px); opacity: 0; } }
 @keyframes tb-eq { 0%,100% { transform: scaleY(0.28); } 50% { transform: scaleY(1); } }
@@ -854,6 +855,10 @@ class Component extends DCLogic {
     audio.volume = this.state.muted ? 0 : this.state.volume;
     this._prevActiveId = this.state.activeId;
     this._prevPlaying = this.state.playing;
+
+    const nowPlaying = this.state.playing ? this.activeTrack() : null;
+    const wantTitle = nowPlaying ? '▶ ' + nowPlaying.title + ' — TagoBeats' : 'TagoBeats — Beats & Music Production';
+    if (document.title !== wantTitle) document.title = wantTitle;
   }
 
   initSectionSnap() {
@@ -935,6 +940,14 @@ class Component extends DCLogic {
       if (this.state.menuOpen) return;
       const tag = document.activeElement && document.activeElement.tagName;
       if (tag === 'INPUT' || tag === 'TEXTAREA') return;
+      // Player transport shortcuts take over while a track is loaded;
+      // Space falls back to section scrolling when the player is closed.
+      if (this.state.activeId) {
+        if (e.key === ' ') { e.preventDefault(); this.togglePlay(); return; }
+        if (e.key === 'ArrowRight') { e.preventDefault(); this.playNext(); return; }
+        if (e.key === 'ArrowLeft') { e.preventDefault(); this.playPrev(); return; }
+        if (e.key === 'Escape') { this.dismiss(); return; }
+      }
       const isDown = e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ';
       const isUp = e.key === 'ArrowUp' || e.key === 'PageUp';
       if (!isDown && !isUp) return;
@@ -1104,6 +1117,13 @@ class Component extends DCLogic {
     const idx = this.TRACKS.findIndex(t => t.id === at.id);
     const next = this.TRACKS[(idx + 1) % this.TRACKS.length];
     this.setState({ activeId: next.id, playing: true, progress: 0 });
+  }
+  playPrev() {
+    const at = this.activeTrack();
+    if (!at) return;
+    const idx = this.TRACKS.findIndex(t => t.id === at.id);
+    const prev = this.TRACKS[(idx - 1 + this.TRACKS.length) % this.TRACKS.length];
+    this.setState({ activeId: prev.id, playing: true, progress: 0 });
   }
   dismiss() { this.setState({ activeId: null, playing: false, progress: 0 }); }
   setVolume(e) {

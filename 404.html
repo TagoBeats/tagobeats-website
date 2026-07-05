@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>404 — TagoBeats</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<style>
+@font-face {
+  font-family: 'Archivo';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url("/fonts/archivo-3babba83.woff2") format('woff2');
+}
+@font-face {
+  font-family: 'Space Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/archivo-4bbe479d.woff2") format('woff2');
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+::selection { background:#00FDDC; color:#0A0908; }
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 26px;
+  background: #12100E;
+  color: #ECE7DE;
+  font-family: 'Archivo', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-align: center;
+  padding: 24px;
+  position: relative;
+  overflow: hidden;
+}
+.fog {
+  position: absolute;
+  width: 82vw; height: 82vw;
+  left: 50%; top: 50%;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle at 50% 50%, rgba(0,253,220,0.07), transparent 60%);
+  pointer-events: none;
+}
+.eyebrow {
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.3em;
+  color: #00FDDC;
+}
+h1 {
+  font-size: clamp(52px, 12vw, 160px);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 0.9;
+  color: #F2EEE6;
+}
+p {
+  font-family: 'Space Mono', monospace;
+  font-size: 13px;
+  letter-spacing: 0.14em;
+  color: rgba(236,231,222,0.55);
+}
+a {
+  position: relative;
+  z-index: 1;
+  margin-top: 8px;
+  text-decoration: none;
+  color: #0A0908;
+  background: #00FDDC;
+  font-weight: 800;
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  padding: 16px 34px;
+  border-radius: 2px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  white-space: nowrap;
+  transition: transform .3s cubic-bezier(.2,.8,.2,1);
+}
+a:hover { transform: translateY(-3px) scale(1.03); }
+</style>
+</head>
+<body>
+  <div class="fog"></div>
+  <div class="eyebrow">ERROR 404</div>
+  <h1>TRACK NOT FOUND</h1>
+  <p>THIS ONE NEVER MADE IT OUT OF THE SESSION.</p>
+  <a href="/">BACK TO THE CATALOG <span style="font-size:16px; line-height:1;">→</span></a>
+</body>
+</html>

@@ -1,0 +1,24 @@
+# TagoBeats
+
+> TagoBeats is the beat catalog and music production studio of Robin Busse, a German audio engineer and music producer based near Leipzig. Robin Busse and TagoBeats are the same person — TagoBeats is his production alias.
+
+## About Robin Busse
+
+Robin Busse is an audio engineer and music producer with 7+ years of experience and a catalog of 300+ tracks, mostly hip-hop, trap and cinematic instrumentals. He holds a Bachelor of Engineering in Audio Engineering (Hochschule Mittweida) and also develops his own VST plugins and audio DSP algorithms, including DubCheck (audio QC software, https://audio-dubcheck.com).
+
+Services: full music production, mixing, mastering, audio engineering, beat licensing.
+
+Contact: music@tagobeats.com · hello@tagobeats.com
+
+## Key Pages
+
+- [Home](https://tagobeats.com/): Beat catalog selection, engineering projects, drone photography, about Robin Busse
+- [Beat Catalog](https://tagobeats.com/music): Stream, preview and license the full TagoBeats catalog via BeatStars
+
+## Profiles
+
+- Instagram: https://www.instagram.com/tagobeats/
+- YouTube: https://www.youtube.com/@TagoBeats420
+- BeatStars: https://www.beatstars.com/tagobeats
+- GitHub: https://github.com/TagoBeats
+- ArtistConnect: https://artistconnect.de/de/TagoBeats

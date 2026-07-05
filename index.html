@@ -15,11 +15,11 @@
 <meta name="twitter:title" content="TagoBeats — Beats & Music Production">
 <meta name="twitter:description" content="Stream, preview and license original beats from TagoBeats. Browse the full catalog and studio media.">
 <meta name="twitter:image" content="https://tagobeats.com/uploads_opt/lake.jpg">
-<link rel="preconnect" href="https://unpkg.com" crossorigin>
+<link rel="preload" as="image" href="/uploads_opt/holo-sticker-studio-680.jpg">
 <style>x-dc{display:none;}</style>
-<script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
-<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
-<script src="js/dc-runtime.js"></script>
+<script defer src="js/react.production.min.js"></script>
+<script defer src="js/react-dom.production.min.js"></script>
+<script defer src="js/dc-runtime.js"></script>
 <script defer src="/_vercel/insights/script.js"></script>
 
 
@@ -36,8 +36,6 @@
 <body>
 <x-dc>
 <helmet>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
 <style>/* vietnamese */
 @font-face {
   font-family: 'Archivo';
@@ -505,7 +503,7 @@ body { margin: 0; }
         <div style="position:relative; display:flex; justify-content:center; align-items:center;">
           <div onMouseMove="{{ holoOnMove }}" onMouseLeave="{{ holoOnLeave }}" style="--mx:0.5; --my:0.5; position:relative; z-index:1; width:clamp(180px,22vw,300px); height:clamp(180px,22vw,300px); margin-bottom:clamp(18px,2.6vw,30px); border-radius:50%; transform-style:preserve-3d; transform-origin:50% 50%; transform:perspective(1100px) scale(1.05) rotateX(calc((0.5 - var(--my)) * 16deg)) rotateY(calc((var(--mx) - 0.5) * 16deg)); transition:transform .12s ease-out; filter:drop-shadow(0 26px 44px rgba(0,0,0,.55)); cursor:pointer;">
             <div style="position:absolute; inset:0; border-radius:50%; background:#0a0b0e; border:clamp(9px,1.4vw,15px) solid #f4f5f7; box-shadow:inset 0 0 0 2px #2c2f36, inset 0 8px 40px rgba(0,0,0,.5), 0 0 0 1px rgba(0,253,220,0.18); overflow:hidden;">
-              <div style="position:absolute; inset:0; background:url('uploads_opt/holo-sticker-studio.jpg') center/cover no-repeat;"></div>
+              <div style="position:absolute; inset:0; background:url('uploads_opt/holo-sticker-studio-680.jpg') center/cover no-repeat;"></div>
               <div style="position:absolute; inset:0; background:radial-gradient(circle at 50% 46%, rgba(8,9,12,.45), rgba(8,9,12,.82) 80%);"></div>
               <div style="position:absolute; inset:0; background:repeating-linear-gradient(118deg,#ff5b8a 0%,#ffb06b 9%,#ffe98a 18%,#7df0ae 27%,#7fdcff 36%,#8e9bff 45%,#d18aff 54%,#ff5b8a 63%); background-size:240% 240%; background-position:calc(var(--mx)*100%) calc(var(--my)*100%); mix-blend-mode:screen; opacity:.3; animation:tb-holoDrift 11s ease-in-out infinite;"></div>
               <div style="position:absolute; inset:0; background:repeating-linear-gradient(78deg,rgba(255,255,255,.10) 0px,rgba(255,255,255,.10) 1px,transparent 2px,transparent 6px); background-position:calc(var(--mx)*40%) 0; mix-blend-mode:overlay; opacity:.4;"></div>
@@ -557,7 +555,7 @@ body { margin: 0; }
           <div style="{{ row.revealStyle }}">
             <div ref="{{ row.cardRef }}" onclick="{{ row.onSelect }}" onmouseenter="{{ row.onEnter }}" onmouseleave="{{ row.onLeave }}" onmousemove="{{ row.onMove }}" style="{{ row.cardStyle }}">
               <div style="position:relative; aspect-ratio:1/1; overflow:hidden; border-radius:3px; background:#1A1815;">
-                <img src="{{ row.cover }}" alt="{{ row.title }}" width="400" height="400" style="{{ row.coverImgStyle }}">
+                <img src="{{ row.cover }}" alt="{{ row.title }}" width="400" height="400" loading="lazy" decoding="async" style="{{ row.coverImgStyle }}">
                 <div ref="{{ row.playHitRef }}" onmousemove="{{ row.onPlayMove }}" onmouseleave="{{ row.onPlayLeave }}" style="position:absolute; right:8px; bottom:8px; width:48px; height:48px; display:flex; align-items:center; justify-content:center;">
                   <div ref="{{ row.playBtnRef }}" style="{{ row.playBtnStyle }}">
                     <sc-if value="{{ row.active }}" hint-placeholder-val="{{ false }}">
@@ -612,7 +610,7 @@ body { margin: 0; }
       <div style="display:flex; flex-direction:column; gap:clamp(14px,2.07vh,23px); width:100%; max-width:1357px; margin:0 auto;">
         <div class="tb-proj-card" style="background:#1A1815; border-radius:10px; overflow:hidden; border:1px solid rgba(236,231,222,0.08); display:flex; align-items:stretch;">
           <div style="position:relative; flex:0 0 clamp(161px,27.6vw,345px); min-height:clamp(104px,19.55vh,196px); overflow:hidden; background:radial-gradient(circle at 30% 20%, rgba(0,253,220,0.2), transparent 55%), linear-gradient(135deg, #201d3a, #120f18);">
-            <div style="position:absolute; inset:0; background:url('uploads_opt/DubCheck.png') center/cover no-repeat;"></div>
+            <div style="position:absolute; inset:0; background:url('uploads_opt/DubCheck_800.jpg') center/cover no-repeat;"></div>
           </div>
           <div style="flex:1; min-width:0; padding:clamp(16px,2.53vh,30px) clamp(23px,2.76vw,37px); display:flex; flex-direction:column; justify-content:center;">
             <h3 style="margin:0; font-size:clamp(23px,2.53vw,32px); font-weight:800; letter-spacing:-0.02em; color:#F2EEE6;">DubCheck</h3>
@@ -622,7 +620,7 @@ body { margin: 0; }
         <div class="tb-proj-grid-2col" style="display:grid; grid-template-columns:repeat(2, 1fr); gap:clamp(14px,2.07vh,23px);">
           <div class="tb-proj-card" style="background:#1A1815; border-radius:10px; overflow:hidden; border:1px solid rgba(236,231,222,0.08); display:flex; align-items:stretch;">
             <div style="position:relative; flex:0 0 clamp(92px,12.65vw,150px); min-height:clamp(81px,13.8vh,127px); overflow:hidden; background:radial-gradient(circle at 30% 20%, rgba(0,253,220,0.18), transparent 55%), linear-gradient(135deg, #201d3a, #120f18);">
-              <div style="position:absolute; inset:0; background:url('uploads_opt/DeEsser.png') center/cover no-repeat;"></div>
+              <div style="position:absolute; inset:0; background:url('uploads_opt/DeEsser_800.jpg') center/cover no-repeat;"></div>
             </div>
             <div style="flex:1; min-width:0; padding:clamp(14px,2.07vh,23px) clamp(18px,2.07vw,25px); display:flex; flex-direction:column; justify-content:center;">
               <h3 style="margin:0; font-size:clamp(18px,1.84vw,23px); font-weight:800; letter-spacing:-0.02em; color:#F2EEE6;">DeEsser</h3>
@@ -631,7 +629,7 @@ body { margin: 0; }
           </div>
           <div class="tb-proj-card" style="background:#1A1815; border-radius:10px; overflow:hidden; border:1px solid rgba(236,231,222,0.08); display:flex; align-items:stretch;">
             <div style="position:relative; flex:0 0 clamp(92px,12.65vw,150px); min-height:clamp(81px,13.8vh,127px); overflow:hidden; background:radial-gradient(circle at 30% 20%, rgba(0,253,220,0.18), transparent 55%), linear-gradient(135deg, #201d3a, #120f18);">
-              <div style="position:absolute; inset:0; background:url('uploads_opt/ReEsser.png') center/cover no-repeat;"></div>
+              <div style="position:absolute; inset:0; background:url('uploads_opt/ReEsser_800.jpg') center/cover no-repeat;"></div>
             </div>
             <div style="flex:1; min-width:0; padding:clamp(14px,2.07vh,23px) clamp(18px,2.07vw,25px); display:flex; flex-direction:column; justify-content:center;">
               <h3 style="margin:0; font-size:clamp(18px,1.84vw,23px); font-weight:800; letter-spacing:-0.02em; color:#F2EEE6;">ReEsser</h3>
@@ -653,7 +651,7 @@ body { margin: 0; }
 
     <div style="flex:1; min-height:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:clamp(14px,2vh,22px); border-top:1px solid rgba(236,231,222,0.12); padding-top:clamp(24px,4vh,44px);">
       <div style="position:relative; width:min(90%, 900px); max-height:100%; aspect-ratio:16/9; overflow:hidden; border-radius:4px;">
-        <img src="uploads_opt/lake.jpg" alt="Drone photography — lake" width="1400" height="787" style="width:100%; height:100%; object-fit:cover; display:block;">
+        <img src="uploads_opt/lake.jpg" alt="Drone photography — lake" width="1400" height="787" loading="lazy" decoding="async" style="width:100%; height:100%; object-fit:cover; display:block;">
         <div style="position:absolute; inset:0; background:linear-gradient(to top, rgba(10,9,8,0.55) 0%, transparent 40%);"></div>
       </div>
       <p style="margin:0; max-width:560px; text-align:center; font-size:clamp(16px,1.6vw,20px); line-height:1.5; color:rgba(236,231,222,0.6);">Studio sessions, behind-the-scenes clips and visualizers, coming soon.</p>
@@ -672,7 +670,7 @@ body { margin: 0; }
       <div style="flex-shrink:0; display:flex; justify-content:center;">
         <div onMouseMove="{{ holoOnMove }}" onMouseLeave="{{ holoOnLeave }}" style="--mx:0.5; --my:0.5; position:relative; z-index:1; width:clamp(200px,26vw,340px); height:clamp(200px,26vw,340px); border-radius:50%; transform-style:preserve-3d; transform-origin:50% 50%; transform:perspective(1100px) scale(1.05) rotateX(calc((0.5 - var(--my)) * 16deg)) rotateY(calc((var(--mx) - 0.5) * 16deg)); transition:transform .12s ease-out; filter:drop-shadow(0 26px 44px rgba(0,0,0,.55)); cursor:pointer;">
           <div style="position:absolute; inset:0; border-radius:50%; background:#0a0b0e; border:clamp(9px,1.4vw,15px) solid #f4f5f7; box-shadow:inset 0 0 0 2px #2c2f36, inset 0 8px 40px rgba(0,0,0,.5), 0 0 0 1px rgba(0,253,220,0.18); overflow:hidden;">
-            <div style="position:absolute; inset:0; background:url('uploads_opt/holo-sticker-studio.jpg') center/cover no-repeat;"></div>
+            <div style="position:absolute; inset:0; background:url('uploads_opt/holo-sticker-studio-680.jpg') center/cover no-repeat;"></div>
             <div style="position:absolute; inset:0; background:radial-gradient(circle at 50% 46%, rgba(8,9,12,.45), rgba(8,9,12,.82) 80%);"></div>
             <div style="position:absolute; inset:0; background:repeating-linear-gradient(118deg,#ff5b8a 0%,#ffb06b 9%,#ffe98a 18%,#7df0ae 27%,#7fdcff 36%,#8e9bff 45%,#d18aff 54%,#ff5b8a 63%); background-size:240% 240%; background-position:calc(var(--mx)*100%) calc(var(--my)*100%); mix-blend-mode:screen; opacity:.3; animation:tb-holoDrift 11s ease-in-out infinite;"></div>
             <div style="position:absolute; inset:0; background:repeating-linear-gradient(78deg,rgba(255,255,255,.10) 0px,rgba(255,255,255,.10) 1px,transparent 2px,transparent 6px); background-position:calc(var(--mx)*40%) 0; mix-blend-mode:overlay; opacity:.4;"></div>
@@ -803,16 +801,16 @@ class Component extends DCLogic {
   ];
 
   TRACKS = [
-    { id: 'TB-001', n: 'TB-001', title: 'Die Inside', cover: 'uploads_opt/sound_selection/01.png',  src: 'uploads_opt/sound_selection/01_Die_inside.mp3', genre: '—', bpm: 140, key: 'D#m', dur: 125, link: 'https://www.beatstars.com/tagobeats' },
-    { id: 'TB-002', n: 'TB-002', title: 'Outro',      cover: 'uploads_opt/sound_selection/02.png',  src: 'uploads_opt/sound_selection/02_outro.mp3',      genre: '—', bpm: 130, key: 'Dm',  dur: 166, link: 'https://www.beatstars.com/tagobeats' },
-    { id: 'TB-003', n: 'TB-003', title: 'WWST',       cover: 'uploads_opt/sound_selection/03.png',  src: 'uploads_opt/sound_selection/03_wwst.mp3',       genre: '—', bpm: 155, key: 'Cm',  dur: 129, link: 'https://www.beatstars.com/tagobeats' },
-    { id: 'TB-004', n: 'TB-004', title: 'Sun Fire',   cover: 'uploads_opt/sound_selection/04.jpeg', src: 'uploads_opt/sound_selection/04_sun_fire.mp3',   genre: '—', bpm: 160, key: 'Dm',  dur: 108, link: 'https://www.beatstars.com/tagobeats' },
-    { id: 'TB-005', n: 'TB-005', title: 'Clam',       cover: 'uploads_opt/sound_selection/05.png',  src: 'uploads_opt/sound_selection/05_clam.mp3',       genre: '—', bpm: 140, key: 'Gm',  dur: 167, link: 'https://www.beatstars.com/tagobeats' },
-    { id: 'TB-006', n: 'TB-006', title: 'Blessing',   cover: 'uploads_opt/sound_selection/06.jpg',  src: 'uploads_opt/sound_selection/06_blessing.mp3',   genre: '—', bpm: 160, key: 'Am',  dur: 156, link: 'https://www.beatstars.com/tagobeats' },
-    { id: 'TB-007', n: 'TB-007', title: 'Inu Yasha',  cover: 'uploads_opt/sound_selection/07.png',  src: 'uploads_opt/sound_selection/07_Inu_Yasha.mp3',  genre: '—', bpm: 149, key: 'Gm',  dur: 103, link: 'https://www.beatstars.com/tagobeats' },
-    { id: 'TB-008', n: 'TB-008', title: 'Spider',     cover: 'uploads_opt/sound_selection/08.png',  src: 'uploads_opt/sound_selection/08_spider.mp3',     genre: '—', bpm: 160, key: 'Fm',  dur: 168, link: 'https://www.beatstars.com/tagobeats' },
-    { id: 'TB-009', n: 'TB-009', title: 'Heal',       cover: 'uploads_opt/sound_selection/09.png',  src: 'uploads_opt/sound_selection/09_heal.mp3',       genre: '—', bpm: 160, key: 'Am',  dur: 145, link: 'https://www.beatstars.com/tagobeats' },
-    { id: 'TB-010', n: 'TB-010', title: 'High Tech',  cover: 'uploads_opt/sound_selection/10.png',  src: 'uploads_opt/sound_selection/10_high_tech.mp3',  genre: '—', bpm: 94,  key: 'Am',  dur: 147, link: 'https://www.beatstars.com/tagobeats' }
+    { id: 'TB-001', n: 'TB-001', title: 'Die Inside', cover: 'uploads_opt/sound_selection/covers_800/01.jpg', src: 'uploads_opt/sound_selection/01_Die_inside.mp3', genre: '—', bpm: 140, key: 'D#m', dur: 125, link: 'https://www.beatstars.com/tagobeats' },
+    { id: 'TB-002', n: 'TB-002', title: 'Outro',      cover: 'uploads_opt/sound_selection/covers_800/02.jpg', src: 'uploads_opt/sound_selection/02_outro.mp3',      genre: '—', bpm: 130, key: 'Dm',  dur: 166, link: 'https://www.beatstars.com/tagobeats' },
+    { id: 'TB-003', n: 'TB-003', title: 'WWST',       cover: 'uploads_opt/sound_selection/covers_800/03.jpg', src: 'uploads_opt/sound_selection/03_wwst.mp3',       genre: '—', bpm: 155, key: 'Cm',  dur: 129, link: 'https://www.beatstars.com/tagobeats' },
+    { id: 'TB-004', n: 'TB-004', title: 'Sun Fire',   cover: 'uploads_opt/sound_selection/covers_800/04.jpg',src: 'uploads_opt/sound_selection/04_sun_fire.mp3',   genre: '—', bpm: 160, key: 'Dm',  dur: 108, link: 'https://www.beatstars.com/tagobeats' },
+    { id: 'TB-005', n: 'TB-005', title: 'Clam',       cover: 'uploads_opt/sound_selection/covers_800/05.jpg', src: 'uploads_opt/sound_selection/05_clam.mp3',       genre: '—', bpm: 140, key: 'Gm',  dur: 167, link: 'https://www.beatstars.com/tagobeats' },
+    { id: 'TB-006', n: 'TB-006', title: 'Blessing',   cover: 'uploads_opt/sound_selection/covers_800/06.jpg', src: 'uploads_opt/sound_selection/06_blessing.mp3',   genre: '—', bpm: 160, key: 'Am',  dur: 156, link: 'https://www.beatstars.com/tagobeats' },
+    { id: 'TB-007', n: 'TB-007', title: 'Inu Yasha',  cover: 'uploads_opt/sound_selection/covers_800/07.jpg', src: 'uploads_opt/sound_selection/07_Inu_Yasha.mp3',  genre: '—', bpm: 149, key: 'Gm',  dur: 103, link: 'https://www.beatstars.com/tagobeats' },
+    { id: 'TB-008', n: 'TB-008', title: 'Spider',     cover: 'uploads_opt/sound_selection/covers_800/08.jpg', src: 'uploads_opt/sound_selection/08_spider.mp3',     genre: '—', bpm: 160, key: 'Fm',  dur: 168, link: 'https://www.beatstars.com/tagobeats' },
+    { id: 'TB-009', n: 'TB-009', title: 'Heal',       cover: 'uploads_opt/sound_selection/covers_800/09.jpg', src: 'uploads_opt/sound_selection/09_heal.mp3',       genre: '—', bpm: 160, key: 'Am',  dur: 145, link: 'https://www.beatstars.com/tagobeats' },
+    { id: 'TB-010', n: 'TB-010', title: 'High Tech',  cover: 'uploads_opt/sound_selection/covers_800/10.jpg', src: 'uploads_opt/sound_selection/10_high_tech.mp3',  genre: '—', bpm: 94,  key: 'Am',  dur: 147, link: 'https://www.beatstars.com/tagobeats' }
   ];
 
   componentDidMount() {

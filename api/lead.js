@@ -20,18 +20,34 @@ function downloadEmail() {
     'https://tagobeats.com',
   ].join('\n')
 
-  const html = `
-  <body style="margin:0;padding:0;background-color:#0A0908;">
-  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#0A0908;">
+  // Dark-mode-proof: color-scheme meta pins Apple Mail/Outlook, and every
+  // background is doubled as a single-color linear-gradient because Gmail's
+  // dark theme inverts plain background-colors but leaves gradients alone.
+  const html = `<!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="color-scheme" content="dark">
+    <meta name="supported-color-schemes" content="dark">
+    <style>
+      :root { color-scheme: dark; supported-color-schemes: dark; }
+      @media (prefers-color-scheme: dark) {
+        body, .tb-bg { background-color: #0A0908 !important; }
+        .tb-card { background-color: #1A1815 !important; }
+      }
+    </style>
+  </head>
+  <body class="tb-bg" style="margin:0;padding:0;background-color:#0A0908;background-image:linear-gradient(#0A0908,#0A0908);">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" class="tb-bg" bgcolor="#0A0908" style="background-color:#0A0908;background-image:linear-gradient(#0A0908,#0A0908);">
     <tr><td align="center" style="padding:32px 16px;">
       <table role="presentation" width="560" cellpadding="0" cellspacing="0" border="0" style="max-width:560px;width:100%;">
 
         <tr><td style="padding:0 4px 18px;">
-          <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background-color:#00FDDC;"></span>
+          <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background-color:#00FDDC;background-image:linear-gradient(#00FDDC,#00FDDC);"></span>
           <span style="font-family:Arial,Helvetica,sans-serif;font-size:14px;font-weight:bold;letter-spacing:3px;color:#ECE7DE;">&nbsp;TAGOBEATS</span>
         </td></tr>
 
-        <tr><td style="background-color:#1A1815;border:1px solid #2A2723;border-radius:10px;overflow:hidden;">
+        <tr><td class="tb-card" bgcolor="#1A1815" style="background-color:#1A1815;background-image:linear-gradient(#1A1815,#1A1815);border:1px solid #2A2723;border-radius:10px;overflow:hidden;">
           <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
             <tr><td style="padding:0;line-height:0;">
               <img src="https://tagobeats.com/uploads_opt/TagoPitch_800.jpg" alt="TagoPitch plugin UI" width="558" style="width:100%;max-width:558px;height:auto;display:block;border:0;border-radius:9px 9px 0 0;">
@@ -43,10 +59,10 @@ function downloadEmail() {
 
               <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="width:100%;">
                 <tr><td style="padding-bottom:12px;">
-                  <a href="${DOWNLOADS.mac}" style="display:block;background-color:#00FDDC;color:#0A0908;font-family:Arial,Helvetica,sans-serif;font-size:13px;font-weight:bold;letter-spacing:1.5px;text-decoration:none;text-align:center;padding:16px 20px;border-radius:3px;">DOWNLOAD FOR MACOS &nbsp;&rarr;</a>
+                  <a href="${DOWNLOADS.mac}" style="display:block;background-color:#00FDDC;background-image:linear-gradient(#00FDDC,#00FDDC);color:#0A0908;font-family:Arial,Helvetica,sans-serif;font-size:13px;font-weight:bold;letter-spacing:1.5px;text-decoration:none;text-align:center;padding:16px 20px;border-radius:3px;">DOWNLOAD FOR MACOS &nbsp;&rarr;</a>
                 </td></tr>
                 <tr><td style="padding-bottom:6px;">
-                  <a href="${DOWNLOADS.win}" style="display:block;background-color:#26231F;color:#ECE7DE;font-family:Arial,Helvetica,sans-serif;font-size:13px;font-weight:bold;letter-spacing:1.5px;text-decoration:none;text-align:center;padding:16px 20px;border-radius:3px;border:1px solid #3A362F;">DOWNLOAD FOR WINDOWS &nbsp;&rarr;</a>
+                  <a href="${DOWNLOADS.win}" style="display:block;background-color:#26231F;background-image:linear-gradient(#26231F,#26231F);color:#ECE7DE;font-family:Arial,Helvetica,sans-serif;font-size:13px;font-weight:bold;letter-spacing:1.5px;text-decoration:none;text-align:center;padding:16px 20px;border-radius:3px;border:1px solid #3A362F;">DOWNLOAD FOR WINDOWS &nbsp;&rarr;</a>
                 </td></tr>
               </table>
 
@@ -73,7 +89,8 @@ function downloadEmail() {
       </table>
     </td></tr>
   </table>
-  </body>`
+  </body>
+  </html>`
 
   return { subject: 'Your TagoPitch download', text, html }
 }

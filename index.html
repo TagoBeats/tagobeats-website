@@ -84,6 +84,73 @@
 
 </head>
 <body>
+<div id="tb-static-hero" style="background:#12100E; color:#ECE7DE; font-family:'Archivo',sans-serif; -webkit-font-smoothing:antialiased; overflow-x:hidden; position:relative;">
+  <section style="position:relative; z-index:1; min-height:100vh; overflow:hidden; display:flex;">
+    <div style="position:absolute; inset:0; z-index:0; overflow:hidden;">
+      <div style="position:absolute; width:72vw; height:72vw; left:6%; top:4%; background:radial-gradient(circle at 50% 50%, rgba(0,210,196,0.09) 0%, rgba(0,210,196,0.06) 22%, rgba(0,210,196,0.03) 42%, transparent 60%); animation:tb-fog 22s ease-in-out infinite; will-change:transform;"></div>
+      <div style="position:absolute; width:62vw; height:62vw; right:2%; bottom:-8%; background:radial-gradient(circle at 50% 50%, rgba(0,253,220,0.075) 0%, rgba(0,253,220,0.05) 22%, rgba(0,253,220,0.025) 42%, transparent 60%); animation:tb-fog 30s ease-in-out infinite reverse; will-change:transform;"></div>
+      <div style="position:absolute; inset:0; background:radial-gradient(circle at 50% 42%, rgba(0,253,220,0.05), transparent 42%);"></div>
+      <svg style="position:absolute; inset:0; width:100%; height:100%; opacity:0.11; mix-blend-mode:overlay; pointer-events:none;">
+        <filter id="tb-grain-s"><feTurbulence type="fractalNoise" baseFrequency="0.88" numOctaves="2" stitchTiles="stitch"></feTurbulence><feColorMatrix type="saturate" values="0"></feColorMatrix></filter>
+        <rect width="100%" height="100%" filter="url(#tb-grain-s)"></rect>
+      </svg>
+      <div style="position:absolute; inset:0; background:radial-gradient(circle at 50% 45%, transparent 28%, rgba(11,10,8,0.6) 100%);"></div>
+      <div style="position:absolute; left:0; right:0; bottom:0; height:170px; background:linear-gradient(180deg, transparent, #12100E);"></div>
+    </div>
+    <div style="position:relative; z-index:3; flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:80px clamp(24px,6vw,120px) 140px;">
+      <div style="position:relative; display:flex; flex-direction:column; align-items:center;">
+        <div style="position:relative; display:flex; justify-content:center; align-items:center;">
+          <div style="--mx:0.5; --my:0.5; position:relative; z-index:1; width:clamp(180px,22vw,300px); height:clamp(180px,22vw,300px); margin-bottom:clamp(18px,2.6vw,30px); border-radius:50%; transform-style:preserve-3d; transform-origin:50% 50%; transform:perspective(1100px) scale(1.05); filter:drop-shadow(0 26px 44px rgba(0,0,0,.55));">
+            <div style="position:absolute; inset:0; border-radius:50%; background:#0a0b0e; border:clamp(9px,1.4vw,15px) solid #f4f5f7; box-shadow:inset 0 0 0 2px #2c2f36, inset 0 8px 40px rgba(0,0,0,.5), 0 0 0 1px rgba(0,253,220,0.18); overflow:hidden;">
+              <div style="position:absolute; inset:0; background:url('uploads_opt/holo-sticker-studio-680.jpg') center/cover no-repeat;"></div>
+              <div style="position:absolute; inset:0; background:radial-gradient(circle at 50% 46%, rgba(8,9,12,.45), rgba(8,9,12,.82) 80%);"></div>
+              <div style="position:absolute; inset:0; background:repeating-linear-gradient(118deg,#ff5b8a 0%,#ffb06b 9%,#ffe98a 18%,#7df0ae 27%,#7fdcff 36%,#8e9bff 45%,#d18aff 54%,#ff5b8a 63%); background-size:240% 240%; background-position:calc(var(--mx)*100%) calc(var(--my)*100%); mix-blend-mode:screen; opacity:.3; animation:tb-holoDrift 11s ease-in-out infinite;"></div>
+              <div style="position:absolute; inset:0; background:repeating-linear-gradient(78deg,rgba(255,255,255,.10) 0px,rgba(255,255,255,.10) 1px,transparent 2px,transparent 6px); background-position:calc(var(--mx)*40%) 0; mix-blend-mode:overlay; opacity:.4;"></div>
+              <div style="position:absolute; inset:0; background:radial-gradient(circle at calc(var(--mx)*100%) calc(var(--my)*100%), rgba(255,255,255,.6), rgba(255,255,255,.08) 24%, transparent 46%); mix-blend-mode:screen; opacity:.9;"></div>
+            </div>
+            <svg viewBox="0 0 440 440" style="position:absolute; inset:0; width:100%; height:100%; pointer-events:none;">
+              <defs>
+                <path id="tb-holoRingTop-s" d="M 46,220 A 174,174 0 0 1 394,220" fill="none"></path>
+              </defs>
+              <text style="font:700 13px 'Space Mono',monospace; letter-spacing:2px; fill:rgba(255,255,255,.92);"><textPath href="#tb-holoRingTop-s" startOffset="50%" text-anchor="middle">IG: @TagoBeats · music@tagobeats.com</textPath></text>
+            </svg>
+            <div style="position:absolute; inset:11%; border-radius:50%; border:1.5px dashed rgba(255,255,255,.32);"></div>
+            <div style="position:absolute; left:0; right:0; bottom:19%; display:flex; justify-content:center; transform:translateZ(28px); pointer-events:none;">
+              <div style="font:700 9px 'Space Mono',monospace; letter-spacing:1.5px; color:#fff; filter:drop-shadow(0 2px 6px rgba(0,0,0,.95)) drop-shadow(0 0 2px rgba(0,0,0,.8));">tagobeats.com</div>
+            </div>
+          </div>
+        </div>
+        <div style="position:relative; display:flex; justify-content:center; align-items:center;">
+          <h1 style="position:relative; z-index:2; margin:0; max-width:100%; font-size:clamp(52px,14vw,220px); font-weight:800; letter-spacing:-0.045em; line-height:0.86; color:#F2EEE6; text-align:center;">TAGOBEATS</h1>
+        </div>
+        <p style="position:relative; z-index:2; margin:clamp(20px,3vw,36px) 0 0; font-size:clamp(17px,2.3vw,28px); letter-spacing:0.01em; text-align:center; text-wrap:balance; color:rgba(236,231,222,0.88);">
+          <span style="font-weight:300;">Audio engineer</span><span style="font-weight:800; font-style:italic;"> and </span><span style="font-weight:300;">producer</span>
+        </p>
+      </div>
+    </div>
+    <div style="position:absolute; bottom:30px; left:0; right:0; z-index:3; display:flex; flex-direction:column; align-items:center; gap:13px;">
+      <span style="font-family:'Space Mono',monospace; font-size:11px; letter-spacing:0.3em; color:rgba(236,231,222,0.55);">SCROLL</span>
+      <div style="position:relative; width:1px; height:48px; background:rgba(236,231,222,0.18); overflow:hidden;">
+        <div style="position:absolute; top:0; left:0; width:1px; height:14px; background:#00FDDC; animation:tb-scroll 1.9s ease-in-out infinite;"></div>
+      </div>
+    </div>
+  </section>
+</div>
+<script>
+(function () {
+  function armed() {
+    var root = document.getElementById('dc-root');
+    if (root && root.childNodes.length) {
+      var s = document.getElementById('tb-static-hero');
+      if (s) s.remove();
+      return true;
+    }
+    return false;
+  }
+  var mo = new MutationObserver(function () { if (armed()) mo.disconnect(); });
+  mo.observe(document.documentElement, { childList: true, subtree: true });
+})();
+</script>
 <x-dc>
 <helmet>
 <style>/* vietnamese */

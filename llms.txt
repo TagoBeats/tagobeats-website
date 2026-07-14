@@ -4,7 +4,7 @@
 
 ## About Robin Busse
 
-Robin Busse is an audio engineer and music producer with 7+ years of experience and a catalog of 300+ tracks, mostly hip-hop, trap and cinematic instrumentals. He holds a Bachelor of Engineering in Audio Engineering (Hochschule Mittweida) and also develops his own VST plugins and audio DSP algorithms, including DubCheck (audio QC software, https://audio-dubcheck.com).
+Robin Busse is an audio engineer and music producer with 7+ years of experience and a catalog of 300+ tracks, mostly hip-hop, trap and cinematic instrumentals. He holds a Bachelor of Engineering in Audio Engineering (Hochschule Mittweida) and also develops his own VST plugins and audio DSP algorithms, including DubCheck (audio QC software, https://audio-dubcheck.com) and TagoPitch (free vocal pitch shifter plugin, macOS AU/VST3 and Windows VST3, https://tagobeats.com/#tb-plugins).
 
 Services: full music production, mixing, mastering, audio engineering, beat licensing.
 
@@ -12,7 +12,8 @@ Contact: music@tagobeats.com · hello@tagobeats.com
 
 ## Key Pages
 
-- [Home](https://tagobeats.com/): Beat catalog selection, engineering projects, drone photography, about Robin Busse
+- [Home](https://tagobeats.com/): Beat catalog selection, plugins, engineering projects, drone photography, about Robin Busse
+- [TagoPitch](https://tagobeats.com/#tb-plugins): Free vocal pitch shifter plugin, download against email (source: https://github.com/TagoBeats/TagoPitch)
 - [Beat Catalog](https://tagobeats.com/music): Stream, preview and license the full TagoBeats catalog via BeatStars
 
 ## Profiles

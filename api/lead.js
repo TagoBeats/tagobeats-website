@@ -21,17 +21,59 @@ function downloadEmail() {
   ].join('\n')
 
   const html = `
-  <div style="font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;font-size:15px;line-height:1.6;color:#222;max-width:560px;">
-    <p>Hey, thanks for grabbing TagoPitch.</p>
-    <p>
-      <a href="${DOWNLOADS.mac}">Download for macOS</a> (AU + VST3 installer, notarized)<br>
-      <a href="${DOWNLOADS.win}">Download for Windows</a> (VST3 zip)
-    </p>
-    <p>macOS: run the .pkg and pick the formats you want.<br>
-    Windows: unzip and drop TagoPitch.vst3 into <code>C:\\Program Files\\Common Files\\VST3</code>.</p>
-    <p>If anything acts up, just reply to this mail.</p>
-    <p>Robin (TagoBeats)<br><a href="https://tagobeats.com">tagobeats.com</a></p>
-  </div>`
+  <body style="margin:0;padding:0;background-color:#0A0908;">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#0A0908;">
+    <tr><td align="center" style="padding:32px 16px;">
+      <table role="presentation" width="560" cellpadding="0" cellspacing="0" border="0" style="max-width:560px;width:100%;">
+
+        <tr><td style="padding:0 4px 18px;">
+          <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background-color:#00FDDC;"></span>
+          <span style="font-family:Arial,Helvetica,sans-serif;font-size:14px;font-weight:bold;letter-spacing:3px;color:#ECE7DE;">&nbsp;TAGOBEATS</span>
+        </td></tr>
+
+        <tr><td style="background-color:#1A1815;border:1px solid #2A2723;border-radius:10px;overflow:hidden;">
+          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+            <tr><td style="padding:0;line-height:0;">
+              <img src="https://tagobeats.com/uploads_opt/TagoPitch_800.jpg" alt="TagoPitch plugin UI" width="558" style="width:100%;max-width:558px;height:auto;display:block;border:0;border-radius:9px 9px 0 0;">
+            </td></tr>
+            <tr><td style="padding:28px 32px 32px;">
+              <div style="font-family:'Courier New',Courier,monospace;font-size:11px;letter-spacing:2px;color:#8A857C;padding-bottom:10px;">V1.0.0 &middot; MACOS AU/VST3 &middot; WINDOWS VST3 &middot; FREE</div>
+              <div style="font-family:Arial,Helvetica,sans-serif;font-size:26px;font-weight:800;letter-spacing:-0.5px;color:#F2EEE6;padding-bottom:14px;">TagoPitch</div>
+              <div style="font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:1.6;color:#B5AFA4;padding-bottom:24px;">Hey, thanks for grabbing TagoPitch. Here are your downloads:</div>
+
+              <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="width:100%;">
+                <tr><td style="padding-bottom:12px;">
+                  <a href="${DOWNLOADS.mac}" style="display:block;background-color:#00FDDC;color:#0A0908;font-family:Arial,Helvetica,sans-serif;font-size:13px;font-weight:bold;letter-spacing:1.5px;text-decoration:none;text-align:center;padding:16px 20px;border-radius:3px;">DOWNLOAD FOR MACOS &nbsp;&rarr;</a>
+                </td></tr>
+                <tr><td style="padding-bottom:6px;">
+                  <a href="${DOWNLOADS.win}" style="display:block;background-color:#26231F;color:#ECE7DE;font-family:Arial,Helvetica,sans-serif;font-size:13px;font-weight:bold;letter-spacing:1.5px;text-decoration:none;text-align:center;padding:16px 20px;border-radius:3px;border:1px solid #3A362F;">DOWNLOAD FOR WINDOWS &nbsp;&rarr;</a>
+                </td></tr>
+              </table>
+
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-top:22px;">
+                <tr><td style="border-top:1px solid #2A2723;padding-top:20px;">
+                  <div style="font-family:'Courier New',Courier,monospace;font-size:11px;letter-spacing:2px;color:#8A857C;padding-bottom:8px;">INSTALL</div>
+                  <div style="font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:1.7;color:#B5AFA4;">
+                    <span style="color:#ECE7DE;">macOS:</span> run the .pkg and pick the formats you want (AU + VST3, notarized).<br>
+                    <span style="color:#ECE7DE;">Windows:</span> unzip and drop TagoPitch.vst3 into <span style="font-family:'Courier New',Courier,monospace;color:#ECE7DE;">C:\\Program Files\\Common Files\\VST3</span>.
+                  </div>
+                </td></tr>
+              </table>
+            </td></tr>
+          </table>
+        </td></tr>
+
+        <tr><td style="padding:22px 4px 0;">
+          <div style="font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:1.6;color:#8A857C;">
+            If anything acts up, just reply to this mail.<br>
+            Robin (TagoBeats) &middot; <a href="https://tagobeats.com" style="color:#00FDDC;text-decoration:none;">tagobeats.com</a>
+          </div>
+        </td></tr>
+
+      </table>
+    </td></tr>
+  </table>
+  </body>`
 
   return { subject: 'Your TagoPitch download', text, html }
 }

@@ -12,7 +12,7 @@ Contact: music@tagobeats.com · hello@tagobeats.com
 
 ## Key Pages
 
-- [Home](https://tagobeats.com/): Beat catalog selection, plugins, engineering projects, drone photography, about Robin Busse
+- [Home](https://tagobeats.com/): Beat catalog selection, plugins, drone photography, about Robin Busse
 - [TagoPitch](https://tagobeats.com/#tb-plugins): Free vocal pitch shifter plugin, download against email (source: https://github.com/TagoBeats/TagoPitch)
 - [Beat Catalog](https://tagobeats.com/music): Stream, preview and license the full TagoBeats catalog via BeatStars
 

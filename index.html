@@ -455,10 +455,9 @@ body { margin: 0; }
   #tb-catalog-grid { grid-template-columns: repeat(3, minmax(0,1fr)) !important; gap: 18px 10px !important; }
   .tb-proj-card { flex-direction: column !important; }
   .tb-plugin-hero { flex-direction: column !important; }
-  .tb-plugin-hero > div:first-child { flex-basis: auto !important; width: 100% !important; min-height: 200px !important; }
+  .tb-plugin-hero > div:first-child { flex-basis: auto !important; width: 100% !important; max-width: 100% !important; min-height: 0 !important; }
   .tb-plugin-form { flex-direction: column !important; align-items: stretch !important; }
   .tb-plugin-form input { width: 100% !important; }
-  .tb-proj-grid-2col { grid-template-columns: 1fr !important; }
   .tb-about-wrap { flex-direction: column !important; text-align: center; }
   .tb-about-wrap > div:last-child { max-width: 100% !important; }
 }
@@ -522,9 +521,9 @@ body { margin: 0; }
         <a onclick="{{ closeMenu }}" href="/music" style="text-decoration:none; color:#F2EEE6; font-size:clamp(40px,8vw,92px); font-weight:800; letter-spacing:-0.035em; line-height:1.02;">Catalog</a>
         <a onclick="{{ closeMenu }}" href="#tb-plugins" style="text-decoration:none; color:#F2EEE6; font-size:clamp(40px,8vw,92px); font-weight:800; letter-spacing:-0.035em; line-height:1.02;">Plugins</a>
         <a onclick="{{ closeMenu }}" href="#tb-about" style="text-decoration:none; color:#F2EEE6; font-size:clamp(40px,8vw,92px); font-weight:800; letter-spacing:-0.035em; line-height:1.02;">About</a>
-        <a onclick="{{ closeMenu }}" href="#tb-engineering" style="text-decoration:none; color:#F2EEE6; font-size:clamp(40px,8vw,92px); font-weight:800; letter-spacing:-0.035em; line-height:1.02;">Engineering</a>
         <a onclick="{{ closeMenu }}" href="#tb-media" style="text-decoration:none; color:#F2EEE6; font-size:clamp(40px,8vw,92px); font-weight:800; letter-spacing:-0.035em; line-height:1.02;">Media</a>
-        <a href="https://www.beatstars.com/tagobeats" target="_blank" rel="noopener noreferrer" style="text-decoration:none; color:rgba(236,231,222,0.55); font-size:clamp(26px,4vw,46px); font-weight:300; letter-spacing:-0.01em; line-height:1.3; margin-top:18px;">BeatStars <span style="color:#00FDDC;">↗</span></a>
+        <a href="https://robinbusse.dev" target="_blank" rel="noopener noreferrer" style="text-decoration:none; color:rgba(236,231,222,0.55); font-size:clamp(26px,4vw,46px); font-weight:300; letter-spacing:-0.01em; line-height:1.3; margin-top:18px;">Engineering <span style="color:#00FDDC;">↗</span></a>
+        <a href="https://www.beatstars.com/tagobeats" target="_blank" rel="noopener noreferrer" style="text-decoration:none; color:rgba(236,231,222,0.55); font-size:clamp(26px,4vw,46px); font-weight:300; letter-spacing:-0.01em; line-height:1.3;">BeatStars <span style="color:#00FDDC;">↗</span></a>
         <a href="mailto:hello@tagobeats.com" style="text-decoration:none; color:rgba(236,231,222,0.55); font-size:clamp(26px,4vw,46px); font-weight:300; letter-spacing:-0.01em; line-height:1.3;">Contact</a>
       </nav>
       <div style="font-family:'Space Mono',monospace; font-size:12px; letter-spacing:0.2em; color:rgba(236,231,222,0.4);">ROBIN BUSSE · AUDIO ENGINEER &amp; PRODUCER · DE</div>
@@ -532,7 +531,7 @@ body { margin: 0; }
   </sc-if>
 
   <nav class="tb-dotnav" aria-label="Section navigation">
-    <sc-for list="{{ sectionDots }}" as="dot" hint-placeholder-count="7">
+    <sc-for list="{{ sectionDots }}" as="dot" hint-placeholder-count="6">
       <button onclick="{{ dot.onClick }}" class="{{ dot.rowClass }}" aria-label="{{ dot.label }}">
         <span class="tb-dot"></span>
         <span class="tb-dot-label">{{ dot.label }}</span>
@@ -667,8 +666,8 @@ body { margin: 0; }
 
     <div style="flex:1; min-height:0; display:flex; align-items:center; border-top:1px solid rgba(236,231,222,0.12); padding-top:clamp(18px,2.76vh,32px);">
       <div class="tb-proj-card tb-plugin-hero" style="background:#1A1815; border-radius:10px; overflow:hidden; border:1px solid rgba(236,231,222,0.08); display:flex; align-items:stretch; width:100%; max-width:1357px; margin:0 auto;">
-        <div style="position:relative; flex:0 0 clamp(220px,38vw,520px); min-height:clamp(200px,36vh,380px); overflow:hidden; background:#181917;">
-          <div style="position:absolute; inset:0; background:url('uploads_opt/TagoPitch_800.jpg?v=1') center/contain no-repeat;"></div>
+        <div style="position:relative; flex:0 0 auto; aspect-ratio:556/358; min-height:clamp(200px,36vh,380px); max-width:60%; overflow:hidden; background:#181917;">
+          <div style="position:absolute; inset:0; background:url('uploads_opt/TagoPitch_800.jpg?v=1') center/cover no-repeat;"></div>
         </div>
         <div style="flex:1; min-width:0; padding:clamp(20px,3.2vh,38px) clamp(23px,2.76vw,37px); display:flex; flex-direction:column; justify-content:center;">
           <div style="font-family:'Space Mono',monospace; font-size:11px; letter-spacing:0.18em; color:rgba(236,231,222,0.45); margin-bottom:8px;">V1.0.0 · MACOS AU/VST3 · WINDOWS VST3 · FREE</div>
@@ -687,49 +686,6 @@ body { margin: 0; }
               <div style="flex-basis:100%; font-size:13px; line-height:1.5; color:rgba(236,231,222,0.4);">We mail you the download link, plus a heads-up when the next Tago plugin drops. Nothing else.</div>
             </form>
             <div id="tb-tp-msg" role="status" style="display:none; margin-top:12px; font-family:'Space Mono',monospace; font-size:13px; line-height:1.5;"></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="tb-engineering" data-screen-label="Engineering" class="tb-snap-section" style="position:relative; z-index:1; min-height:100vh; padding:clamp(80px,8vh,100px) clamp(24px,6vw,120px) clamp(12px,1.6vh,22px); display:flex; flex-direction:column; border-top:1px solid rgba(236,231,222,0.14);">
-    <div style="display:flex; align-items:flex-end; justify-content:space-between; flex-wrap:wrap; gap:16px; margin-bottom:clamp(10px,1.4vh,16px);">
-      <div>
-        <div style="font-family:'Space Mono',monospace; font-size:11px; letter-spacing:0.3em; color:#00FDDC; margin-bottom:6px;">Audio Engineering</div>
-        <h2 style="margin:0; font-size:clamp(26px,3.4vw,40px); font-weight:800; letter-spacing:-0.03em; line-height:0.9; color:#F2EEE6;">Projects</h2>
-      </div>
-    </div>
-
-    <div style="flex:1; min-height:0; display:flex; align-items:center; border-top:1px solid rgba(236,231,222,0.12); padding-top:clamp(18px,2.76vh,32px);">
-      <div style="display:flex; flex-direction:column; gap:clamp(14px,2.07vh,23px); width:100%; max-width:1357px; margin:0 auto;">
-        <div class="tb-proj-card" style="background:#1A1815; border-radius:10px; overflow:hidden; border:1px solid rgba(236,231,222,0.08); display:flex; align-items:stretch;">
-          <div style="position:relative; flex:0 0 clamp(161px,27.6vw,345px); min-height:clamp(104px,19.55vh,196px); overflow:hidden; background:radial-gradient(circle at 30% 20%, rgba(0,253,220,0.2), transparent 55%), linear-gradient(135deg, #201d3a, #120f18);">
-            <div style="position:absolute; inset:0; background:url('uploads_opt/DubCheck_800.jpg?v=2') center/cover no-repeat;"></div>
-          </div>
-          <div style="flex:1; min-width:0; padding:clamp(16px,2.53vh,30px) clamp(23px,2.76vw,37px); display:flex; flex-direction:column; justify-content:center;">
-            <h3 style="margin:0; font-size:clamp(23px,2.53vw,32px); font-weight:800; letter-spacing:-0.02em; color:#F2EEE6;">DubCheck</h3>
-            <p style="margin:clamp(7px,1.15vh,12px) 0 0; max-width:560px; font-size:clamp(15px,1.27vw,17px); line-height:1.5; color:rgba(236,231,222,0.55);">Quick mix &amp; master check for your tracks, audiobooks and synchronous track. More details under <a href="https://audio-dubcheck.com" target="_blank" rel="noopener noreferrer" style="color:#00FDDC; font-weight:800; text-decoration:none; border-bottom:1.5px solid rgba(0,253,220,0.45);">audio-dubcheck.com</a></p>
-          </div>
-        </div>
-        <div class="tb-proj-grid-2col" style="display:grid; grid-template-columns:repeat(2, 1fr); gap:clamp(14px,2.07vh,23px);">
-          <div class="tb-proj-card" style="background:#1A1815; border-radius:10px; overflow:hidden; border:1px solid rgba(236,231,222,0.08); display:flex; align-items:stretch;">
-            <div style="position:relative; flex:0 0 clamp(92px,12.65vw,150px); min-height:clamp(81px,13.8vh,127px); overflow:hidden; background:radial-gradient(circle at 30% 20%, rgba(0,253,220,0.18), transparent 55%), linear-gradient(135deg, #201d3a, #120f18);">
-              <div style="position:absolute; inset:0; background:url('uploads_opt/DeEsser_800.jpg') center/cover no-repeat;"></div>
-            </div>
-            <div style="flex:1; min-width:0; padding:clamp(14px,2.07vh,23px) clamp(18px,2.07vw,25px); display:flex; flex-direction:column; justify-content:center;">
-              <h3 style="margin:0; font-size:clamp(18px,1.84vw,23px); font-weight:800; letter-spacing:-0.02em; color:#F2EEE6;">DeEsser</h3>
-              <p style="margin:7px 0 0; font-size:clamp(14px,1.15vw,15px); line-height:1.45; color:rgba(236,231,222,0.55);">Dynamic de-essing plugin chain. Details dropping soon.</p>
-            </div>
-          </div>
-          <div class="tb-proj-card" style="background:#1A1815; border-radius:10px; overflow:hidden; border:1px solid rgba(236,231,222,0.08); display:flex; align-items:stretch;">
-            <div style="position:relative; flex:0 0 clamp(92px,12.65vw,150px); min-height:clamp(81px,13.8vh,127px); overflow:hidden; background:radial-gradient(circle at 30% 20%, rgba(0,253,220,0.18), transparent 55%), linear-gradient(135deg, #201d3a, #120f18);">
-              <div style="position:absolute; inset:0; background:url('uploads_opt/ReEsser_800.jpg?v=2') center/cover no-repeat;"></div>
-            </div>
-            <div style="flex:1; min-width:0; padding:clamp(14px,2.07vh,23px) clamp(18px,2.07vw,25px); display:flex; flex-direction:column; justify-content:center;">
-              <h3 style="margin:0; font-size:clamp(18px,1.84vw,23px); font-weight:800; letter-spacing:-0.02em; color:#F2EEE6;">ReEsser</h3>
-              <p style="margin:7px 0 0; font-size:clamp(14px,1.15vw,15px); line-height:1.45; color:rgba(236,231,222,0.55);">Dynamic re-essing plugin chain. Details dropping soon.</p>
-            </div>
           </div>
         </div>
       </div>
@@ -890,7 +846,6 @@ class Component extends DCLogic {
     { id: 'tb-hero', label: 'Home' },
     { id: 'tb-catalog', label: 'Catalog' },
     { id: 'tb-plugins', label: 'Plugins' },
-    { id: 'tb-engineering', label: 'Engineering' },
     { id: 'tb-media', label: 'Media' },
     { id: 'tb-about', label: 'About' },
     { id: 'tb-contact', label: 'Contact' }

@@ -8,13 +8,17 @@ const PRODUCTS = {
     image: 'https://tagobeats.com/uploads_opt/TagoPitch_800.jpg',
     mac: 'https://github.com/TagoBeats/TagoPitch/releases/download/v1.0.0/TagoPitch-1.0.0.pkg',
     win: 'https://github.com/TagoBeats/TagoPitch/releases/download/v1.0.0/TagoPitch-v1.0.0-Windows-VST3.zip',
+    macInstallText: 'run the .pkg and pick the formats you want',
+    macInstallHtml: 'run the .pkg and pick the formats you want (AU + VST3, notarized).',
   },
   tagoclip: {
     name: 'TagoClip',
     metaLine: 'V1.0.0 &middot; MACOS AU/VST3 &middot; WINDOWS VST3 &middot; FREE',
     image: 'https://tagobeats.com/uploads_opt/TagoClip_800.jpg?v=3',
-    mac: 'https://github.com/TagoBeats/TagoClip/releases/download/v1.0.0/TagoClip-1.0.0.pkg',
+    mac: 'https://github.com/TagoBeats/TagoClip/releases/download/v1.0.0/TagoClip-1.0.0.dmg',
     win: 'https://github.com/TagoBeats/TagoClip/releases/download/v1.0.0/TagoClip-v1.0.0-Windows-VST3.zip',
+    macInstallText: 'open the .dmg, then run the .pkg inside and pick the formats you want',
+    macInstallHtml: 'open the .dmg, then run the .pkg inside and pick the formats you want (AU + VST3, notarized).',
   },
 }
 
@@ -25,7 +29,7 @@ function downloadEmail(product) {
     `macOS installer (AU + VST3, notarized): ${product.mac}`,
     `Windows VST3 (zip): ${product.win}`,
     '',
-    `macOS: run the .pkg and pick the formats you want. Windows: unzip and drop ${product.name}.vst3 into C:\\Program Files\\Common Files\\VST3.`,
+    `macOS: ${product.macInstallText}. Windows: unzip and drop ${product.name}.vst3 into C:\\Program Files\\Common Files\\VST3.`,
     '',
     'If anything acts up, just reply to this mail.',
     '',
@@ -83,7 +87,7 @@ function downloadEmail(product) {
                 <tr><td style="border-top:1px solid #2A2723;padding-top:20px;">
                   <div style="font-family:'Courier New',Courier,monospace;font-size:11px;letter-spacing:2px;color:#8A857C;padding-bottom:8px;">INSTALL</div>
                   <div style="font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:1.7;color:#B5AFA4;">
-                    <span style="color:#ECE7DE;">macOS:</span> run the .pkg and pick the formats you want (AU + VST3, notarized).<br>
+                    <span style="color:#ECE7DE;">macOS:</span> ${product.macInstallHtml}<br>
                     <span style="color:#ECE7DE;">Windows:</span> unzip and drop ${product.name}.vst3 into <span style="font-family:'Courier New',Courier,monospace;color:#ECE7DE;">C:\\Program Files\\Common Files\\VST3</span>.
                   </div>
                 </td></tr>

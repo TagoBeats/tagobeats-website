@@ -12,7 +12,7 @@ const PRODUCTS = {
   tagoclip: {
     name: 'TagoClip',
     metaLine: 'V1.0.0 &middot; MACOS AU/VST3 &middot; WINDOWS VST3 &middot; FREE',
-    image: 'https://tagobeats.com/uploads_opt/TagoClip_800.jpg?v=2',
+    image: 'https://tagobeats.com/uploads_opt/TagoClip_800.jpg?v=3',
     mac: 'https://github.com/TagoBeats/TagoClip/releases/download/v1.0.0/TagoClip-1.0.0.pkg',
     win: 'https://github.com/TagoBeats/TagoClip/releases/download/v1.0.0/TagoClip-v1.0.0-Windows-VST3.zip',
   },

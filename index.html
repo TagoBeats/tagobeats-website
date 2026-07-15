@@ -557,6 +557,12 @@ body { margin: 0; }
 .tb-plugin-form input::placeholder { color: rgba(236,231,222,0.35); }
 .tb-plugin-form input:focus { border-color: rgba(0,253,220,0.6); box-shadow: 0 0 0 4px rgba(0,253,220,0.08); }
 
+/* Touch devices: the demo iframe must never eat page scroll (see the
+   Insta-webview snap-scroll freeze), so it goes display-only there. */
+@media (hover: none) {
+  .tb-demo-frame { pointer-events: none; }
+}
+
 @media (max-width: 780px) {
   #tb-catalog-grid { grid-template-columns: repeat(3, minmax(0,1fr)) !important; gap: 18px 10px !important; }
   .tb-proj-card { flex-direction: column !important; }
@@ -762,6 +768,43 @@ body { margin: 0; }
     </sc-if>
   </section>
 
+  <section id="tb-tagoclip" data-screen-label="TagoClip" class="tb-snap-section" style="position:relative; z-index:1; min-height:100vh; padding:clamp(80px,8vh,100px) clamp(24px,6vw,120px) clamp(12px,1.6vh,22px); display:flex; flex-direction:column; border-top:1px solid rgba(236,231,222,0.14);">
+    <div style="display:flex; align-items:flex-end; justify-content:space-between; flex-wrap:wrap; gap:16px; margin-bottom:clamp(10px,1.4vh,16px);">
+      <div>
+        <div style="font-family:'Space Mono',monospace; font-size:11px; letter-spacing:0.3em; color:#00FDDC; margin-bottom:6px;">Tago Plugins</div>
+        <h2 style="margin:0; font-size:clamp(26px,3.4vw,40px); font-weight:800; letter-spacing:-0.03em; line-height:0.9; color:#F2EEE6;">TagoClip</h2>
+      </div>
+    </div>
+
+    <div style="flex:1; min-height:0; display:flex; align-items:center; border-top:1px solid rgba(236,231,222,0.12); padding-top:clamp(18px,2.76vh,32px);">
+      <div class="tb-proj-card tb-plugin-hero" style="background:#1A1815; border-radius:10px; overflow:hidden; border:1px solid rgba(236,231,222,0.08); display:flex; align-items:stretch; width:100%; max-width:1357px; margin:0 auto;">
+        <div style="position:relative; flex:0 0 auto; aspect-ratio:556/358; min-height:clamp(200px,36vh,380px); max-width:60%; overflow:hidden; background:#181917;">
+          <iframe src="demos/tagoclip.html" title="TagoClip interactive demo" loading="lazy" class="tb-demo-frame" style="position:absolute; inset:0; width:100%; height:100%; border:0; background:#181917;"></iframe>
+          <div style="position:absolute; left:10px; bottom:8px; font-family:'Space Mono',monospace; font-size:10px; letter-spacing:0.18em; color:rgba(236,231,222,0.35); pointer-events:none;">LIVE DEMO</div>
+        </div>
+        <div style="flex:1; min-width:0; padding:clamp(20px,3.2vh,38px) clamp(23px,2.76vw,37px); display:flex; flex-direction:column; justify-content:center;">
+          <div style="font-family:'Space Mono',monospace; font-size:11px; letter-spacing:0.18em; color:rgba(236,231,222,0.45); margin-bottom:8px;">V1.0.0 · MACOS AU/VST3 · WINDOWS VST3 · FREE</div>
+          <h3 style="margin:0; font-size:clamp(23px,2.53vw,32px); font-weight:800; letter-spacing:-0.02em; color:#F2EEE6;">Soft clipper for 808s and drums</h3>
+          <p style="margin:clamp(7px,1.15vh,12px) 0 0; max-width:560px; font-size:clamp(15px,1.27vw,17px); line-height:1.5; color:rgba(236,231,222,0.55);">The FL soft clip sound in every DAW: the exact curve, measured and cloned, plus optional 4x/8x oversampling against its aliasing. Delta listening plays only what gets clipped away, mono low keeps the sub centered. On the left is the real UI.</p>
+
+          <div id="tb-tc-gate" style="margin-top:clamp(16px,2.4vh,26px);">
+            <button id="tb-tc-cta" type="button" class="tb-cta" style="border:none; cursor:pointer; font-family:inherit; color:#0A0908; background:#00FDDC; font-weight:800; font-size:14px; letter-spacing:0.1em; padding:19px 46px; border-radius:2px; display:inline-flex; align-items:center; gap:12px; white-space:nowrap;">
+              DOWNLOAD FREE <span class="tb-cta-arrow" style="font-size:17px; line-height:1;">→</span>
+            </button>
+            <form id="tb-tc-form" class="tb-plugin-form" novalidate style="display:none; align-items:center; gap:10px; flex-wrap:wrap;">
+              <input id="tb-tc-email" type="email" name="email" required autocomplete="email" placeholder="your@email.com" style="flex:1 1 220px; min-width:0; max-width:340px; background:rgba(236,231,222,0.06); border:1px solid rgba(236,231,222,0.18); border-radius:2px; padding:15px 16px; color:#ECE7DE; font-family:'Space Mono',monospace; font-size:14px; outline:none; transition:border-color .3s, box-shadow .3s;">
+              <button id="tb-tc-send" type="submit" class="tb-cta" style="border:none; cursor:pointer; font-family:inherit; color:#0A0908; background:#00FDDC; font-weight:800; font-size:13px; letter-spacing:0.1em; padding:16px 28px; border-radius:2px; display:inline-flex; align-items:center; gap:10px; white-space:nowrap;">
+                SEND LINK <span class="tb-cta-arrow" style="font-size:15px; line-height:1;">→</span>
+              </button>
+              <div style="flex-basis:100%; font-size:13px; line-height:1.5; color:rgba(236,231,222,0.4);">We mail you the download link, plus a heads-up when the next Tago plugin drops. Nothing else.</div>
+            </form>
+            <div id="tb-tc-msg" role="status" style="display:none; margin-top:12px; font-family:'Space Mono',monospace; font-size:13px; line-height:1.5;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section id="tb-plugins" data-screen-label="Plugins" class="tb-snap-section" style="position:relative; z-index:1; min-height:100vh; padding:clamp(80px,8vh,100px) clamp(24px,6vw,120px) clamp(12px,1.6vh,22px); display:flex; flex-direction:column; border-top:1px solid rgba(236,231,222,0.14);">
     <div style="display:flex; align-items:flex-end; justify-content:space-between; flex-wrap:wrap; gap:16px; margin-bottom:clamp(10px,1.4vh,16px);">
       <div>
@@ -955,6 +998,7 @@ class Component extends DCLogic {
   SECTIONS = [
     { id: 'tb-hero', label: 'Home' },
     { id: 'tb-catalog', label: 'Catalog' },
+    { id: 'tb-tagoclip', label: 'TagoClip' },
     { id: 'tb-plugins', label: 'Plugins' },
     { id: 'tb-media', label: 'Media' },
     { id: 'tb-about', label: 'About' },
@@ -1442,50 +1486,69 @@ class Component extends DCLogic {
 (function () {
   // Delegated listeners: the runtime rebuilds the DOM after hydration,
   // so direct element bindings would get thrown away.
-  function showMsg(text, ok) {
-    var msg = document.getElementById('tb-tp-msg');
+  // One gate per plugin, same markup pattern with a different id prefix.
+  var GATES = [
+    { prefix: 'tb-tp', source: 'tagopitch' },
+    { prefix: 'tb-tc', source: 'tagoclip' }
+  ];
+
+  function showMsg(prefix, text, ok) {
+    var msg = document.getElementById(prefix + '-msg');
     if (!msg) return;
     msg.textContent = text;
     msg.style.color = ok ? '#00FDDC' : '#FF8A7A';
     msg.style.display = 'block';
   }
 
+  function gateForCta(el) {
+    for (var i = 0; i < GATES.length; i++) {
+      if (el.closest && el.closest('#' + GATES[i].prefix + '-cta')) return GATES[i];
+    }
+    return null;
+  }
+
   document.addEventListener('click', function (e) {
-    var cta = e.target.closest && e.target.closest('#tb-tp-cta');
-    if (!cta) return;
-    var form = document.getElementById('tb-tp-form');
-    var email = document.getElementById('tb-tp-email');
-    cta.style.display = 'none';
+    var gate = e.target && gateForCta(e.target);
+    if (!gate) return;
+    var cta = document.getElementById(gate.prefix + '-cta');
+    var form = document.getElementById(gate.prefix + '-form');
+    var email = document.getElementById(gate.prefix + '-email');
+    if (cta) cta.style.display = 'none';
     if (form) form.style.display = 'flex';
     if (email) email.focus();
   });
 
   document.addEventListener('submit', function (e) {
-    if (!e.target || e.target.id !== 'tb-tp-form') return;
+    if (!e.target || !e.target.id) return;
+    var gate = null;
+    for (var i = 0; i < GATES.length; i++) {
+      if (e.target.id === GATES[i].prefix + '-form') gate = GATES[i];
+    }
+    if (!gate) return;
     e.preventDefault();
     var form = e.target;
-    var email = document.getElementById('tb-tp-email');
-    var send = document.getElementById('tb-tp-send');
+    var email = document.getElementById(gate.prefix + '-email');
+    var send = document.getElementById(gate.prefix + '-send');
     var value = ((email && email.value) || '').trim();
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
-      showMsg('That email does not look right.', false);
+      showMsg(gate.prefix, 'That email does not look right.', false);
       return;
     }
-    var msg = document.getElementById('tb-tp-msg');
+    var msg = document.getElementById(gate.prefix + '-msg');
     if (msg) msg.style.display = 'none';
     if (send) { send.disabled = true; send.firstChild.textContent = 'SENDING… '; }
 
     fetch('/api/lead', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email: value, source: 'tagopitch' })
+      body: JSON.stringify({ email: value, source: gate.source })
     }).then(function (res) {
       if (!res.ok) throw new Error('bad status');
       form.style.display = 'none';
-      showMsg('Sent. The download link is on its way to your inbox (check spam, just in case).', true);
+      showMsg(gate.prefix, 'Sent. The download link is on its way to your inbox (check spam, just in case).', true);
     }).catch(function () {
       if (send) { send.disabled = false; send.firstChild.textContent = 'SEND LINK '; }
-      showMsg('Something went wrong. Try again in a minute or mail plugins@robinbusse.dev.', false);
+      showMsg(gate.prefix, 'Something went wrong. Try again in a minute or mail plugins@robinbusse.dev.', false);
     });
   });
 })();
@@ -1502,6 +1565,21 @@ class Component extends DCLogic {
   "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" },
   "description": "Free vocal pitch shifter plugin (AU/VST3) with separate pitch and formant control, made by TagoBeats (Robin Busse).",
   "url": "https://tagobeats.com/#tb-plugins",
+  "author": { "@type": "Person", "name": "Robin Busse" }
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "TagoClip",
+  "operatingSystem": "macOS, Windows",
+  "applicationCategory": "MultimediaApplication",
+  "softwareVersion": "1.0.0",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" },
+  "description": "Free soft clipper plugin (AU/VST3) for 808s and drums: the FL soft clip curve with optional oversampling against aliasing, delta listening and mono low end, made by TagoBeats (Robin Busse).",
+  "url": "https://tagobeats.com/#tb-tagoclip",
   "author": { "@type": "Person", "name": "Robin Busse" }
 }
 </script>

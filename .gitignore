@@ -3,3 +3,4 @@
 node_modules
 squirrel.toml
 uploads_opt/lake-original-backup.jpg
+.env*.local

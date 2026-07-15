@@ -1,18 +1,31 @@
 const RESEND_API = 'https://api.resend.com'
 
-const DOWNLOADS = {
-  mac: 'https://github.com/TagoBeats/TagoPitch/releases/download/v1.0.0/TagoPitch-1.0.0.pkg',
-  win: 'https://github.com/TagoBeats/TagoPitch/releases/download/v1.0.0/TagoPitch-v1.0.0-Windows-VST3.zip',
+// One entry per plugin; the page posts its key as `source`.
+const PRODUCTS = {
+  tagopitch: {
+    name: 'TagoPitch',
+    metaLine: 'V1.0.0 &middot; MACOS AU/VST3 &middot; WINDOWS VST3 &middot; FREE',
+    image: 'https://tagobeats.com/uploads_opt/TagoPitch_800.jpg',
+    mac: 'https://github.com/TagoBeats/TagoPitch/releases/download/v1.0.0/TagoPitch-1.0.0.pkg',
+    win: 'https://github.com/TagoBeats/TagoPitch/releases/download/v1.0.0/TagoPitch-v1.0.0-Windows-VST3.zip',
+  },
+  tagoclip: {
+    name: 'TagoClip',
+    metaLine: 'V1.0.0 &middot; MACOS AU/VST3 &middot; WINDOWS VST3 &middot; FREE',
+    image: 'https://tagobeats.com/uploads_opt/TagoClip_800.jpg?v=2',
+    mac: 'https://github.com/TagoBeats/TagoClip/releases/download/v1.0.0/TagoClip-1.0.0.pkg',
+    win: 'https://github.com/TagoBeats/TagoClip/releases/download/v1.0.0/TagoClip-v1.0.0-Windows-VST3.zip',
+  },
 }
 
-function downloadEmail() {
+function downloadEmail(product) {
   const text = [
-    'Hey, thanks for grabbing TagoPitch.',
+    `Hey, thanks for grabbing ${product.name}.`,
     '',
-    `macOS installer (AU + VST3, notarized): ${DOWNLOADS.mac}`,
-    `Windows VST3 (zip): ${DOWNLOADS.win}`,
+    `macOS installer (AU + VST3, notarized): ${product.mac}`,
+    `Windows VST3 (zip): ${product.win}`,
     '',
-    'macOS: run the .pkg and pick the formats you want. Windows: unzip and drop TagoPitch.vst3 into C:\\Program Files\\Common Files\\VST3.',
+    `macOS: run the .pkg and pick the formats you want. Windows: unzip and drop ${product.name}.vst3 into C:\\Program Files\\Common Files\\VST3.`,
     '',
     'If anything acts up, just reply to this mail.',
     '',
@@ -50,19 +63,19 @@ function downloadEmail() {
         <tr><td class="tb-card" bgcolor="#1A1815" style="background-color:#1A1815;background-image:linear-gradient(#1A1815,#1A1815);border:1px solid #2A2723;border-radius:10px;overflow:hidden;">
           <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
             <tr><td style="padding:0;line-height:0;">
-              <img src="https://tagobeats.com/uploads_opt/TagoPitch_800.jpg" alt="TagoPitch plugin UI" width="558" style="width:100%;max-width:558px;height:auto;display:block;border:0;border-radius:9px 9px 0 0;">
+              <img src="${product.image}" alt="${product.name} plugin UI" width="558" style="width:100%;max-width:558px;height:auto;display:block;border:0;border-radius:9px 9px 0 0;">
             </td></tr>
             <tr><td style="padding:28px 32px 32px;">
-              <div style="font-family:'Courier New',Courier,monospace;font-size:11px;letter-spacing:2px;color:#8A857C;padding-bottom:10px;">V1.0.0 &middot; MACOS AU/VST3 &middot; WINDOWS VST3 &middot; FREE</div>
-              <div style="font-family:Arial,Helvetica,sans-serif;font-size:26px;font-weight:800;letter-spacing:-0.5px;color:#F2EEE6;padding-bottom:14px;">TagoPitch</div>
-              <div style="font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:1.6;color:#B5AFA4;padding-bottom:24px;">Hey, thanks for grabbing TagoPitch. Here are your downloads:</div>
+              <div style="font-family:'Courier New',Courier,monospace;font-size:11px;letter-spacing:2px;color:#8A857C;padding-bottom:10px;">${product.metaLine}</div>
+              <div style="font-family:Arial,Helvetica,sans-serif;font-size:26px;font-weight:800;letter-spacing:-0.5px;color:#F2EEE6;padding-bottom:14px;">${product.name}</div>
+              <div style="font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:1.6;color:#B5AFA4;padding-bottom:24px;">Hey, thanks for grabbing ${product.name}. Here are your downloads:</div>
 
               <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="width:100%;">
                 <tr><td style="padding-bottom:12px;">
-                  <a href="${DOWNLOADS.mac}" style="display:block;background-color:#00FDDC;background-image:linear-gradient(#00FDDC,#00FDDC);color:#0A0908;font-family:Arial,Helvetica,sans-serif;font-size:13px;font-weight:bold;letter-spacing:1.5px;text-decoration:none;text-align:center;padding:16px 20px;border-radius:3px;">DOWNLOAD FOR MACOS &nbsp;&rarr;</a>
+                  <a href="${product.mac}" style="display:block;background-color:#00FDDC;background-image:linear-gradient(#00FDDC,#00FDDC);color:#0A0908;font-family:Arial,Helvetica,sans-serif;font-size:13px;font-weight:bold;letter-spacing:1.5px;text-decoration:none;text-align:center;padding:16px 20px;border-radius:3px;">DOWNLOAD FOR MACOS &nbsp;&rarr;</a>
                 </td></tr>
                 <tr><td style="padding-bottom:6px;">
-                  <a href="${DOWNLOADS.win}" style="display:block;background-color:#26231F;background-image:linear-gradient(#26231F,#26231F);color:#ECE7DE;font-family:Arial,Helvetica,sans-serif;font-size:13px;font-weight:bold;letter-spacing:1.5px;text-decoration:none;text-align:center;padding:16px 20px;border-radius:3px;border:1px solid #3A362F;">DOWNLOAD FOR WINDOWS &nbsp;&rarr;</a>
+                  <a href="${product.win}" style="display:block;background-color:#26231F;background-image:linear-gradient(#26231F,#26231F);color:#ECE7DE;font-family:Arial,Helvetica,sans-serif;font-size:13px;font-weight:bold;letter-spacing:1.5px;text-decoration:none;text-align:center;padding:16px 20px;border-radius:3px;border:1px solid #3A362F;">DOWNLOAD FOR WINDOWS &nbsp;&rarr;</a>
                 </td></tr>
               </table>
 
@@ -71,7 +84,7 @@ function downloadEmail() {
                   <div style="font-family:'Courier New',Courier,monospace;font-size:11px;letter-spacing:2px;color:#8A857C;padding-bottom:8px;">INSTALL</div>
                   <div style="font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:1.7;color:#B5AFA4;">
                     <span style="color:#ECE7DE;">macOS:</span> run the .pkg and pick the formats you want (AU + VST3, notarized).<br>
-                    <span style="color:#ECE7DE;">Windows:</span> unzip and drop TagoPitch.vst3 into <span style="font-family:'Courier New',Courier,monospace;color:#ECE7DE;">C:\\Program Files\\Common Files\\VST3</span>.
+                    <span style="color:#ECE7DE;">Windows:</span> unzip and drop ${product.name}.vst3 into <span style="font-family:'Courier New',Courier,monospace;color:#ECE7DE;">C:\\Program Files\\Common Files\\VST3</span>.
                   </div>
                 </td></tr>
               </table>
@@ -92,7 +105,7 @@ function downloadEmail() {
   </body>
   </html>`
 
-  return { subject: 'Your TagoPitch download', text, html }
+  return { subject: `Your ${product.name} download`, text, html }
 }
 
 module.exports = async function handler(req, res) {
@@ -102,6 +115,7 @@ module.exports = async function handler(req, res) {
 
   const email = String((req.body && req.body.email) || '').trim().toLowerCase()
   const source = String((req.body && req.body.source) || 'tagopitch')
+  const product = PRODUCTS[source] || PRODUCTS.tagopitch
 
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
     return res.status(400).json({ error: 'Invalid email address' })
@@ -122,8 +136,8 @@ module.exports = async function handler(req, res) {
   }
 
   try {
-    // 1. Add contact to the TagoPitch audience. 409 / already exists is fine,
-    //    repeat downloaders still get their mail.
+    // 1. Add contact to the plugins audience (shared across Tago plugins).
+    //    409 / already exists is fine, repeat downloaders still get their mail.
     const contactRes = await fetch(`${RESEND_API}/audiences/${audienceId}/contacts`, {
       method: 'POST',
       headers: auth,
@@ -138,7 +152,7 @@ module.exports = async function handler(req, res) {
 
     // 2. Send the download mail. This is the actual gate: a fake address
     //    never sees the links.
-    const { subject, text, html } = downloadEmail()
+    const { subject, text, html } = downloadEmail(product)
     const sendRes = await fetch(`${RESEND_API}/emails`, {
       method: 'POST',
       headers: auth,

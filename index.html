@@ -769,7 +769,7 @@ body { margin: 0; }
 
     <div style="flex:1; min-height:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:clamp(14px,2vh,22px); border-top:1px solid rgba(236,231,222,0.12); padding-top:clamp(24px,4vh,44px);">
       <div style="position:relative; width:min(90%, 900px); max-height:100%; aspect-ratio:16/9; overflow:hidden; border-radius:4px;">
-        <img src="uploads_opt/og-image.jpg" alt="Drone photography — lake" width="1400" height="787" loading="lazy" decoding="async" style="width:100%; height:100%; object-fit:cover; display:block;">
+        <img src="uploads_opt/lake.jpg" alt="Drone photography — lake" width="1400" height="787" loading="lazy" decoding="async" style="width:100%; height:100%; object-fit:cover; display:block;">
         <div style="position:absolute; inset:0; background:linear-gradient(to top, rgba(10,9,8,0.55) 0%, transparent 40%);"></div>
       </div>
       <p style="margin:0; max-width:560px; text-align:center; font-size:clamp(16px,1.6vw,20px); line-height:1.5; color:rgba(236,231,222,0.6);">Studio sessions, behind-the-scenes clips and visualizers, coming soon.</p>
@@ -1010,18 +1010,34 @@ class Component extends DCLogic {
     // has gone quiet for a beat — a single trackpad flick keeps emitting wheel
     // events well after the section has visually arrived, so settling on scroll
     // position alone let one flick chain through two or three sections.
+    // setTimeout, not requestAnimationFrame: throttled webviews (in-app
+    // browsers, background tabs) pause rAF entirely, which left the lock
+    // stuck forever and ate every scroll event after the first.
     const lockUntilSettled = (targetTop) => {
       locked = true;
-      if (settleRaf) cancelAnimationFrame(settleRaf);
+      if (settleRaf) clearTimeout(settleRaf);
       const startedAt = performance.now();
       const poll = () => {
         const closeEnough = Math.abs(window.scrollY - targetTop) < 2;
         const quiet = performance.now() - lastWheelAt > WHEEL_SILENCE_MS;
         const timedOut = performance.now() - startedAt > MAX_LOCK_MS;
-        if ((closeEnough && quiet) || timedOut) { locked = false; settleRaf = null; return; }
-        settleRaf = requestAnimationFrame(poll);
+        if ((closeEnough && quiet) || timedOut) {
+          // Fail open: if smooth scrolling never moved the page (some
+          // webviews drop it), jump there instantly instead of staying stuck.
+          // behavior:'auto' would defer to the CSS scroll-behavior (smooth),
+          // so force instant via the inline style for one jump.
+          if (timedOut && !closeEnough) {
+            const el = document.documentElement;
+            const prev = el.style.scrollBehavior;
+            el.style.scrollBehavior = 'auto';
+            window.scrollTo(0, targetTop);
+            el.style.scrollBehavior = prev;
+          }
+          locked = false; settleRaf = null; return;
+        }
+        settleRaf = setTimeout(poll, 80);
       };
-      settleRaf = requestAnimationFrame(poll);
+      settleRaf = setTimeout(poll, 80);
     };
 
     const goTo = (i) => {
@@ -1103,11 +1119,18 @@ class Component extends DCLogic {
       else if (dy < 0 && i > 0 && atSectionTop(i)) goTo(i - 1);
     };
 
+    // Touch devices scroll natively: sections are ~1 viewport tall, so the
+    // edge checks are always true there and preventDefault would block every
+    // swipe. If the smooth scrollIntoView then fails (Instagram/WKWebView
+    // in-app browsers), the page is frozen entirely.
+    const coarsePointer = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
     window.addEventListener('wheel', onWheel, { passive: false });
     window.addEventListener('keydown', onKeyDown);
-    window.addEventListener('touchstart', onTouchStart, { passive: true });
-    window.addEventListener('touchmove', onTouchMove, { passive: false });
-    window.addEventListener('touchend', onTouchEnd, { passive: true });
+    if (!coarsePointer) {
+      window.addEventListener('touchstart', onTouchStart, { passive: true });
+      window.addEventListener('touchmove', onTouchMove, { passive: false });
+      window.addEventListener('touchend', onTouchEnd, { passive: true });
+    }
 
     this._snapCleanup = () => {
       window.removeEventListener('wheel', onWheel);
@@ -1116,7 +1139,7 @@ class Component extends DCLogic {
       window.removeEventListener('touchmove', onTouchMove);
       window.removeEventListener('touchend', onTouchEnd);
       window.removeEventListener('scroll', onScroll);
-      if (settleRaf) cancelAnimationFrame(settleRaf);
+      if (settleRaf) clearTimeout(settleRaf);
     };
   }
 

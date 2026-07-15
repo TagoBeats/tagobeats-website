@@ -3,6 +3,11 @@
   "trailingSlash": false,
   "redirects": [
     {
+      "source": "/free",
+      "destination": "/#tb-plugins",
+      "permanent": false
+    },
+    {
       "source": "/:path*",
       "has": [{ "type": "host", "value": "www.tagobeats.com" }],
       "destination": "https://tagobeats.com/:path*",

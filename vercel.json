@@ -8,6 +8,12 @@
       "permanent": false
     },
     {
+      "source": "/",
+      "has": [{ "type": "host", "value": "www.tagobeats.com" }],
+      "destination": "https://tagobeats.com/",
+      "permanent": true
+    },
+    {
       "source": "/:path*",
       "has": [{ "type": "host", "value": "www.tagobeats.com" }],
       "destination": "https://tagobeats.com/:path*",

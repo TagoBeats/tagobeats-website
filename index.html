@@ -67,6 +67,45 @@
 </script>
 <link rel="preload" as="image" href="/uploads_opt/holo-sticker-studio-680.jpg">
 <style>x-dc{display:none;}</style>
+<script>
+// Debug-Overlay: nur aktiv mit ?debug=1 in der URL. Bewusst ES5, damit es
+// auch dann noch laeuft, wenn moderne Syntax anderswo den Parser killt.
+(function () {
+  if (window.location.search.indexOf('debug=1') === -1) return;
+  var lines = [];
+  var box = null;
+  function render() {
+    if (!box && document.body) {
+      box = document.createElement('div');
+      box.style.cssText = 'position:fixed;top:0;left:0;right:0;z-index:99999;background:#000;color:#0f0;font:11px/1.5 monospace;padding:8px;max-height:60vh;overflow:auto;white-space:pre-wrap;word-break:break-all;';
+      document.body.appendChild(box);
+    }
+    if (box) box.textContent = lines.join('\n');
+  }
+  function log(msg) { lines.push(msg); render(); }
+  window.addEventListener('error', function (e) {
+    if (e.message) log('JS-ERROR: ' + e.message + ' @ ' + (e.filename || '?') + ':' + (e.lineno || '?'));
+    else if (e.target && (e.target.src || e.target.href)) log('LOAD-FAIL: ' + (e.target.src || e.target.href));
+  }, true);
+  window.addEventListener('unhandledrejection', function (e) {
+    log('PROMISE-REJECT: ' + (e.reason && e.reason.message ? e.reason.message : String(e.reason)));
+  });
+  log('UA: ' + navigator.userAgent);
+  function status(label) {
+    var root = document.getElementById('dc-root');
+    log(label +
+      ' | React:' + (typeof window.React !== 'undefined' ? 'ja' : 'NEIN') +
+      ' | ReactDOM:' + (typeof window.ReactDOM !== 'undefined' ? 'ja' : 'NEIN') +
+      ' | dc-root:' + (root ? (root.childNodes.length ? 'gemountet' : 'LEER') : 'FEHLT') +
+      ' | staticHero:' + (document.getElementById('tb-static-hero') ? 'noch da' : 'weg') +
+      ' | bodyH:' + (document.body ? document.body.scrollHeight : '?') +
+      ' | innerH:' + window.innerHeight);
+  }
+  document.addEventListener('DOMContentLoaded', function () { status('DOMContentLoaded'); });
+  setTimeout(function () { status('nach 3s'); }, 3000);
+  setTimeout(function () { status('nach 8s'); }, 8000);
+})();
+</script>
 <script defer src="js/react.production.min.js"></script>
 <script defer src="js/react-dom.production.min.js"></script>
 <script defer src="js/dc-runtime.js"></script>

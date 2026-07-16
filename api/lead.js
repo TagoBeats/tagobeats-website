@@ -22,7 +22,7 @@ const PRODUCTS = {
   },
 }
 
-function downloadEmail(product) {
+function downloadEmail(product, unsubUrl) {
   const text = [
     `Hey, thanks for grabbing ${product.name}.`,
     '',
@@ -35,6 +35,8 @@ function downloadEmail(product) {
     '',
     'Robin (TagoBeats)',
     'https://tagobeats.com',
+    '',
+    `Only want the download and no future plugin drops? Unsubscribe: ${unsubUrl}`,
   ].join('\n')
 
   // Dark-mode-proof: color-scheme meta pins Apple Mail/Outlook, and every
@@ -99,7 +101,8 @@ function downloadEmail(product) {
         <tr><td style="padding:22px 4px 0;">
           <div style="font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:1.6;color:#8A857C;">
             If anything acts up, just reply to this mail.<br>
-            Robin (TagoBeats) &middot; <a href="https://tagobeats.com" style="color:#00FDDC;text-decoration:none;">tagobeats.com</a>
+            Robin (TagoBeats) &middot; <a href="https://tagobeats.com" style="color:#00FDDC;text-decoration:none;">tagobeats.com</a><br>
+            <span style="color:#6A655C;">Just here for the download? <a href="${unsubUrl}" style="color:#8A857C;text-decoration:underline;">Unsubscribe</a> from future plugin drops.</span>
           </div>
         </td></tr>
 
@@ -156,16 +159,25 @@ module.exports = async function handler(req, res) {
 
     // 2. Send the download mail. This is the actual gate: a fake address
     //    never sees the links.
-    const { subject, text, html } = downloadEmail(product)
+    //    List-Unsubscribe (RFC 2369/8058) is the single biggest inbox-placement
+    //    lever for a mail that also enrolls the address into a list: Gmail and
+    //    Apple surface a one-click unsubscribe and reward its presence.
+    const unsubUrl = `https://tagobeats.com/api/unsubscribe?e=${encodeURIComponent(email)}`
+    const { subject, text, html } = downloadEmail(product, unsubUrl)
     const sendRes = await fetch(`${RESEND_API}/emails`, {
       method: 'POST',
       headers: auth,
       body: JSON.stringify({
         from: 'TagoBeats <plugins@robinbusse.dev>',
         to: [email],
+        reply_to: 'plugins@robinbusse.dev',
         subject,
         text,
         html,
+        headers: {
+          'List-Unsubscribe': `<${unsubUrl}>, <mailto:plugins@robinbusse.dev?subject=unsubscribe>`,
+          'List-Unsubscribe-Post': 'List-Unsubscribe=One-Click',
+        },
       }),
     })
 

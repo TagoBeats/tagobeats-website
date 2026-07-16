@@ -5,7 +5,7 @@ const PRODUCTS = {
   tagopitch: {
     name: 'TagoPitch',
     metaLine: 'V1.0.0 &middot; MACOS AU/VST3 &middot; WINDOWS VST3 &middot; FREE',
-    image: 'https://tagobeats.com/uploads_opt/TagoPitch_800.jpg',
+    image: 'https://tagobeats.com/uploads_opt/TagoPitch_800.jpg?v=2',
     mac: 'https://github.com/TagoBeats/TagoPitch/releases/download/v1.0.0/TagoPitch-1.0.0.pkg',
     win: 'https://github.com/TagoBeats/TagoPitch/releases/download/v1.0.0/TagoPitch-v1.0.0-Windows-VST3.zip',
     macInstallText: 'run the .pkg and pick the formats you want',

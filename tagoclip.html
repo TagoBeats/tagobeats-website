@@ -253,18 +253,25 @@ body { margin: 0; background:#12100E; color:#ECE7DE; font-family:'Archivo',sans-
   document.querySelectorAll('[data-ab-player]').forEach(function (root) {
     var srcs = SOURCES[root.getAttribute('data-ab-id')];
     if (!srcs) return;
+    // All variants play in lockstep, the chips just flip the mute flags.
+    // That makes switching seamless: no seek, no reload, same position.
     var players = {};
     Object.keys(srcs).forEach(function (key) {
       var a = new Audio(srcs[key]);
-      a.preload = 'none';
+      a.preload = 'auto';
       players[key] = a;
     });
-    var current = 'dry';
+    var keys = Object.keys(players);
+    var current = keys[0];
     var playing = false;
     var playBtn = root.querySelector('[data-ab-play]');
     var iconPlay = root.querySelector('[data-ab-icon-play]');
     var iconPause = root.querySelector('[data-ab-icon-pause]');
     var bar = root.querySelector('[data-ab-bar]');
+
+    function applyMutes() {
+      keys.forEach(function (k) { players[k].muted = (k !== current); });
+    }
 
     function setIcon() {
       iconPlay.style.display = playing ? 'none' : 'block';
@@ -278,29 +285,34 @@ body { margin: 0; background:#12100E; color:#ECE7DE; font-family:'Archivo',sans-
     }
 
     playBtn.addEventListener('click', function () {
-      var a = players[current];
-      if (playing) { a.pause(); playing = false; }
-      else { a.play(); playing = true; requestAnimationFrame(tick); }
+      if (playing) {
+        keys.forEach(function (k) { players[k].pause(); });
+        playing = false;
+      } else {
+        applyMutes();
+        keys.forEach(function (k) { players[k].play(); });
+        playing = true;
+        requestAnimationFrame(tick);
+      }
       setIcon();
     });
 
-    Object.keys(players).forEach(function (key) {
-      players[key].addEventListener('ended', function () {
-        playing = false;
-        players[key].currentTime = 0;
-        bar.style.width = '0%';
-        setIcon();
+    players[current].addEventListener('ended', function () {
+      playing = false;
+      keys.forEach(function (k) {
+        players[k].pause();
+        players[k].currentTime = 0;
       });
+      bar.style.width = '0%';
+      setIcon();
     });
 
     root.querySelectorAll('.tb-ab-chip').forEach(function (chip) {
       chip.addEventListener('click', function () {
         var next = chip.getAttribute('data-variant');
         if (next === current) return;
-        var from = players[current], to = players[next];
-        to.currentTime = from.currentTime || 0;
-        if (playing) { from.pause(); to.play(); }
         current = next;
+        applyMutes();
         root.querySelectorAll('.tb-ab-chip').forEach(function (c) {
           c.setAttribute('data-active', c === chip ? '1' : '0');
         });

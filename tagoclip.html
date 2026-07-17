@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>TagoClip — Free Soft Clipper Plugin (AU/VST3) by TagoBeats</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="TagoClip is a free soft clipper plugin for 808s and drums: the FL soft clip curve, measured and cloned, plus optional oversampling, delta listening and mono low end. macOS AU/VST3 and Windows VST3.">
+<link rel="canonical" href="https://tagobeats.com/tagoclip">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta property="og:title" content="TagoClip — Free Soft Clipper Plugin by TagoBeats">
+<meta property="og:description" content="The FL soft clip sound in every DAW: the exact curve plus optional oversampling against its aliasing, delta listening and mono low end. Free for macOS and Windows.">
+<meta property="og:image" content="https://tagobeats.com/uploads_opt/TagoClip_800.jpg">
+<meta property="og:url" content="https://tagobeats.com/tagoclip">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="TagoClip — Free Soft Clipper Plugin by TagoBeats">
+<meta name="twitter:description" content="The FL soft clip sound in every DAW: the exact curve plus optional oversampling against its aliasing, delta listening and mono low end. Free for macOS and Windows.">
+<meta name="twitter:image" content="https://tagobeats.com/uploads_opt/TagoClip_800.jpg">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "@id": "https://tagobeats.com/tagoclip#app",
+  "name": "TagoClip",
+  "operatingSystem": "macOS, Windows",
+  "applicationCategory": "MultimediaApplication",
+  "softwareVersion": "1.0.0",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "EUR" },
+  "description": "Free soft clipper plugin (AU/VST3) for 808s and drums: the FL soft clip curve with optional oversampling against aliasing, delta listening and mono low end, made by TagoBeats (Robin Busse).",
+  "url": "https://tagobeats.com/tagoclip",
+  "image": "https://tagobeats.com/uploads_opt/TagoClip_800.jpg",
+  "author": { "@type": "Person", "name": "Robin Busse", "alternateName": "TagoBeats" }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://tagobeats.com/" },
+    { "@type": "ListItem", "position": 2, "name": "TagoClip", "item": "https://tagobeats.com/tagoclip" }
+  ]
+}
+</script>
+<style>
+/* latin */
+@font-face { font-family:'Archivo'; font-style:normal; font-weight:300; font-display:swap; src:url("fonts/archivo-3babba83.woff2") format('woff2'); }
+@font-face { font-family:'Archivo'; font-style:normal; font-weight:400; font-display:swap; src:url("fonts/archivo-3babba83.woff2") format('woff2'); }
+@font-face { font-family:'Archivo'; font-style:normal; font-weight:600; font-display:swap; src:url("fonts/archivo-3babba83.woff2") format('woff2'); }
+@font-face { font-family:'Archivo'; font-style:normal; font-weight:700; font-display:swap; src:url("fonts/archivo-3babba83.woff2") format('woff2'); }
+@font-face { font-family:'Archivo'; font-style:normal; font-weight:800; font-display:swap; src:url("fonts/archivo-3babba83.woff2") format('woff2'); }
+@font-face { font-family:'Space Mono'; font-style:normal; font-weight:400; font-display:swap; src:url("fonts/archivo-4bbe479d.woff2") format('woff2'); }
+@font-face { font-family:'Space Mono'; font-style:normal; font-weight:700; font-display:swap; src:url("fonts/archivo-83c0c00d.woff2") format('woff2'); }
+
+@keyframes tb-fog { 0% { transform: translate3d(0,0,0) scale(1); } 50% { transform: translate3d(4%,-3%,0) scale(1.08); } 100% { transform: translate3d(0,0,0) scale(1); } }
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+::selection { background:#00FDDC; color:#0A0908; }
+body { margin: 0; background:#12100E; color:#ECE7DE; font-family:'Archivo',sans-serif; -webkit-font-smoothing:antialiased; overflow-x:hidden; }
+
+.tb-cta { position: relative; overflow: hidden; transition: transform .3s cubic-bezier(.2,.8,.2,1), box-shadow .3s ease; box-shadow: 0 22px 50px -20px rgba(0,253,220,0.55), 0 10px 26px -12px rgba(0,0,0,0.55); }
+.tb-cta::before { content: ''; position: absolute; top: 0; left: -60%; width: 40%; height: 100%; background: linear-gradient(120deg, transparent, rgba(255,255,255,.6), transparent); transform: skewX(-20deg); transition: left .65s ease; pointer-events: none; }
+.tb-cta:hover { transform: translateY(-3px) scale(1.03); }
+.tb-cta:hover::before { left: 130%; }
+
+.tb-eyebrow { font-family:'Space Mono',monospace; font-size:12px; font-weight:400; letter-spacing:0.3em; color:#00FDDC; text-transform:uppercase; }
+.tb-card { background:#1A1815; border:1px solid rgba(236,231,222,0.08); border-radius:10px; }
+
+.tb-ab-chip { font-family:'Space Mono',monospace; font-size:12px; letter-spacing:0.12em; padding:9px 16px; border-radius:2px; border:1px solid rgba(236,231,222,0.18); background:transparent; color:rgba(236,231,222,0.55); cursor:pointer; transition:color .2s, border-color .2s, background .2s; }
+.tb-ab-chip[data-active="1"] { color:#0A0908; background:#00FDDC; border-color:#00FDDC; font-weight:700; }
+.tb-play-btn { width:52px; height:52px; flex:0 0 52px; border-radius:50%; border:1px solid rgba(0,253,220,0.5); background:rgba(0,253,220,0.08); color:#00FDDC; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:background .2s, transform .2s; }
+.tb-play-btn:hover { background:rgba(0,253,220,0.18); transform:scale(1.05); }
+.tb-progress { position:relative; height:3px; background:rgba(236,231,222,0.12); border-radius:2px; overflow:hidden; }
+.tb-progress > div { position:absolute; inset:0 auto 0 0; width:0%; background:#00FDDC; }
+
+@media (max-width: 640px) {
+  .tb-hide-mobile { display:none !important; }
+  .tb-hero-grid { grid-template-columns:1fr !important; }
+}
+</style>
+<script defer src="/_vercel/insights/script.js"></script>
+</head>
+<body>
+
+<div style="position:relative;">
+
+  <div style="position:fixed; inset:0; z-index:0; overflow:hidden; pointer-events:none;">
+    <div style="position:absolute; width:82vw; height:82vw; left:-16%; top:-14%; background:radial-gradient(circle at 50% 50%, rgba(0,253,220,0.075) 0%, rgba(0,253,220,0.05) 22%, rgba(0,253,220,0.025) 42%, transparent 62%); animation:tb-fog 34s ease-in-out infinite; will-change:transform;"></div>
+    <div style="position:absolute; width:72vw; height:72vw; right:-18%; top:38%; background:radial-gradient(circle at 50% 50%, rgba(0,210,196,0.06) 0%, rgba(0,210,196,0.04) 22%, rgba(0,210,196,0.02) 42%, transparent 62%); animation:tb-fog 41s ease-in-out infinite reverse; will-change:transform;"></div>
+  </div>
+
+  <nav style="position:fixed; top:0; left:0; right:0; z-index:50; display:flex; align-items:center; justify-content:space-between; padding:clamp(20px,3vw,34px) clamp(24px,6vw,120px); background:linear-gradient(180deg, rgba(18,16,14,0.9), transparent);">
+    <a href="/" style="display:flex; align-items:center; gap:11px; text-decoration:none; color:#ECE7DE;">
+      <span style="width:8px; height:8px; border-radius:50%; background:#00FDDC; display:block;"></span>
+      <span style="font-weight:700; font-size:15px; letter-spacing:0.18em;">TAGOBEATS</span>
+    </a>
+    <div style="display:flex; align-items:center; gap:clamp(18px,3vw,40px);">
+      <a href="/tagopitch" class="tb-hide-mobile" style="text-decoration:none; color:rgba(236,231,222,0.7); font-size:13px; letter-spacing:0.14em; font-weight:600;">TAGOPITCH</a>
+      <a href="/" style="text-decoration:none; color:rgba(236,231,222,0.7); font-size:13px; letter-spacing:0.18em; font-weight:600;">HOME</a>
+    </div>
+  </nav>
+
+  <main style="position:relative; z-index:1; padding:clamp(110px,16vh,170px) clamp(20px,6vw,120px) clamp(40px,7vh,80px);">
+
+    <!-- Hero -->
+    <section style="max-width:1100px; margin:0 auto;">
+      <div class="tb-eyebrow" style="margin-bottom:12px;">Tago Plugins · Free Download</div>
+      <h1 style="margin:0 0 10px; font-size:clamp(38px,6vw,64px); font-weight:800; letter-spacing:-0.03em; line-height:0.95; color:#F2EEE6;">TagoClip</h1>
+      <p style="margin:0 0 clamp(28px,4vh,44px); max-width:640px; font-size:clamp(16px,1.4vw,19px); line-height:1.6; color:rgba(236,231,222,0.65);">Soft clipper for 808s and drums. The FL soft clip sound in every DAW: the exact curve, measured and cloned, plus optional oversampling against its aliasing.</p>
+
+      <div class="tb-card" style="overflow:hidden; margin-bottom:clamp(18px,2.6vh,28px);">
+        <img src="uploads_opt/TagoClip_800.jpg?v=4" alt="TagoClip plugin interface with drive, threshold, curve selection and live clipping curve display" style="display:block; width:100%; height:auto;">
+      </div>
+
+      <div id="tb-tc-gate">
+        <button id="tb-tc-cta" type="button" class="tb-cta" style="border:none; cursor:pointer; font-family:inherit; color:#0A0908; background:#00FDDC; font-weight:800; font-size:14px; letter-spacing:0.1em; padding:19px 46px; border-radius:2px; display:inline-flex; align-items:center; gap:12px; white-space:nowrap;">
+          DOWNLOAD FREE <span class="tb-cta-arrow" style="font-size:17px; line-height:1;">→</span>
+        </button>
+        <form id="tb-tc-form" class="tb-plugin-form" novalidate style="display:none; align-items:center; gap:10px; flex-wrap:wrap;">
+          <input id="tb-tc-email" type="email" name="email" required autocomplete="email" placeholder="your@email.com" style="flex:1 1 220px; min-width:0; max-width:340px; background:rgba(236,231,222,0.06); border:1px solid rgba(236,231,222,0.18); border-radius:2px; padding:15px 16px; color:#ECE7DE; font-family:'Space Mono',monospace; font-size:14px; outline:none; transition:border-color .3s, box-shadow .3s;">
+          <button id="tb-tc-send" type="submit" class="tb-cta" style="border:none; cursor:pointer; font-family:inherit; color:#0A0908; background:#00FDDC; font-weight:800; font-size:13px; letter-spacing:0.1em; padding:16px 28px; border-radius:2px; display:inline-flex; align-items:center; gap:10px; white-space:nowrap;">
+            SEND LINK <span class="tb-cta-arrow" style="font-size:15px; line-height:1;">→</span>
+          </button>
+          <div style="flex-basis:100%; font-size:13px; line-height:1.5; color:rgba(236,231,222,0.4);">We mail you the download link, plus a heads-up when the next Tago plugin drops. Nothing else.</div>
+        </form>
+        <div id="tb-tc-msg" role="status" style="display:none; margin-top:12px; font-family:'Space Mono',monospace; font-size:13px; line-height:1.5;"></div>
+        <div style="margin-top:14px; font-family:'Space Mono',monospace; font-size:11px; letter-spacing:0.18em; color:rgba(236,231,222,0.45);">V1.0.0 · MACOS AU/VST3 (NOTARIZED) · WINDOWS VST3 · FREE</div>
+      </div>
+    </section>
+
+    <!-- Listen -->
+    <section aria-label="Audio demo" style="max-width:1100px; margin:clamp(56px,10vh,100px) auto 0;">
+      <h2 class="tb-eyebrow" style="margin:0 0 14px;">Hear it</h2>
+      <p style="margin:0 0 22px; max-width:640px; font-size:15px; line-height:1.7; color:rgba(236,231,222,0.7);">Same beat, same position. Hit play, then switch while it runs.</p>
+
+      <div class="tb-card" style="padding:clamp(18px,2.6vw,28px);" data-ab-player data-ab-id="beat">
+        <div style="display:flex; align-items:center; gap:18px; flex-wrap:wrap;">
+          <button type="button" class="tb-play-btn" data-ab-play aria-label="Play demo">
+            <svg data-ab-icon-play width="18" height="18" viewBox="0 0 18 18" fill="currentColor" aria-hidden="true"><path d="M4 2.5v13l11-6.5z"/></svg>
+            <svg data-ab-icon-pause width="18" height="18" viewBox="0 0 18 18" fill="currentColor" aria-hidden="true" style="display:none;"><path d="M4 2.5h3.4v13H4zM10.6 2.5H14v13h-3.4z"/></svg>
+          </button>
+          <div style="flex:1; min-width:200px;">
+            <div style="font-weight:700; font-size:16px; color:#F2EEE6; margin-bottom:4px;">808 beat by TagoBeats</div>
+            <div class="tb-progress"><div data-ab-bar></div></div>
+          </div>
+          <div style="display:flex; gap:8px;" data-ab-chips>
+            <button type="button" class="tb-ab-chip" data-variant="dry" data-active="1">DRY</button>
+            <button type="button" class="tb-ab-chip" data-variant="clipped" data-active="0">TAGOCLIP</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Features -->
+    <section aria-label="Features" style="max-width:1100px; margin:clamp(56px,10vh,100px) auto 0;">
+      <h2 class="tb-eyebrow" style="margin:0 0 22px;">What it does</h2>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:14px;">
+        <div class="tb-card" style="padding:22px;">
+          <div style="font-weight:700; font-size:16px; color:#F2EEE6; margin-bottom:8px;">The exact FL curve</div>
+          <p style="margin:0; font-size:14px; line-height:1.6; color:rgba(236,231,222,0.6);">The Fruity Soft Clipper transfer curve, identified by measurement down to float noise. FL mode is a 1:1 clone, plus hard and tanh curves on top.</p>
+        </div>
+        <div class="tb-card" style="padding:22px;">
+          <div style="font-weight:700; font-size:16px; color:#F2EEE6; margin-bottom:8px;">Oversampling</div>
+          <p style="margin:0; font-size:14px; line-height:1.6; color:rgba(236,231,222,0.6);">The original aliases. TagoClip ships with 4x and 8x oversampling to clean that up, or leave it off for the honest 1:1 sound.</p>
+        </div>
+        <div class="tb-card" style="padding:22px;">
+          <div style="font-weight:700; font-size:16px; color:#F2EEE6; margin-bottom:8px;">Delta listening</div>
+          <p style="margin:0; font-size:14px; line-height:1.6; color:rgba(236,231,222,0.6);">One button plays only what gets clipped away, so you hear exactly what you are trading for loudness.</p>
+        </div>
+        <div class="tb-card" style="padding:22px;">
+          <div style="font-weight:700; font-size:16px; color:#F2EEE6; margin-bottom:8px;">Mono low end</div>
+          <p style="margin:0; font-size:14px; line-height:1.6; color:rgba(236,231,222,0.6);">Sum everything below a chosen frequency to mono and keep the 808 centered, right inside the clipper.</p>
+        </div>
+      </div>
+      <p style="margin:26px 0 0; font-size:14px; line-height:1.7; color:rgba(236,231,222,0.5);">Curious how the clone was built? Read the full write-up: <a href="https://robinbusse.dev/writing/tagoclip" style="color:#00FDDC; text-decoration:none;">Building TagoClip →</a></p>
+      <p style="margin:14px 0 0; font-size:12px; line-height:1.6; color:rgba(236,231,222,0.35);">FL Studio and Fruity Soft Clipper are trademarks of Image-Line. TagoClip is an independent product and not affiliated with Image-Line.</p>
+    </section>
+
+    <div style="max-width:1100px; margin:clamp(48px,8vh,72px) auto 0; display:flex; gap:26px; font-family:'Space Mono',monospace; font-size:12px; letter-spacing:0.14em;">
+      <a href="/imprint" style="text-decoration:none; color:rgba(236,231,222,0.45);">IMPRINT</a>
+      <a href="/privacy" style="text-decoration:none; color:rgba(236,231,222,0.45);">PRIVACY</a>
+    </div>
+  </main>
+
+</div>
+
+<script>
+(function () {
+  // Email gate, same flow as the index sections.
+  var PREFIX = 'tb-tc', SOURCE = 'tagoclip';
+
+  function showMsg(text, ok) {
+    var msg = document.getElementById(PREFIX + '-msg');
+    if (!msg) return;
+    msg.textContent = text;
+    msg.style.color = ok ? '#00FDDC' : '#FF8A7A';
+    msg.style.display = 'block';
+  }
+
+  document.addEventListener('click', function (e) {
+    if (!e.target.closest || !e.target.closest('#' + PREFIX + '-cta')) return;
+    document.getElementById(PREFIX + '-cta').style.display = 'none';
+    var form = document.getElementById(PREFIX + '-form');
+    form.style.display = 'flex';
+    var email = document.getElementById(PREFIX + '-email');
+    if (email) email.focus();
+  });
+
+  document.addEventListener('submit', function (e) {
+    if (!e.target || e.target.id !== PREFIX + '-form') return;
+    e.preventDefault();
+    var form = e.target;
+    var email = document.getElementById(PREFIX + '-email');
+    var send = document.getElementById(PREFIX + '-send');
+    var value = ((email && email.value) || '').trim();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+      showMsg('That email does not look right.', false);
+      return;
+    }
+    var msg = document.getElementById(PREFIX + '-msg');
+    if (msg) msg.style.display = 'none';
+    if (send) { send.disabled = true; send.firstChild.textContent = 'SENDING… '; }
+    fetch('/api/lead', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: value, source: SOURCE })
+    }).then(function (res) {
+      if (!res.ok) throw new Error('bad status');
+      form.style.display = 'none';
+      showMsg('Sent. The download link is on its way to your inbox (check spam, just in case).', true);
+    }).catch(function () {
+      if (send) { send.disabled = false; send.firstChild.textContent = 'SEND LINK '; }
+      showMsg('Something went wrong. Try again in a minute or mail plugins@robinbusse.dev.', false);
+    });
+  });
+})();
+</script>
+
+<script>
+(function () {
+  // A/B player: one play button, variant chips switch the source at the
+  // exact same playback position so the difference is the only change.
+  var SOURCES = {
+    beat: {
+      dry: 'uploads_opt/audio/tagoclip_beat_dry.mp3',
+      clipped: 'uploads_opt/audio/tagoclip_beat_clipped.mp3'
+    }
+  };
+
+  document.querySelectorAll('[data-ab-player]').forEach(function (root) {
+    var srcs = SOURCES[root.getAttribute('data-ab-id')];
+    if (!srcs) return;
+    var players = {};
+    Object.keys(srcs).forEach(function (key) {
+      var a = new Audio(srcs[key]);
+      a.preload = 'none';
+      players[key] = a;
+    });
+    var current = 'dry';
+    var playing = false;
+    var playBtn = root.querySelector('[data-ab-play]');
+    var iconPlay = root.querySelector('[data-ab-icon-play]');
+    var iconPause = root.querySelector('[data-ab-icon-pause]');
+    var bar = root.querySelector('[data-ab-bar]');
+
+    function setIcon() {
+      iconPlay.style.display = playing ? 'none' : 'block';
+      iconPause.style.display = playing ? 'block' : 'none';
+    }
+
+    function tick() {
+      var a = players[current];
+      if (a.duration) bar.style.width = (a.currentTime / a.duration * 100) + '%';
+      if (playing) requestAnimationFrame(tick);
+    }
+
+    playBtn.addEventListener('click', function () {
+      var a = players[current];
+      if (playing) { a.pause(); playing = false; }
+      else { a.play(); playing = true; requestAnimationFrame(tick); }
+      setIcon();
+    });
+
+    Object.keys(players).forEach(function (key) {
+      players[key].addEventListener('ended', function () {
+        playing = false;
+        players[key].currentTime = 0;
+        bar.style.width = '0%';
+        setIcon();
+      });
+    });
+
+    root.querySelectorAll('.tb-ab-chip').forEach(function (chip) {
+      chip.addEventListener('click', function () {
+        var next = chip.getAttribute('data-variant');
+        if (next === current) return;
+        var from = players[current], to = players[next];
+        to.currentTime = from.currentTime || 0;
+        if (playing) { from.pause(); to.play(); }
+        current = next;
+        root.querySelectorAll('.tb-ab-chip').forEach(function (c) {
+          c.setAttribute('data-active', c === chip ? '1' : '0');
+        });
+      });
+    });
+  });
+})();
+</script>
+</body>
+</html>

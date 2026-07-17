@@ -4,3 +4,6 @@ node_modules
 squirrel.toml
 uploads_opt/lake-original-backup.jpg
 .env*.local
+
+# Quell-Bounces fuer die Demo-MP3s bleiben lokal
+/*.wav

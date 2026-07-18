@@ -1013,14 +1013,14 @@ class Component extends DCLogic {
     { id: 'TB-001', n: 'TB-001', title: 'Die Inside', cover: 'uploads_opt/sound_selection/covers_800/01.jpg', src: 'uploads_opt/sound_selection/01_Die_inside.mp3', genre: '—', bpm: 140, key: 'D#m', dur: 125, link: 'https://www.beatstars.com/tagobeats' },
     { id: 'TB-002', n: 'TB-002', title: 'Outro',      cover: 'uploads_opt/sound_selection/covers_800/02.jpg', src: 'uploads_opt/sound_selection/02_outro.mp3',      genre: '—', bpm: 130, key: 'Dm',  dur: 166, link: 'https://www.beatstars.com/tagobeats' },
     { id: 'TB-003', n: 'TB-003', title: 'WWST',       cover: 'uploads_opt/sound_selection/covers_800/03.jpg', src: 'uploads_opt/sound_selection/03_wwst.mp3',       genre: '—', bpm: 155, key: 'Cm',  dur: 129, link: 'https://www.beatstars.com/tagobeats' },
-    { id: 'TB-004', n: 'TB-004', title: 'Sun Fire',   cover: 'uploads_opt/sound_selection/covers_800/04.jpg',src: 'uploads_opt/sound_selection/04_sun_fire.mp3',   genre: '—', bpm: 160, key: 'Dm',  dur: 108, link: 'https://www.beatstars.com/tagobeats' },
+    { id: 'TB-004', n: 'TB-004', title: 'Senior Pluto', cover: 'uploads_opt/sound_selection/covers_800/04.jpg',src: 'uploads_opt/sound_selection/04_senior_pluto.mp3',   genre: '—', bpm: 145, key: 'Gm',  dur: 127, link: 'https://www.beatstars.com/tagobeats' },
     { id: 'TB-005', n: 'TB-005', title: 'Clam',       cover: 'uploads_opt/sound_selection/covers_800/05.jpg', src: 'uploads_opt/sound_selection/05_clam.mp3',       genre: '—', bpm: 140, key: 'Gm',  dur: 167, link: 'https://www.beatstars.com/tagobeats' },
     { id: 'TB-006', n: 'TB-006', title: 'Blessing',   cover: 'uploads_opt/sound_selection/covers_800/06.jpg', src: 'uploads_opt/sound_selection/06_blessing.mp3',   genre: '—', bpm: 160, key: 'Am',  dur: 156, link: 'https://www.beatstars.com/tagobeats' },
     { id: 'TB-007', n: 'TB-007', title: 'Inu Yasha',  cover: 'uploads_opt/sound_selection/covers_800/07.jpg', src: 'uploads_opt/sound_selection/07_Inu_Yasha.mp3',  genre: '—', bpm: 149, key: 'Gm',  dur: 103, link: 'https://www.beatstars.com/tagobeats' },
     { id: 'TB-008', n: 'TB-008', title: 'Spider',     cover: 'uploads_opt/sound_selection/covers_800/08.jpg', src: 'uploads_opt/sound_selection/08_spider.mp3',     genre: '—', bpm: 160, key: 'Fm',  dur: 168, link: 'https://www.beatstars.com/tagobeats' },
-    { id: 'TB-009', n: 'TB-009', title: 'Heal',       cover: 'uploads_opt/sound_selection/covers_800/09.jpg', src: 'uploads_opt/sound_selection/09_heal.mp3',       genre: '—', bpm: 160, key: 'Am',  dur: 145, link: 'https://www.beatstars.com/tagobeats' },
+    { id: 'TB-009', n: 'TB-009', title: 'Ambition',   cover: 'uploads_opt/sound_selection/covers_800/09.jpg', src: 'uploads_opt/sound_selection/09_ambition.mp3',       genre: '—', bpm: 150, key: 'Fm',  dur: 148, link: 'https://www.beatstars.com/tagobeats' },
     { id: 'TB-010', n: 'TB-010', title: 'High Tech',  cover: 'uploads_opt/sound_selection/covers_800/10.jpg', src: 'uploads_opt/sound_selection/10_high_tech.mp3',  genre: '—', bpm: 94,  key: 'Am',  dur: 147, link: 'https://www.beatstars.com/tagobeats' }
-  ];
+  ].sort(() => Math.random() - 0.5);
 
   componentDidMount() {
     this._lastFilteredKey = this.TRACKS.map(t => t.id).join(',');

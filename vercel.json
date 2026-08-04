@@ -1,6 +1,16 @@
 {
   "cleanUrls": true,
   "trailingSlash": false,
+  "rewrites": [
+    {
+      "source": "/travel",
+      "destination": "https://tagobeats-travel.vercel.app/"
+    },
+    {
+      "source": "/travel/:path*",
+      "destination": "https://tagobeats-travel.vercel.app/:path*"
+    }
+  ],
   "redirects": [
     {
       "source": "/free",

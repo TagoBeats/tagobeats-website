@@ -31,7 +31,9 @@ function downloadEmail(product, unsubUrl) {
     '',
     `macOS: ${product.macInstallText}. Windows: unzip and drop ${product.name}.vst3 into C:\\Program Files\\Common Files\\VST3.`,
     '',
-    'Needs macOS 11 (Big Sur) or newer. On older systems the plugin loads but its window stays black.',
+    'Needs macOS 11 (Big Sur) or newer. On Windows the interface is drawn by the Edge WebView2',
+    'runtime, which ships with Windows 11. If the plugin loads but its window stays black, that',
+    'is the piece that is missing on either system.',
     '',
     'If anything acts up, just reply to this mail.',
     '',
@@ -93,7 +95,7 @@ function downloadEmail(product, unsubUrl) {
                   <div style="font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:1.7;color:#B5AFA4;">
                     <span style="color:#ECE7DE;">macOS:</span> ${product.macInstallHtml}<br>
                     <span style="color:#ECE7DE;">Windows:</span> unzip and drop ${product.name}.vst3 into <span style="font-family:'Courier New',Courier,monospace;color:#ECE7DE;">C:\\Program Files\\Common Files\\VST3</span>.
-                    <div style="margin-top:12px;color:#8A857C;font-size:12.5px;">Needs macOS 11 (Big Sur) or newer. On older systems the plugin loads but its window stays black.</div>
+                    <div style="margin-top:12px;color:#8A857C;font-size:12.5px;">Needs macOS 11 (Big Sur) or newer. On Windows the interface is drawn by the Edge WebView2 runtime, which ships with Windows 11. If the plugin loads but its window stays black, that is the piece that is missing.</div>
                   </div>
                 </td></tr>
               </table>

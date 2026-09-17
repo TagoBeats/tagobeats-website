@@ -35,7 +35,8 @@ function downloadEmail(product, unsubUrl) {
     'runtime, which ships with Windows 11. If the plugin loads but its window stays black, that',
     'is the piece that is missing on either system.',
     '',
-    'If anything acts up, just reply to this mail.',
+    'If anything acts up, just reply to this mail. And if it runs fine, tell me anyway:',
+    'CPU load, your DAW and OS, whatever felt off. Every reply reaches me.',
     '',
     'Robin (TagoBeats)',
     'https://tagobeats.com',
@@ -105,7 +106,7 @@ function downloadEmail(product, unsubUrl) {
 
         <tr><td style="padding:22px 4px 0;">
           <div style="font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:1.6;color:#8A857C;">
-            If anything acts up, just reply to this mail.<br>
+            If anything acts up, just reply to this mail. And if it runs fine, tell me anyway: CPU load, your DAW and OS, whatever felt off. Every reply reaches me.<br>
             Robin (TagoBeats) &middot; <a href="https://tagobeats.com" style="color:#00FDDC;text-decoration:none;">tagobeats.com</a><br>
             <span style="color:#6A655C;">Just here for the download? <a href="${unsubUrl}" style="color:#8A857C;text-decoration:underline;">Unsubscribe</a> from future plugin drops.</span>
           </div>

@@ -13,10 +13,10 @@ const PRODUCTS = {
   },
   tagoclip: {
     name: 'TagoClip',
-    metaLine: 'V1.0.0 &middot; MACOS AU/VST3 &middot; WINDOWS VST3 &middot; FREE',
-    image: 'https://tagobeats.com/uploads_opt/TagoClip_800.jpg?v=4',
-    mac: 'https://github.com/TagoBeats/TagoClip/releases/download/v1.0.0/TagoClip-1.0.0.dmg',
-    win: 'https://github.com/TagoBeats/TagoClip/releases/download/v1.0.0/TagoClip-v1.0.0-Windows-VST3.zip',
+    metaLine: 'V1.1.0 &middot; MACOS AU/VST3 &middot; WINDOWS VST3 &middot; FREE',
+    image: 'https://tagobeats.com/uploads_opt/TagoClip_800.jpg?v=5',
+    mac: 'https://github.com/TagoBeats/TagoClip/releases/download/v1.1.0/TagoClip-1.1.0.dmg',
+    win: 'https://github.com/TagoBeats/TagoClip/releases/download/v1.1.0/TagoClip-v1.1.0-Windows-VST3.zip',
     macInstallText: 'open the .dmg, then run the .pkg inside and pick the formats you want',
     macInstallHtml: 'open the .dmg, then run the .pkg inside and pick the formats you want (AU + VST3, notarized).',
   },
@@ -115,6 +115,53 @@ function downloadEmail(product, unsubUrl) {
   return { subject: `Your ${product.name} download`, text, html }
 }
 
+// Own contact store, independent of Resend's Audience.
+//
+// Why: Resend caps Marketing contacts at 1,000 on the free tier and rejects
+// new ones past that, while the transactional send below has no contact cap
+// at all (50,000 mails/mo on the Pro plan). Without this the gate would keep
+// delivering downloads while silently dropping every new address. Keeping our
+// own copy also makes the list portable to any sender later.
+//
+// Layout (Upstash Redis, REST API, one pipelined round trip):
+//   tago:contacts            SET   every address that ever passed the gate
+//   tago:contacts:<product>  SET   per-product segment, drives targeted sends
+//   tago:first_seen          HASH  email -> ISO timestamp of first download
+//   tago:last_seen           HASH  email -> ISO timestamp of latest download
+//   tago:unsub               SET   opt-outs, written by api/unsubscribe.js
+async function storeContact(email, productKey) {
+  const url = process.env.UPSTASH_REDIS_REST_URL
+  const token = process.env.UPSTASH_REDIS_REST_TOKEN
+  if (!url || !token) {
+    console.log(`[lead] (no Upstash creds) ${email} · ${productKey}`)
+    return
+  }
+
+  const now = new Date().toISOString()
+  try {
+    const store = await fetch(`${url}/pipeline`, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify([
+        ['SADD', 'tago:contacts', email],
+        ['SADD', `tago:contacts:${productKey}`, email],
+        ['HSETNX', 'tago:first_seen', email, now],
+        ['HSET', 'tago:last_seen', email, now],
+      ]),
+    })
+    if (!store.ok) {
+      console.error('[lead] Upstash store error', store.status, await store.text().catch(() => ''))
+    }
+  } catch (err) {
+    // Never let the store break the download. A lost address is bad, a lost
+    // customer is worse.
+    console.error('[lead] Upstash request failed', err)
+  }
+}
+
 module.exports = async function handler(req, res) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' })
@@ -122,7 +169,10 @@ module.exports = async function handler(req, res) {
 
   const email = String((req.body && req.body.email) || '').trim().toLowerCase()
   const source = String((req.body && req.body.source) || 'tagopitch')
-  const product = PRODUCTS[source] || PRODUCTS.tagopitch
+  // Fall back to a known key rather than trusting the client string: it ends up
+  // in a Redis key name below, so an unknown value must never reach the store.
+  const productKey = Object.prototype.hasOwnProperty.call(PRODUCTS, source) ? source : 'tagopitch'
+  const product = PRODUCTS[productKey]
 
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
     return res.status(400).json({ error: 'Invalid email address' })

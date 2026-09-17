@@ -4,7 +4,7 @@ const RESEND_API = 'https://api.resend.com'
 const PRODUCTS = {
   tagopitch: {
     name: 'TagoPitch',
-    metaLine: 'V1.0.0 &middot; MACOS AU/VST3 &middot; WINDOWS VST3 &middot; FREE',
+    metaLine: 'V1.0.0 &middot; MACOS 11+ AU/VST3 &middot; WINDOWS VST3 &middot; FREE',
     image: 'https://tagobeats.com/uploads_opt/TagoPitch_800.jpg?v=2',
     mac: 'https://github.com/TagoBeats/TagoPitch/releases/download/v1.0.0/TagoPitch-1.0.0.pkg',
     win: 'https://github.com/TagoBeats/TagoPitch/releases/download/v1.0.0/TagoPitch-v1.0.0-Windows-VST3.zip',
@@ -13,7 +13,7 @@ const PRODUCTS = {
   },
   tagoclip: {
     name: 'TagoClip',
-    metaLine: 'V1.0.0 &middot; MACOS AU/VST3 &middot; WINDOWS VST3 &middot; FREE',
+    metaLine: 'V1.0.0 &middot; MACOS 11+ AU/VST3 &middot; WINDOWS VST3 &middot; FREE',
     image: 'https://tagobeats.com/uploads_opt/TagoClip_800.jpg?v=4',
     mac: 'https://github.com/TagoBeats/TagoClip/releases/download/v1.0.0/TagoClip-1.0.0.dmg',
     win: 'https://github.com/TagoBeats/TagoClip/releases/download/v1.0.0/TagoClip-v1.0.0-Windows-VST3.zip',
@@ -30,6 +30,8 @@ function downloadEmail(product, unsubUrl) {
     `Windows VST3 (zip): ${product.win}`,
     '',
     `macOS: ${product.macInstallText}. Windows: unzip and drop ${product.name}.vst3 into C:\\Program Files\\Common Files\\VST3.`,
+    '',
+    'Needs macOS 11 (Big Sur) or newer. On older systems the plugin loads but its window stays black.',
     '',
     'If anything acts up, just reply to this mail.',
     '',
@@ -91,6 +93,7 @@ function downloadEmail(product, unsubUrl) {
                   <div style="font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:1.7;color:#B5AFA4;">
                     <span style="color:#ECE7DE;">macOS:</span> ${product.macInstallHtml}<br>
                     <span style="color:#ECE7DE;">Windows:</span> unzip and drop ${product.name}.vst3 into <span style="font-family:'Courier New',Courier,monospace;color:#ECE7DE;">C:\\Program Files\\Common Files\\VST3</span>.
+                    <div style="margin-top:12px;color:#8A857C;font-size:12.5px;">Needs macOS 11 (Big Sur) or newer. On older systems the plugin loads but its window stays black.</div>
                   </div>
                 </td></tr>
               </table>

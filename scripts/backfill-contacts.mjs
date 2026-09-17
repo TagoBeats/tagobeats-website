@@ -72,15 +72,30 @@ async function upstash(commands) {
   return res.json()
 }
 
+// Resend timestamps look like "2026-09-17 15:31:29.332254+00". Normalise them
+// so they sort and compare as plain ISO strings.
+const toIso = (stamp) => {
+  const d = new Date(String(stamp || '').replace(' ', 'T').replace(/\+00$/, 'Z'))
+  return Number.isNaN(d.getTime()) ? null : d.toISOString()
+}
+
+// Keep the earliest signup we have seen for an address, across both sources.
+const remember = (map, email, createdAt, unsubscribed = false) => {
+  const prev = map.get(email)
+  const iso = toIso(createdAt)
+  map.set(email, {
+    unsubscribed: Boolean(unsubscribed) || Boolean(prev?.unsubscribed),
+    createdAt: !prev?.createdAt ? iso : !iso ? prev.createdAt : iso < prev.createdAt ? iso : prev.createdAt,
+  })
+}
+
 // 1. All contacts across all audiences.
-const contacts = new Map() // email -> { unsubscribed }
+const contacts = new Map() // email -> { unsubscribed, createdAt }
 const { data: audiences } = await resend('/audiences')
 for (const audience of audiences) {
   const { data } = await resend(`/audiences/${audience.id}/contacts`)
   for (const c of data || []) {
-    const email = c.email.toLowerCase()
-    const prev = contacts.get(email)
-    contacts.set(email, { unsubscribed: Boolean(c.unsubscribed) || Boolean(prev?.unsubscribed) })
+    remember(contacts, c.email.toLowerCase(), c.created_at, c.unsubscribed)
   }
   await sleep(600)
 }
@@ -115,10 +130,10 @@ while (pages < 60) {
       const email = raw.toLowerCase()
       if (product) segments[product].add(email)
       if (mail.last_event === 'bounced') bounced.add(email)
-      if (!contacts.has(email)) {
-        contacts.set(email, { unsubscribed: false })
-        recovered++
-      }
+      if (!contacts.has(email)) recovered++
+      // The mail's own timestamp doubles as a signup date for addresses the
+      // audience no longer holds, and corrects any later one we already have.
+      remember(contacts, email, mail.created_at)
     }
   }
   pages++
@@ -146,15 +161,31 @@ for (const [key, set] of Object.entries(segments)) {
 if (unsubscribed.length) for (const part of chunk(unsubscribed, 500)) await upstash([['SADD', 'tago:unsub', ...part]])
 if (bounced.size) for (const part of chunk([...bounced], 500)) await upstash([['SADD', 'tago:bounced', ...part]])
 
-// first_seen is only known for addresses still in the audience, so use the
-// Resend created_at where we have it and fall back to now.
+// first_seen carries the growth curve the dashboard draws, so it has to hold
+// the real signup date, not the moment this script happened to run. Whatever is
+// already stored wins only if it is earlier: the gate writes the exact moment a
+// download was requested, Resend's created_at is a second or two later, and a
+// previous run of this script may have stamped its own run time.
 const now = new Date().toISOString()
-for (const part of chunk(emails, 200)) {
-  await upstash(part.map((e) => ['HSETNX', 'tago:first_seen', e, now]))
+// upstash() hands back the raw pipeline response, so unwrap the result field.
+const stored = (await upstash([['HGETALL', 'tago:first_seen']]))[0]?.result ?? []
+const known = new Map()
+for (let i = 0; i < stored.length; i += 2) known.set(stored[i], stored[i + 1])
+
+const timestamps = []
+let corrected = 0
+for (const email of emails) {
+  const real = contacts.get(email).createdAt ?? now
+  const current = known.get(email)
+  if (current && current <= real) continue
+  if (current) corrected++
+  timestamps.push(['HSET', 'tago:first_seen', email, real])
 }
+for (const part of chunk(timestamps, 200)) await upstash(part)
 
 console.log(
   dryRun
     ? `DRY RUN, nothing written. Would store ${emails.length} contacts, ${unsubscribed.length} unsubscribed, ${bounced.size} bounced.`
-    : `Done. ${emails.length} contacts, ${unsubscribed.length} unsubscribed, ${bounced.size} bounced.`,
+    : `Done. ${emails.length} contacts, ${unsubscribed.length} unsubscribed, ${bounced.size} bounced, ` +
+        `${timestamps.length} timestamps written (${corrected} corrected).`,
 )

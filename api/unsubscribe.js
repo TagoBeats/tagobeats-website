@@ -7,10 +7,43 @@ const RESEND_API = 'https://api.resend.com'
 //   - this https endpoint for Gmail/Apple one-click
 // Gmail sends a background POST (List-Unsubscribe-Post: List-Unsubscribe=One-Click)
 // with the recipient's address in ?e=. A human clicking the link hits GET and
-// sees a small confirmation page. Both mark the contact unsubscribed in the
-// shared Resend audience.
+// sees a small confirmation page. Both mark the contact unsubscribed in our
+// own store (tago:unsub) and, as long as it still holds the address, in the
+// Resend audience.
+//
+// The own store is the one that counts: past Resend's 1,000-contact free tier
+// cap, new addresses only exist in Upstash, so a Resend-only opt-out would be
+// lost and the person would keep getting mail. scripts/broadcast.mjs subtracts
+// tago:unsub from every send.
 
-async function markUnsubscribed(email) {
+async function markUnsubscribedOwnStore(email) {
+  const url = process.env.UPSTASH_REDIS_REST_URL
+  const token = process.env.UPSTASH_REDIS_REST_TOKEN
+  if (!url || !token) {
+    console.log(`[unsubscribe] (no Upstash creds) ${email}`)
+    return true
+  }
+  try {
+    const res = await fetch(`${url}/pipeline`, {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify([
+        ['SADD', 'tago:unsub', email],
+        ['HSET', 'tago:unsub_at', email, new Date().toISOString()],
+      ]),
+    })
+    if (!res.ok) {
+      console.error('[unsubscribe] Upstash error', res.status, await res.text().catch(() => ''))
+      return false
+    }
+    return true
+  } catch (err) {
+    console.error('[unsubscribe] Upstash request failed', err)
+    return false
+  }
+}
+
+async function markUnsubscribedResend(email) {
   const apiKey = process.env.RESEND_API_KEY
   const audienceId = process.env.RESEND_AUDIENCE_ID
   if (!apiKey || !audienceId) {
@@ -18,6 +51,8 @@ async function markUnsubscribed(email) {
     return true
   }
   // Resend lets you address a contact by email in the path.
+  // 404 means the address never made it into the audience (cap reached), which
+  // is fine: the own store above already has the opt-out.
   const res = await fetch(`${RESEND_API}/audiences/${audienceId}/contacts/${encodeURIComponent(email)}`, {
     method: 'PATCH',
     headers: { Authorization: `Bearer ${apiKey}`, 'Content-Type': 'application/json' },
@@ -29,6 +64,16 @@ async function markUnsubscribed(email) {
     return false
   }
   return true
+}
+
+async function markUnsubscribed(email) {
+  const [own, resend] = await Promise.all([
+    markUnsubscribedOwnStore(email),
+    markUnsubscribedResend(email),
+  ])
+  // Only report failure if the opt-out landed nowhere. One store being down
+  // must not tell someone their unsubscribe did not work when it did.
+  return own || resend
 }
 
 function page(body) {

@@ -193,13 +193,20 @@ module.exports = async function handler(req, res) {
   }
 
   try {
-    // 1. Add contact to the plugins audience (shared across Tago plugins).
+    // 1. Record the contact in both stores, in parallel.
+    //    Upstash is the one that has to work: it is the list we own and the
+    //    one we send broadcasts from. The Resend audience is kept in sync as
+    //    long as it has room (free tier stops at 1,000 contacts) so the
+    //    dashboard stays useful, but it is no longer the source of truth.
     //    409 / already exists is fine, repeat downloaders still get their mail.
-    const contactRes = await fetch(`${RESEND_API}/audiences/${audienceId}/contacts`, {
-      method: 'POST',
-      headers: auth,
-      body: JSON.stringify({ email, unsubscribed: false }),
-    })
+    const [contactRes] = await Promise.all([
+      fetch(`${RESEND_API}/audiences/${audienceId}/contacts`, {
+        method: 'POST',
+        headers: auth,
+        body: JSON.stringify({ email, unsubscribed: false }),
+      }),
+      storeContact(email, productKey),
+    ])
     if (!contactRes.ok && contactRes.status !== 409) {
       const data = await contactRes.json().catch(() => ({}))
       if (!/already/i.test(data?.message || '')) {

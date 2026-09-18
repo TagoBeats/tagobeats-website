@@ -14,7 +14,7 @@ const PRODUCTS = {
   tagoclip: {
     name: 'TagoClip',
     metaLine: 'V1.1.0 &middot; MACOS 11+ AU/VST3 &middot; WINDOWS VST3 &middot; FREE',
-    image: 'https://tagobeats.com/uploads_opt/TagoClip_800.jpg?v=5',
+    image: 'https://tagobeats.com/uploads_opt/TagoClip_800.jpg?v=6',
     mac: 'https://github.com/TagoBeats/TagoClip/releases/download/v1.1.0/TagoClip-1.1.0.dmg',
     win: 'https://github.com/TagoBeats/TagoClip/releases/download/v1.1.0/TagoClip-v1.1.0-Windows-VST3.zip',
     macInstallText: 'open the .dmg, then run the .pkg inside and pick the formats you want',

@@ -4,7 +4,7 @@ const RESEND_API = 'https://api.resend.com'
 const PRODUCTS = {
   tagopitch: {
     name: 'TagoPitch',
-    metaLine: 'V1.0.0 &middot; MACOS AU/VST3 &middot; WINDOWS VST3 &middot; FREE',
+    metaLine: 'V1.0.0 &middot; MACOS 11+ AU/VST3 &middot; WINDOWS VST3 &middot; FREE',
     image: 'https://tagobeats.com/uploads_opt/TagoPitch_800.jpg?v=2',
     mac: 'https://github.com/TagoBeats/TagoPitch/releases/download/v1.0.0/TagoPitch-1.0.0.pkg',
     win: 'https://github.com/TagoBeats/TagoPitch/releases/download/v1.0.0/TagoPitch-v1.0.0-Windows-VST3.zip',
@@ -13,7 +13,7 @@ const PRODUCTS = {
   },
   tagoclip: {
     name: 'TagoClip',
-    metaLine: 'V1.1.0 &middot; MACOS AU/VST3 &middot; WINDOWS VST3 &middot; FREE',
+    metaLine: 'V1.1.0 &middot; MACOS 11+ AU/VST3 &middot; WINDOWS VST3 &middot; FREE',
     image: 'https://tagobeats.com/uploads_opt/TagoClip_800.jpg?v=5',
     mac: 'https://github.com/TagoBeats/TagoClip/releases/download/v1.1.0/TagoClip-1.1.0.dmg',
     win: 'https://github.com/TagoBeats/TagoClip/releases/download/v1.1.0/TagoClip-v1.1.0-Windows-VST3.zip',
@@ -31,7 +31,12 @@ function downloadEmail(product, unsubUrl) {
     '',
     `macOS: ${product.macInstallText}. Windows: unzip and drop ${product.name}.vst3 into C:\\Program Files\\Common Files\\VST3.`,
     '',
-    'If anything acts up, just reply to this mail.',
+    'Needs macOS 11 (Big Sur) or newer. On Windows the interface is drawn by the Edge WebView2',
+    'runtime, which ships with Windows 11. If the plugin loads but its window stays black, that',
+    'is the piece that is missing on either system.',
+    '',
+    'If anything acts up, just reply to this mail. And if it runs fine, tell me anyway:',
+    'CPU load, your DAW and OS, whatever felt off. Every reply reaches me.',
     '',
     'Robin (TagoBeats)',
     'https://tagobeats.com',
@@ -91,6 +96,7 @@ function downloadEmail(product, unsubUrl) {
                   <div style="font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:1.7;color:#B5AFA4;">
                     <span style="color:#ECE7DE;">macOS:</span> ${product.macInstallHtml}<br>
                     <span style="color:#ECE7DE;">Windows:</span> unzip and drop ${product.name}.vst3 into <span style="font-family:'Courier New',Courier,monospace;color:#ECE7DE;">C:\\Program Files\\Common Files\\VST3</span>.
+                    <div style="margin-top:12px;color:#8A857C;font-size:12.5px;">Needs macOS 11 (Big Sur) or newer. On Windows the interface is drawn by the Edge WebView2 runtime, which ships with Windows 11. If the plugin loads but its window stays black, that is the piece that is missing.</div>
                   </div>
                 </td></tr>
               </table>
@@ -100,7 +106,7 @@ function downloadEmail(product, unsubUrl) {
 
         <tr><td style="padding:22px 4px 0;">
           <div style="font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:1.6;color:#8A857C;">
-            If anything acts up, just reply to this mail.<br>
+            If anything acts up, just reply to this mail. And if it runs fine, tell me anyway: CPU load, your DAW and OS, whatever felt off. Every reply reaches me.<br>
             Robin (TagoBeats) &middot; <a href="https://tagobeats.com" style="color:#00FDDC;text-decoration:none;">tagobeats.com</a><br>
             <span style="color:#6A655C;">Just here for the download? <a href="${unsubUrl}" style="color:#8A857C;text-decoration:underline;">Unsubscribe</a> from future plugin drops.</span>
           </div>

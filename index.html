@@ -636,7 +636,7 @@ body { margin: 0; }
         <a onclick="{{ closeMenu }}" href="#tb-tagoclip" style="text-decoration:none; color:#F2EEE6; font-size:clamp(40px,8vw,92px); font-weight:800; letter-spacing:-0.035em; line-height:1.02;">TagoClip</a>
         <a onclick="{{ closeMenu }}" href="#tb-plugins" style="text-decoration:none; color:#F2EEE6; font-size:clamp(40px,8vw,92px); font-weight:800; letter-spacing:-0.035em; line-height:1.02;">TagoPitch</a>
         <a onclick="{{ closeMenu }}" href="#tb-about" style="text-decoration:none; color:#F2EEE6; font-size:clamp(40px,8vw,92px); font-weight:800; letter-spacing:-0.035em; line-height:1.02;">About</a>
-        <a onclick="{{ closeMenu }}" href="#tb-media" style="text-decoration:none; color:#F2EEE6; font-size:clamp(40px,8vw,92px); font-weight:800; letter-spacing:-0.035em; line-height:1.02;">Media</a>
+        <a onclick="{{ closeMenu }}" href="#tb-loops" style="text-decoration:none; color:#F2EEE6; font-size:clamp(40px,8vw,92px); font-weight:800; letter-spacing:-0.035em; line-height:1.02;">Loops</a>
         <a href="https://robinbusse.dev" target="_blank" rel="noopener noreferrer" style="text-decoration:none; color:rgba(236,231,222,0.55); font-size:clamp(26px,4vw,46px); font-weight:300; letter-spacing:-0.01em; line-height:1.3; margin-top:18px;">Engineering <span style="color:#00FDDC;">↗</span></a>
         <a href="https://www.beatstars.com/tagobeats" target="_blank" rel="noopener noreferrer" style="text-decoration:none; color:rgba(236,231,222,0.55); font-size:clamp(26px,4vw,46px); font-weight:300; letter-spacing:-0.01em; line-height:1.3;">BeatStars <span style="color:#00FDDC;">↗</span></a>
         <a href="mailto:info@tagobeats.com" style="text-decoration:none; color:rgba(236,231,222,0.55); font-size:clamp(26px,4vw,46px); font-weight:300; letter-spacing:-0.01em; line-height:1.3;">Contact</a>
@@ -845,20 +845,28 @@ body { margin: 0; }
     </div>
   </section>
 
-  <section id="tb-media" data-screen-label="Media" class="tb-snap-section" style="position:relative; z-index:1; min-height:100vh; padding:clamp(80px,8vh,100px) clamp(24px,6vw,120px) clamp(12px,1.6vh,22px); display:flex; flex-direction:column; border-top:1px solid rgba(236,231,222,0.14);">
+  <section id="tb-loops" data-screen-label="Loops" class="tb-snap-section" style="position:relative; z-index:1; min-height:100vh; padding:clamp(80px,8vh,100px) clamp(24px,6vw,120px) clamp(12px,1.6vh,22px); display:flex; flex-direction:column; border-top:1px solid rgba(236,231,222,0.14);">
     <div style="display:flex; align-items:flex-end; justify-content:space-between; flex-wrap:wrap; gap:16px; margin-bottom:clamp(10px,1.4vh,16px);">
       <div>
-        <div style="font-family:'Space Mono',monospace; font-size:11px; letter-spacing:0.3em; color:#00FDDC; margin-bottom:6px;">Photography &amp; Drone</div>
-        <h2 style="margin:0; font-size:clamp(26px,3.4vw,40px); font-weight:800; letter-spacing:-0.03em; line-height:0.9; color:#F2EEE6;">Media</h2>
+        <div style="font-family:'Space Mono',monospace; font-size:11px; letter-spacing:0.3em; color:#00FDDC; margin-bottom:6px;">Free Downloads</div>
+        <h2 style="margin:0; font-size:clamp(26px,3.4vw,40px); font-weight:800; letter-spacing:-0.03em; line-height:0.9; color:#F2EEE6;">Loops</h2>
       </div>
+      <a href="/loops" style="text-decoration:none; font-family:'Space Mono',monospace; font-size:12px; letter-spacing:0.18em; color:#00FDDC; border-bottom:1px solid rgba(0,253,220,0.4); padding-bottom:3px;">BROWSE ALL 65 &rarr;</a>
     </div>
 
-    <div style="flex:1; min-height:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:clamp(14px,2vh,22px); border-top:1px solid rgba(236,231,222,0.12); padding-top:clamp(24px,4vh,44px);">
-      <div style="position:relative; width:min(90%, 900px); max-height:100%; aspect-ratio:16/9; overflow:hidden; border-radius:4px;">
-        <img src="uploads_opt/lake.jpg" alt="Drone photography — lake" width="1400" height="787" loading="lazy" decoding="async" style="width:100%; height:100%; object-fit:cover; display:block;">
-        <div style="position:absolute; inset:0; background:linear-gradient(to top, rgba(10,9,8,0.55) 0%, transparent 40%);"></div>
+    <div style="flex:1; min-height:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:clamp(18px,2.6vh,30px); border-top:1px solid rgba(236,231,222,0.12); padding-top:clamp(24px,4vh,44px);">
+      <!-- covers/hero/ variants: the burned-in wordmark is cropped off there.
+           Six full covers side by side would line their wordmarks up into a
+           row of letter mush. align-items:start keeps the grid from stretching
+           the tiles tall and overriding aspect-ratio. -->
+      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); align-items:start; gap:clamp(12px,1.6vw,22px); width:min(96%, 940px);">
+        <img src="uploads_opt/loops/covers/hero/blood-moon.jpg" alt="Blood Moon loop" width="440" height="326" loading="lazy" decoding="async" style="width:100%; height:auto; aspect-ratio:4/3; object-fit:cover; border-radius:8px; display:block;">
+        <img src="uploads_opt/loops/covers/hero/death-wish.jpg" alt="Death Wish loop" width="440" height="326" loading="lazy" decoding="async" style="width:100%; height:auto; aspect-ratio:4/3; object-fit:cover; border-radius:8px; display:block;">
+        <img src="uploads_opt/loops/covers/hero/playlist.jpg" alt="Playlist loop" width="440" height="326" loading="lazy" decoding="async" style="width:100%; height:auto; aspect-ratio:4/3; object-fit:cover; border-radius:8px; display:block;">
+        <img src="uploads_opt/loops/covers/hero/ghost.jpg" alt="Ghost loop" width="440" height="326" loading="lazy" decoding="async" style="width:100%; height:auto; aspect-ratio:4/3; object-fit:cover; border-radius:8px; display:block;">
       </div>
-      <p style="margin:0; max-width:560px; text-align:center; font-size:clamp(16px,1.6vw,20px); line-height:1.5; color:rgba(236,231,222,0.6);">Studio sessions, behind-the-scenes clips and visualizers, coming soon.</p>
+      <p style="margin:0; max-width:560px; text-align:center; font-size:clamp(16px,1.6vw,20px); line-height:1.5; color:rgba(236,231,222,0.6);">65 free loops, royalty-free, full WAV. Play them, pick what you want, the links come by mail.</p>
+      <a href="/loops" class="tb-cta" style="text-decoration:none; background:#00FDDC; color:#0A0908; font-weight:700; font-size:13px; letter-spacing:0.08em; padding:14px 26px; border-radius:3px;">GET THE LOOPS</a>
     </div>
   </section>
 
@@ -1004,7 +1012,7 @@ class Component extends DCLogic {
     { id: 'tb-catalog', label: 'Catalog' },
     { id: 'tb-tagoclip', label: 'TagoClip' },
     { id: 'tb-plugins', label: 'TagoPitch' },
-    { id: 'tb-media', label: 'Media' },
+    { id: 'tb-loops', label: 'Loops' },
     { id: 'tb-about', label: 'About' },
     { id: 'tb-contact', label: 'Contact' }
   ];

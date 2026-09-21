@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>TagoBeats — Loops</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Free trap and hip-hop loops from TagoBeats. Play them, pick the ones you want, get the download links by email.">
+<link rel="canonical" href="https://tagobeats.com/loops">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta property="og:title" content="TagoBeats — Loops">
+<meta property="og:description" content="Play them, pick what you want, get the links by email.">
+<meta property="og:url" content="https://tagobeats.com/loops">
+<meta property="og:type" content="website">
+<style>
+@font-face { font-family:'Archivo'; font-style:normal; font-weight:400; font-display:swap; src:url("fonts/archivo-3babba83.woff2") format('woff2'); }
+@font-face { font-family:'Archivo'; font-style:normal; font-weight:700; font-display:swap; src:url("fonts/archivo-3babba83.woff2") format('woff2'); }
+@font-face { font-family:'Archivo'; font-style:normal; font-weight:800; font-display:swap; src:url("fonts/archivo-3babba83.woff2") format('woff2'); }
+@font-face { font-family:'Space Mono'; font-style:normal; font-weight:400; font-display:swap; src:url("fonts/archivo-4bbe479d.woff2") format('woff2'); }
+@font-face { font-family:'Space Mono'; font-style:normal; font-weight:700; font-display:swap; src:url("fonts/archivo-83c0c00d.woff2") format('woff2'); }
+
+* { box-sizing: border-box; }
+::selection { background:#00FDDC; color:#0A0908; }
+body { margin:0; background:#12100E; color:#ECE7DE; font-family:'Archivo',sans-serif; -webkit-font-smoothing:antialiased; padding-bottom:120px; }
+
+.tb-wrap { max-width:1120px; margin:0 auto; padding:0 24px; }
+
+.tb-header { display:flex; align-items:center; justify-content:space-between; padding:26px 0; }
+.tb-logo { font-family:'Space Mono',monospace; font-size:13px; font-weight:700; letter-spacing:0.25em; color:#ECE7DE; text-decoration:none; display:flex; align-items:center; gap:9px; }
+.tb-logo::before { content:''; width:7px; height:7px; border-radius:50%; background:#00FDDC; }
+.tb-back { font-family:'Space Mono',monospace; font-size:12px; color:rgba(236,231,222,0.5); text-decoration:none; }
+.tb-back:hover { color:#ECE7DE; }
+
+/* Hero: the headline sits on a strip of the artwork itself, so the page has
+   something to look at before the grid starts. */
+.tb-hero { position:relative; border-radius:16px; overflow:hidden; margin:8px 0 34px; border:1px solid rgba(236,231,222,0.08); }
+.tb-hero-art { position:absolute; inset:0; display:grid; grid-template-columns:repeat(6,1fr); opacity:0.55; }
+/* Tiles use the pre-cropped hero artwork (wordmark removed at build time).
+   no-repeat matters: without it a tile narrower than it is tall stacks the
+   same image down the strip. */
+.tb-hero-art div { background-size:cover; background-position:center; background-repeat:no-repeat; }
+.tb-hero-scrim { position:absolute; inset:0; background:linear-gradient(90deg,#12100E 20%, rgba(18,16,14,0.82) 52%, rgba(18,16,14,0.35) 100%); }
+.tb-hero-inner { position:relative; padding:44px 40px 40px; }
+h1 { font-size:clamp(30px,4.6vw,50px); font-weight:800; letter-spacing:-1px; margin:0 0 12px; text-wrap:balance; }
+h1 span { color:#00FDDC; }
+.tb-hero p { color:rgba(236,231,222,0.62); font-size:15.5px; line-height:1.6; max-width:44ch; margin:0; }
+.tb-hero p a { color:#00FDDC; text-decoration:none; border-bottom:1px solid rgba(0,253,220,0.35); }
+.tb-hero p a:hover { border-bottom-color:#00FDDC; }
+.tb-hero-meta { display:flex; gap:22px; margin-top:22px; font-family:'Space Mono',monospace; font-size:11.5px; letter-spacing:0.18em; color:rgba(236,231,222,0.42); text-transform:uppercase; flex-wrap:wrap; }
+.tb-hero-meta b { color:#00FDDC; font-weight:400; }
+
+.tb-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:18px; }
+
+.tb-card { position:relative; cursor:pointer; border-radius:12px; overflow:hidden; background:#1A1815; border:1px solid rgba(236,231,222,0.09); transition:border-color .18s, transform .18s; }
+.tb-card:hover { border-color:rgba(236,231,222,0.24); transform:translateY(-2px); }
+.tb-card[data-selected="1"] { border-color:#00FDDC; }
+.tb-card-art { position:relative; aspect-ratio:1/1; background:#0A0908 center/cover no-repeat; }
+/* pointer-events:none is load-bearing: this overlay sits on top of the play
+   button and would otherwise swallow the click, so play never fires and the
+   card only ever toggles selection. */
+.tb-card-art::after { content:''; position:absolute; inset:0; background:linear-gradient(180deg, transparent 55%, rgba(10,9,8,0.75)); opacity:0; transition:opacity .18s; pointer-events:none; }
+.tb-card:hover .tb-card-art::after { opacity:1; }
+
+.tb-play { position:absolute; left:50%; top:50%; transform:translate(-50%,-50%) scale(0.85); width:52px; height:52px; border-radius:50%; border:none; background:rgba(10,9,8,0.72); backdrop-filter:blur(3px); color:#00FDDC; display:flex; align-items:center; justify-content:center; cursor:pointer; opacity:0; transition:opacity .18s, transform .18s, background .18s; }
+.tb-card:hover .tb-play, .tb-card[data-playing="1"] .tb-play { opacity:1; transform:translate(-50%,-50%) scale(1); }
+.tb-play:hover { background:#00FDDC; color:#0A0908; }
+.tb-card[data-playing="1"] .tb-play { background:#00FDDC; color:#0A0908; }
+/* Touch devices never fire hover, so a hover-only play button would leave
+   phones with no way to hear anything: a tap would only ever select. */
+@media (hover: none) {
+  .tb-play { opacity:1; transform:translate(-50%,-50%) scale(1); }
+  .tb-card-art::after { opacity:1; }
+}
+
+.tb-tick { position:absolute; top:10px; right:10px; width:26px; height:26px; border-radius:50%; border:1.5px solid rgba(236,231,222,0.45); background:rgba(10,9,8,0.55); backdrop-filter:blur(3px); display:flex; align-items:center; justify-content:center; }
+.tb-card[data-selected="1"] .tb-tick { background:#00FDDC; border-color:#00FDDC; }
+.tb-tick svg { display:none; width:14px; height:14px; }
+.tb-card[data-selected="1"] .tb-tick svg { display:block; }
+
+.tb-card-body { padding:12px 14px 14px; }
+.tb-card-title { font-size:14.5px; font-weight:700; color:#F2EEE6; margin-bottom:5px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.tb-card-meta { font-family:'Space Mono',monospace; font-size:11px; letter-spacing:0.09em; color:rgba(236,231,222,0.42); }
+.tb-card[data-selected="1"] .tb-card-meta { color:#00FDDC; }
+
+.tb-bar { position:fixed; left:0; right:0; bottom:0; display:flex; justify-content:center; padding:18px 24px calc(18px + env(safe-area-inset-bottom,0px)); background:linear-gradient(0deg,#0A0908 55%, rgba(10,9,8,0.85) 80%, transparent); transform:translateY(130%); transition:transform .26s cubic-bezier(.2,.8,.2,1); }
+.tb-bar[data-open="1"] { transform:translateY(0); }
+.tb-bar-inner { width:100%; max-width:820px; background:#1A1815; border:1px solid rgba(0,253,220,0.35); border-radius:14px; padding:15px 18px; display:flex; align-items:center; gap:16px; box-shadow:0 26px 60px -24px rgba(0,0,0,0.85); }
+.tb-bar-count { font-family:'Space Mono',monospace; font-size:12.5px; color:#00FDDC; white-space:nowrap; }
+.tb-bar form { display:flex; gap:10px; flex:1 1 auto; }
+.tb-bar input[type="email"] { flex:1 1 180px; min-width:0; background:#0A0908; border:1px solid rgba(236,231,222,0.15); border-radius:8px; color:#ECE7DE; font-family:'Archivo',sans-serif; font-size:14.5px; padding:11px 14px; }
+.tb-bar input[type="email"]::placeholder { color:rgba(236,231,222,0.32); }
+.tb-bar input[type="email"]:focus { outline:none; border-color:#00FDDC; }
+.tb-bar button { flex:0 0 auto; background:#00FDDC; color:#0A0908; border:none; border-radius:8px; font-weight:700; font-size:13px; letter-spacing:0.4px; padding:12px 20px; cursor:pointer; }
+.tb-bar button:disabled { opacity:0.6; cursor:default; }
+
+.tb-status { font-family:'Space Mono',monospace; font-size:12.5px; margin-top:20px; min-height:1em; }
+.tb-status[data-kind="ok"] { color:#00FDDC; }
+.tb-status[data-kind="err"] { color:#FF6B6B; }
+
+.tb-skel { aspect-ratio:1/1; border-radius:12px; background:#1A1815; }
+
+@media (max-width:760px) {
+  .tb-hero-inner { padding:32px 24px 28px; }
+  .tb-hero-scrim { background:linear-gradient(180deg, rgba(18,16,14,0.78), rgba(18,16,14,0.92)); }
+  .tb-grid { grid-template-columns:repeat(auto-fill,minmax(148px,1fr)); gap:14px; }
+  .tb-bar-inner { flex-direction:column; align-items:stretch; gap:12px; }
+  .tb-bar form { flex-direction:row; }
+}
+</style>
+</head>
+<body>
+
+<div class="tb-wrap">
+  <div class="tb-header">
+    <a href="/" class="tb-logo">TAGOBEATS</a>
+    <a href="/" class="tb-back">&larr; back</a>
+  </div>
+
+  <div class="tb-hero">
+    <div class="tb-hero-art" id="tb-hero-art"></div>
+    <div class="tb-hero-scrim"></div>
+    <div class="tb-hero-inner">
+      <h1>TagoBeats <span>Loops</span></h1>
+      <p>Free loops. If one turns into a real record, hit reply and tell me, or <a href="https://instagram.com/tagobeats" target="_blank" rel="noopener noreferrer">@tagobeats</a> on Instagram.</p>
+      <div class="tb-hero-meta">
+        <span><b id="tb-count-total">&mdash;</b> loops</span>
+        <span>Free</span>
+        <span>Royalty-free</span>
+        <span>Full WAV</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="tb-grid" id="tb-grid">
+    <div class="tb-skel"></div><div class="tb-skel"></div><div class="tb-skel"></div>
+    <div class="tb-skel"></div><div class="tb-skel"></div>
+  </div>
+
+  <div class="tb-status" id="tb-status"></div>
+</div>
+
+<audio id="tb-audio"></audio>
+
+<div class="tb-bar" id="tb-bar">
+  <div class="tb-bar-inner">
+    <span class="tb-bar-count" id="tb-bar-count">0 selected</span>
+    <form id="tb-bar-form">
+      <input type="email" id="tb-bar-email" placeholder="you@email.com" required autocomplete="email">
+      <button type="submit" id="tb-bar-submit">Get links</button>
+    </form>
+  </div>
+</div>
+
+<script>
+(function () {
+  var gridEl = document.getElementById('tb-grid');
+  var heroArtEl = document.getElementById('tb-hero-art');
+  var totalEl = document.getElementById('tb-count-total');
+  var barEl = document.getElementById('tb-bar');
+  var countEl = document.getElementById('tb-bar-count');
+  var formEl = document.getElementById('tb-bar-form');
+  var emailEl = document.getElementById('tb-bar-email');
+  var submitEl = document.getElementById('tb-bar-submit');
+  var statusEl = document.getElementById('tb-status');
+  var audioEl = document.getElementById('tb-audio');
+
+  var loops = [];
+  var selected = new Set();
+  var playingId = null;
+
+  function esc(s) {
+    return String(s).replace(/[&<>"]/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c];
+    });
+  }
+
+  var ICON_PLAY = '<svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>';
+  var ICON_PAUSE = '<svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M7 5h4v14H7zM13 5h4v14h-4z"/></svg>';
+  var ICON_CHECK = '<svg viewBox="0 0 24 24" fill="none" stroke="#0A0908" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l5 5L20 6"/></svg>';
+
+  function render() {
+    if (!loops.length) {
+      gridEl.innerHTML = '<div style="color:rgba(236,231,222,0.4); font-family:\'Space Mono\',monospace; font-size:13px;">No loops up right now, check back soon.</div>';
+      return;
+    }
+    gridEl.innerHTML = loops.map(function (l) {
+      var playing = playingId === l.id;
+      return '' +
+        '<div class="tb-card" data-id="' + esc(l.id) + '" data-selected="' + (selected.has(l.id) ? '1' : '0') + '" data-playing="' + (playing ? '1' : '0') + '">' +
+          '<div class="tb-card-art" style="background-image:url(\'' + esc(l.cover) + '\')">' +
+            '<button type="button" class="tb-play" data-action="play" data-id="' + esc(l.id) + '" aria-label="Play or pause ' + esc(l.title) + '">' + (playing ? ICON_PAUSE : ICON_PLAY) + '</button>' +
+            '<span class="tb-tick">' + ICON_CHECK + '</span>' +
+          '</div>' +
+          '<div class="tb-card-body">' +
+            '<div class="tb-card-title">' + esc(l.title) + '</div>' +
+            '<div class="tb-card-meta">' + esc(l.bpm) + ' BPM' + (l.key ? ' &middot; ' + esc(l.key) : '') + '</div>' +
+          '</div>' +
+        '</div>';
+    }).join('');
+  }
+
+  function renderHero() {
+    heroArtEl.innerHTML = loops.slice(0, 6).map(function (l) {
+      return '<div style="background-image:url(\'' + esc(l.hero || l.cover) + '\')"></div>';
+    }).join('');
+  }
+
+  function updateBar() {
+    var n = selected.size;
+    countEl.textContent = n + ' selected';
+    barEl.setAttribute('data-open', n > 0 ? '1' : '0');
+  }
+
+  function loopById(id) {
+    for (var i = 0; i < loops.length; i++) if (loops[i].id === id) return loops[i];
+    return null;
+  }
+
+  function togglePlay(id) {
+    var loop = loopById(id);
+    if (!loop) return;
+    if (playingId === id) {
+      audioEl.pause();
+      playingId = null;
+    } else {
+      audioEl.src = loop.url;
+      audioEl.play().catch(function () {});
+      playingId = id;
+    }
+    render();
+  }
+
+  audioEl.addEventListener('ended', function () { playingId = null; render(); });
+
+  // One listener on the stable grid instead of per card: the cards are
+  // re-rendered on every state change, so anything bound per card would be
+  // thrown away on the first click.
+  gridEl.addEventListener('click', function (ev) {
+    var playBtn = ev.target.closest('[data-action="play"]');
+    if (playBtn) {
+      togglePlay(playBtn.getAttribute('data-id'));
+      return;
+    }
+    var card = ev.target.closest('.tb-card');
+    if (!card) return;
+    var id = card.getAttribute('data-id');
+    if (selected.has(id)) selected.delete(id); else selected.add(id);
+    render();
+    updateBar();
+  });
+
+  formEl.addEventListener('submit', function (ev) {
+    ev.preventDefault();
+    statusEl.textContent = '';
+    statusEl.removeAttribute('data-kind');
+    submitEl.disabled = true;
+    submitEl.textContent = 'Sending…';
+
+    fetch('/api/loops', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email: emailEl.value.trim(), ids: Array.from(selected) }),
+    })
+      .then(function (res) { return res.json().then(function (data) { return { ok: res.ok, data: data }; }); })
+      .then(function (result) {
+        if (!result.ok) throw new Error(result.data && result.data.error ? result.data.error : 'Something went wrong');
+        statusEl.textContent = 'Check your inbox, the links are on their way.';
+        statusEl.setAttribute('data-kind', 'ok');
+        emailEl.value = '';
+        selected.clear();
+        render();
+        updateBar();
+      })
+      .catch(function (err) {
+        statusEl.textContent = err.message || 'Could not send that, try again in a bit.';
+        statusEl.setAttribute('data-kind', 'err');
+      })
+      .finally(function () {
+        submitEl.disabled = false;
+        submitEl.textContent = 'Get links';
+      });
+  });
+
+  fetch('/api/loops')
+    .then(function (res) { return res.json(); })
+    .then(function (data) {
+      loops = data.loops || [];
+      totalEl.textContent = loops.length;
+      renderHero();
+      render();
+    })
+    .catch(function () {
+      gridEl.innerHTML = '<div style="color:rgba(236,231,222,0.4); font-family:\'Space Mono\',monospace; font-size:13px;">Couldn\'t load the loops, refresh to try again.</div>';
+    });
+})();
+</script>
+
+</body>
+</html>

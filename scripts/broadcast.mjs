@@ -97,6 +97,13 @@ if (testTo) {
   ])
   const skip = new Set([...unsub, ...bounced, ...alreadySent, ...excluded])
   recipients = source.filter((e) => !skip.has(e)).sort()
+  // Resend rejects a whole batch with 422 if one address has non-ASCII
+  // characters (19.10.2026: one address cost 64 recipients their mail).
+  const nonAscii = recipients.filter((e) => /[^\x00-\x7F]/.test(e))
+  if (nonAscii.length) {
+    console.log(`Skipping ${nonAscii.length} non-ASCII address(es), Resend refuses them`)
+    recipients = recipients.filter((e) => !/[^\x00-\x7F]/.test(e))
+  }
   console.log(
     `Segment "${segment}": ${source.length} · unsub ${unsub.length} · bounced ${bounced.length} · ` +
       `already sent ${alreadySent.length}${exclude ? ` · excluded "${exclude}" ${excluded.length}` : ''} ` +

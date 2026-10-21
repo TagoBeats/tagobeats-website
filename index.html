@@ -711,66 +711,6 @@ body { margin: 0; }
     </div>
   </section>
 
-  <section id="tb-catalog" data-screen-label="Catalog" class="tb-snap-section" style="position:relative; z-index:1; min-height:100vh; padding:clamp(80px,8vh,100px) clamp(24px,6vw,120px) clamp(12px,1.6vh,22px); display:flex; flex-direction:column; border-top:1px solid rgba(236,231,222,0.14);">
-    <div style="display:flex; align-items:flex-end; justify-content:space-between; flex-wrap:wrap; gap:16px; margin-bottom:clamp(10px,1.4vh,16px);">
-      <div>
-        <div style="font-family:'Space Mono',monospace; font-size:11px; letter-spacing:0.3em; color:#00FDDC; margin-bottom:6px;">TB CATALOG — 2026</div>
-        <h2 style="margin:0; font-size:clamp(26px,3.4vw,40px); font-weight:800; letter-spacing:-0.03em; line-height:0.9; color:#F2EEE6;">Catalog - Selection</h2>
-      </div>
-      <div style="display:flex; align-items:center; gap:clamp(14px,2vw,24px); flex-wrap:wrap;">
-        <div style="font-family:'Space Mono',monospace; font-size:12px; letter-spacing:0.2em; color:rgba(236,231,222,0.5); white-space:nowrap;">{{ countLabel }}</div>
-      </div>
-    </div>
-
-    <sc-if value="{{ hasResults }}" hint-placeholder-val="{{ true }}">
-      <div id="tb-catalog-grid" style="display:grid; grid-template-columns:repeat(5, min(21vh, 14vw)); justify-content:center; gap:1.6vh clamp(10px,1.4vw,18px); border-top:1px solid rgba(236,231,222,0.12); padding-top:clamp(8px,1.2vh,14px);">
-        <sc-for list="{{ rows }}" as="row" hint-placeholder-count="6">
-          <div style="{{ row.revealStyle }}">
-            <div ref="{{ row.cardRef }}" onclick="{{ row.onSelect }}" onmouseenter="{{ row.onEnter }}" onmouseleave="{{ row.onLeave }}" onmousemove="{{ row.onMove }}" style="{{ row.cardStyle }}">
-              <div style="position:relative; aspect-ratio:1/1; overflow:hidden; border-radius:3px; background:#1A1815;">
-                <img src="{{ row.cover }}" alt="{{ row.title }}" width="400" height="400" loading="lazy" decoding="async" style="{{ row.coverImgStyle }}">
-                <div ref="{{ row.playHitRef }}" onmousemove="{{ row.onPlayMove }}" onmouseleave="{{ row.onPlayLeave }}" style="position:absolute; right:8px; bottom:8px; width:48px; height:48px; display:flex; align-items:center; justify-content:center;">
-                  <div ref="{{ row.playBtnRef }}" style="{{ row.playBtnStyle }}">
-                    <sc-if value="{{ row.active }}" hint-placeholder-val="{{ false }}">
-                      <div style="display:flex; align-items:flex-end; gap:3px; height:14px;">
-                        <span style="width:2.5px; height:100%; background:#00FDDC; transform-origin:bottom; animation:tb-eq 0.7s ease-in-out infinite;"></span>
-                        <span style="width:2.5px; height:100%; background:#00FDDC; transform-origin:bottom; animation:tb-eq 0.7s ease-in-out 0.2s infinite;"></span>
-                        <span style="width:2.5px; height:100%; background:#00FDDC; transform-origin:bottom; animation:tb-eq 0.7s ease-in-out 0.4s infinite;"></span>
-                      </div>
-                    </sc-if>
-                    <sc-if value="{{ row.idle }}" hint-placeholder-val="{{ true }}">
-                      <span style="display:block; width:0; height:0; border-left:8px solid #ECE7DE; border-top:5px solid transparent; border-bottom:5px solid transparent; margin-left:2px;"></span>
-                    </sc-if>
-                  </div>
-                </div>
-              </div>
-              <div style="margin-top:8px;">
-                <div style="{{ row.numStyle }}">{{ row.n }}</div>
-                <h3 style="{{ row.titleStyle }}">{{ row.title }}</h3>
-                <div style="{{ row.lineStyle }}"></div>
-                <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap; margin-top:6px;">
-                  <span style="font-family:'Space Mono',monospace; font-size:10px; letter-spacing:0.06em; color:rgba(236,231,222,0.42);">{{ row.bpm }} BPM · {{ row.key }}</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </sc-for>
-      </div>
-    </sc-if>
-
-    <div style="flex:1; display:flex; align-items:center; justify-content:center; flex-wrap:wrap; gap:16px 20px; min-height:16px;">
-      <a href="/music" class="tb-cta" style="text-decoration:none; color:#0A0908; background:#00FDDC; font-weight:800; font-size:14px; letter-spacing:0.1em; padding:19px 46px; border-radius:2px; display:inline-flex; align-items:center; gap:12px; white-space:nowrap;">
-        LISTEN TO THE FULL CATALOG <span class="tb-cta-arrow" style="font-size:17px; line-height:1;">→</span>
-      </a>
-    </div>
-
-    <sc-if value="{{ noResults }}" hint-placeholder-val="{{ false }}">
-      <div style="border-top:1px solid rgba(236,231,222,0.12); padding:clamp(60px,10vw,110px) 0; text-align:center;">
-        <div style="font-family:'Space Mono',monospace; font-size:13px; letter-spacing:0.14em; color:rgba(236,231,222,0.45);">NO BEATS MATCH “{{ searchQuery }}”</div>
-      </div>
-    </sc-if>
-  </section>
-
   <section id="tb-tagoclip" data-screen-label="TagoClip" class="tb-snap-section" style="position:relative; z-index:1; min-height:100vh; padding:clamp(80px,8vh,100px) clamp(24px,6vw,120px) clamp(12px,1.6vh,22px); display:flex; flex-direction:column; border-top:1px solid rgba(236,231,222,0.14);">
     <div style="display:flex; align-items:flex-end; justify-content:space-between; flex-wrap:wrap; gap:16px; margin-bottom:clamp(10px,1.4vh,16px);">
       <div>
@@ -843,6 +783,66 @@ body { margin: 0; }
         </div>
       </div>
     </div>
+  </section>
+
+  <section id="tb-catalog" data-screen-label="Catalog" class="tb-snap-section" style="position:relative; z-index:1; min-height:100vh; padding:clamp(80px,8vh,100px) clamp(24px,6vw,120px) clamp(12px,1.6vh,22px); display:flex; flex-direction:column; border-top:1px solid rgba(236,231,222,0.14);">
+    <div style="display:flex; align-items:flex-end; justify-content:space-between; flex-wrap:wrap; gap:16px; margin-bottom:clamp(10px,1.4vh,16px);">
+      <div>
+        <div style="font-family:'Space Mono',monospace; font-size:11px; letter-spacing:0.3em; color:#00FDDC; margin-bottom:6px;">TB CATALOG — 2026</div>
+        <h2 style="margin:0; font-size:clamp(26px,3.4vw,40px); font-weight:800; letter-spacing:-0.03em; line-height:0.9; color:#F2EEE6;">Catalog - Selection</h2>
+      </div>
+      <div style="display:flex; align-items:center; gap:clamp(14px,2vw,24px); flex-wrap:wrap;">
+        <div style="font-family:'Space Mono',monospace; font-size:12px; letter-spacing:0.2em; color:rgba(236,231,222,0.5); white-space:nowrap;">{{ countLabel }}</div>
+      </div>
+    </div>
+
+    <sc-if value="{{ hasResults }}" hint-placeholder-val="{{ true }}">
+      <div id="tb-catalog-grid" style="display:grid; grid-template-columns:repeat(5, min(21vh, 14vw)); justify-content:center; gap:1.6vh clamp(10px,1.4vw,18px); border-top:1px solid rgba(236,231,222,0.12); padding-top:clamp(8px,1.2vh,14px);">
+        <sc-for list="{{ rows }}" as="row" hint-placeholder-count="6">
+          <div style="{{ row.revealStyle }}">
+            <div ref="{{ row.cardRef }}" onclick="{{ row.onSelect }}" onmouseenter="{{ row.onEnter }}" onmouseleave="{{ row.onLeave }}" onmousemove="{{ row.onMove }}" style="{{ row.cardStyle }}">
+              <div style="position:relative; aspect-ratio:1/1; overflow:hidden; border-radius:3px; background:#1A1815;">
+                <img src="{{ row.cover }}" alt="{{ row.title }}" width="400" height="400" loading="lazy" decoding="async" style="{{ row.coverImgStyle }}">
+                <div ref="{{ row.playHitRef }}" onmousemove="{{ row.onPlayMove }}" onmouseleave="{{ row.onPlayLeave }}" style="position:absolute; right:8px; bottom:8px; width:48px; height:48px; display:flex; align-items:center; justify-content:center;">
+                  <div ref="{{ row.playBtnRef }}" style="{{ row.playBtnStyle }}">
+                    <sc-if value="{{ row.active }}" hint-placeholder-val="{{ false }}">
+                      <div style="display:flex; align-items:flex-end; gap:3px; height:14px;">
+                        <span style="width:2.5px; height:100%; background:#00FDDC; transform-origin:bottom; animation:tb-eq 0.7s ease-in-out infinite;"></span>
+                        <span style="width:2.5px; height:100%; background:#00FDDC; transform-origin:bottom; animation:tb-eq 0.7s ease-in-out 0.2s infinite;"></span>
+                        <span style="width:2.5px; height:100%; background:#00FDDC; transform-origin:bottom; animation:tb-eq 0.7s ease-in-out 0.4s infinite;"></span>
+                      </div>
+                    </sc-if>
+                    <sc-if value="{{ row.idle }}" hint-placeholder-val="{{ true }}">
+                      <span style="display:block; width:0; height:0; border-left:8px solid #ECE7DE; border-top:5px solid transparent; border-bottom:5px solid transparent; margin-left:2px;"></span>
+                    </sc-if>
+                  </div>
+                </div>
+              </div>
+              <div style="margin-top:8px;">
+                <div style="{{ row.numStyle }}">{{ row.n }}</div>
+                <h3 style="{{ row.titleStyle }}">{{ row.title }}</h3>
+                <div style="{{ row.lineStyle }}"></div>
+                <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap; margin-top:6px;">
+                  <span style="font-family:'Space Mono',monospace; font-size:10px; letter-spacing:0.06em; color:rgba(236,231,222,0.42);">{{ row.bpm }} BPM · {{ row.key }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </sc-for>
+      </div>
+    </sc-if>
+
+    <div style="flex:1; display:flex; align-items:center; justify-content:center; flex-wrap:wrap; gap:16px 20px; min-height:16px;">
+      <a href="/music" class="tb-cta" style="text-decoration:none; color:#0A0908; background:#00FDDC; font-weight:800; font-size:14px; letter-spacing:0.1em; padding:19px 46px; border-radius:2px; display:inline-flex; align-items:center; gap:12px; white-space:nowrap;">
+        LISTEN TO THE FULL CATALOG <span class="tb-cta-arrow" style="font-size:17px; line-height:1;">→</span>
+      </a>
+    </div>
+
+    <sc-if value="{{ noResults }}" hint-placeholder-val="{{ false }}">
+      <div style="border-top:1px solid rgba(236,231,222,0.12); padding:clamp(60px,10vw,110px) 0; text-align:center;">
+        <div style="font-family:'Space Mono',monospace; font-size:13px; letter-spacing:0.14em; color:rgba(236,231,222,0.45);">NO BEATS MATCH “{{ searchQuery }}”</div>
+      </div>
+    </sc-if>
   </section>
 
   <section id="tb-loops" data-screen-label="Loops" class="tb-snap-section" style="position:relative; z-index:1; min-height:100vh; padding:clamp(80px,8vh,100px) clamp(24px,6vw,120px) clamp(12px,1.6vh,22px); display:flex; flex-direction:column; border-top:1px solid rgba(236,231,222,0.14);">
@@ -1009,9 +1009,9 @@ class Component extends DCLogic {
 
   SECTIONS = [
     { id: 'tb-hero', label: 'Home' },
-    { id: 'tb-catalog', label: 'Catalog' },
     { id: 'tb-tagoclip', label: 'TagoClip' },
     { id: 'tb-plugins', label: 'TagoPitch' },
+    { id: 'tb-catalog', label: 'Catalog' },
     { id: 'tb-loops', label: 'Loops' },
     { id: 'tb-about', label: 'About' },
     { id: 'tb-contact', label: 'Contact' }

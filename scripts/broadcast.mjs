@@ -20,6 +20,8 @@
 //   --segment <all|tagopitch|tagoclip>   default: all
 //   --exclude <segment>                  e.g. --segment tagopitch --exclude tagoclip
 //   --test <email>                       send only to this address, ignore the list
+//   --to <a@x.com,b@y.com>               send to exactly these addresses instead of a segment
+//                                        (unsub, bounced and the sent log still apply)
 //   --limit <n>                          send to the first n recipients (warm-up wave)
 //   --dry-run                            resolve the audience and print it, send nothing
 //
@@ -28,6 +30,7 @@
 //     id: 'tagoclip-v11',                      // unique, keys the sent log
 //     subject: 'TagoClip 1.1 is out',
 //     render(email, unsubUrl) { return { text, html } },
+//     replyTo: 'info@tagobeats.com',           // optional, default plugins@robinbusse.dev
 //   }
 
 import { readFileSync } from 'node:fs'
@@ -68,6 +71,8 @@ const dryRun = has('dry-run')
 const segment = flag('segment', 'all')
 const exclude = flag('exclude')
 const testTo = flag('test')
+const toList = flag('to')
+const replyTo = template.replyTo || 'plugins@robinbusse.dev'
 const limit = flag('limit') ? Number(flag('limit')) : null
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms))
@@ -88,13 +93,14 @@ if (testTo) {
   recipients = [testTo.toLowerCase()]
 } else {
   const sourceKey = segment === 'all' ? 'tago:contacts' : `tago:contacts:${segment}`
-  const [source, unsub, bounced, alreadySent, excluded] = await upstash([
+  const [segmentMembers, unsub, bounced, alreadySent, excluded] = await upstash([
     ['SMEMBERS', sourceKey],
     ['SMEMBERS', 'tago:unsub'],
     ['SMEMBERS', 'tago:bounced'],
     ['SMEMBERS', `tago:sent:${template.id}`],
     ['SMEMBERS', exclude ? `tago:contacts:${exclude}` : 'tago:__none__'],
   ])
+  const source = toList ? toList.split(',').map((e) => e.trim().toLowerCase()).filter(Boolean) : segmentMembers
   const skip = new Set([...unsub, ...bounced, ...alreadySent, ...excluded])
   recipients = source.filter((e) => !skip.has(e)).sort()
   // Resend rejects a whole batch with 422 if one address has non-ASCII
@@ -105,7 +111,7 @@ if (testTo) {
     recipients = recipients.filter((e) => !/[^\x00-\x7F]/.test(e))
   }
   console.log(
-    `Segment "${segment}": ${source.length} · unsub ${unsub.length} · bounced ${bounced.length} · ` +
+    `${toList ? 'Explicit --to list' : `Segment "${segment}"`}: ${source.length} · unsub ${unsub.length} · bounced ${bounced.length} · ` +
       `already sent ${alreadySent.length}${exclude ? ` · excluded "${exclude}" ${excluded.length}` : ''} ` +
       `-> ${recipients.length} recipients`,
   )
@@ -139,7 +145,7 @@ for (const [index, batch] of chunk(recipients, 100).entries()) {
     return {
       from: 'TagoBeats <plugins@robinbusse.dev>',
       to: [email],
-      reply_to: 'plugins@robinbusse.dev',
+      reply_to: replyTo,
       subject: template.subject,
       text,
       html,

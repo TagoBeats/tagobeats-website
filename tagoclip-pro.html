@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>TagoClip Pro — The FL Clipper, Everywhere (AU/VST3) by TagoBeats</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Not launched yet: keep it out of search until the page and checkout are final. -->
+<meta name="robots" content="noindex">
+<meta name="description" content="TagoClip Pro is the FL soft clip curve in every DAW, on a modern engine: three curves, ADAA up to 4x, a true peak ceiling, mono low and level-matched auto gain. macOS AU/VST3 and Windows VST3.">
+<link rel="canonical" href="https://tagobeats.com/tagoclip-pro">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<style>
+/* latin */
+@font-face { font-family:'Archivo'; font-style:normal; font-weight:300; font-display:swap; src:url("fonts/archivo-3babba83.woff2") format('woff2'); }
+@font-face { font-family:'Archivo'; font-style:normal; font-weight:400; font-display:swap; src:url("fonts/archivo-3babba83.woff2") format('woff2'); }
+@font-face { font-family:'Archivo'; font-style:normal; font-weight:600; font-display:swap; src:url("fonts/archivo-3babba83.woff2") format('woff2'); }
+@font-face { font-family:'Archivo'; font-style:normal; font-weight:700; font-display:swap; src:url("fonts/archivo-3babba83.woff2") format('woff2'); }
+@font-face { font-family:'Archivo'; font-style:normal; font-weight:800; font-display:swap; src:url("fonts/archivo-3babba83.woff2") format('woff2'); }
+/* Same mono as inside the plugin, so page and UI read as one product. */
+@font-face { font-family:'Martian Mono'; font-style:normal; font-weight:100 800; font-display:swap; src:url("fonts/martian-mono-var.woff2") format('woff2'); }
+
+:root {
+  --acc:#00FDDC;
+  --acc-rgb:0,253,220;
+  --warm-rgb:255,92,72;   /* the UI's "clipped" red, used here only as light */
+  --bg:#12100E;
+  --deep:#0A0908;
+  --surface:#1A1815;
+  --hi:#F2EEE6;
+  --text:#ECE7DE;
+  --dim:rgba(236,231,222,0.62);
+  --faint:rgba(236,231,222,0.4);
+  --hair:rgba(236,231,222,0.1);
+  --mono:'Martian Mono', ui-monospace, monospace;
+}
+
+@keyframes tb-fog { 0% { transform: translate3d(0,0,0) scale(1); } 50% { transform: translate3d(4%,-3%,0) scale(1.08); } 100% { transform: translate3d(0,0,0) scale(1); } }
+@keyframes tb-breathe { 0%,100% { opacity:.75; } 50% { opacity:1; } }
+
+* { box-sizing: border-box; }
+[hidden] { display:none !important; }
+html { scroll-behavior: smooth; }
+::selection { background:var(--acc); color:var(--deep); }
+body { margin: 0; background:var(--bg); color:var(--text); font-family:'Archivo',sans-serif; -webkit-font-smoothing:antialiased; overflow-x:hidden; }
+
+/* ---------- Background layers ---------- */
+.tb-bg { position:fixed; inset:0; z-index:0; overflow:hidden; pointer-events:none; }
+.tb-bg-fog { position:absolute; border-radius:50%; will-change:transform; }
+/* Dot grid like the plugin's panels, faded out towards the edges. */
+.tb-bg-grid { position:absolute; inset:0; background-image:radial-gradient(rgba(236,231,222,0.11) 1px, transparent 1.2px); background-size:24px 24px; -webkit-mask-image:radial-gradient(ellipse 70% 60% at 50% 38%, #000 0%, rgba(0,0,0,.5) 45%, transparent 80%); mask-image:radial-gradient(ellipse 70% 60% at 50% 38%, #000 0%, rgba(0,0,0,.5) 45%, transparent 80%); }
+/* Film grain, so the large dark areas do not band and feel less flat. */
+.tb-bg-grain { position:absolute; inset:0; opacity:.035; background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>"); }
+
+/* The clipper's transfer curve, huge and faint, behind the hero. */
+.tb-curve { position:absolute; left:0; right:0; top:0; height:min(100vh,1000px); z-index:0; pointer-events:none; }
+.tb-curve svg { width:100%; height:100%; }
+
+/* ---------- Components ---------- */
+.tb-eyebrow { font-family:var(--mono); font-size:11px; font-weight:400; letter-spacing:0.28em; color:var(--acc); text-transform:uppercase; }
+
+.tb-cta { position: relative; overflow: hidden; transition: transform .3s cubic-bezier(.2,.8,.2,1), box-shadow .3s ease; box-shadow: 0 22px 50px -20px rgba(var(--acc-rgb),0.55), 0 10px 26px -12px rgba(0,0,0,0.55); }
+.tb-cta::before { content: ''; position: absolute; top: 0; left: -60%; width: 40%; height: 100%; background: linear-gradient(120deg, transparent, rgba(255,255,255,.6), transparent); transform: skewX(-20deg); transition: left .65s ease; pointer-events: none; }
+.tb-cta:hover { transform: translateY(-2px); }
+.tb-cta:hover::before { left: 130%; }
+.tb-cta-ghost { transition: border-color .2s, color .2s, background .2s; }
+.tb-cta-ghost:hover { border-color:var(--acc) !important; color:var(--acc) !important; background:rgba(var(--acc-rgb),0.06) !important; }
+
+.tb-hero { max-width:820px; }
+.tb-buyrow { display:grid; grid-template-columns:minmax(0,1fr) 380px; gap:clamp(32px,5vw,72px); align-items:center; margin-top:clamp(56px,8vh,96px); position:relative; z-index:1; }
+
+/* Price card: gradient hairline border via a masked pseudo element. No
+   backdrop-filter on purpose, it is what broke scrolling on this site before. */
+.tb-buy { position:relative; padding:28px 28px 24px; border-radius:14px; background:linear-gradient(160deg, rgba(34,31,27,0.92), rgba(18,16,14,0.92)); box-shadow:0 30px 70px -30px rgba(0,0,0,0.9); }
+.tb-buy::before { content:''; position:absolute; inset:0; border-radius:inherit; padding:1px; background:linear-gradient(150deg, rgba(var(--acc-rgb),0.55), rgba(236,231,222,0.08) 40%, rgba(var(--warm-rgb),0.35)); -webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite:xor; mask-composite:exclude; pointer-events:none; }
+
+/* Plugin stage: rim light on top, two-tone floor glow underneath. */
+.tb-stage { position:relative; margin-top:clamp(44px,7vh,76px); }
+.tb-stage::before { content:''; position:absolute; left:4%; right:52%; bottom:-10%; height:55%; background:radial-gradient(ellipse at 50% 50%, rgba(var(--acc-rgb),0.24), transparent 70%); filter:blur(40px); pointer-events:none; animation:tb-breathe 7s ease-in-out infinite; }
+.tb-stage::after { content:''; position:absolute; left:52%; right:4%; bottom:-10%; height:55%; background:radial-gradient(ellipse at 50% 50%, rgba(var(--warm-rgb),0.16), transparent 70%); filter:blur(46px); pointer-events:none; animation:tb-breathe 9s ease-in-out infinite reverse; }
+.tb-frame { position:relative; z-index:1; aspect-ratio:1000/520; border-radius:14px; overflow:hidden; background:#0E0D0C; box-shadow:0 0 0 1px rgba(236,231,222,0.09), 0 50px 110px -40px rgba(0,0,0,0.95); }
+.tb-frame::after { content:''; position:absolute; left:10%; right:10%; top:0; height:1px; background:linear-gradient(90deg, transparent, rgba(255,255,255,0.35), transparent); pointer-events:none; }
+.tb-frame iframe { position:absolute; inset:0; width:100%; height:100%; border:0; pointer-events:none; }
+
+/* Spec strip under the plugin. */
+.tb-specs { display:grid; grid-template-columns:1fr 1fr; border-top:1px solid var(--hair); border-bottom:1px solid var(--hair); }
+.tb-spec { padding:22px 22px 22px 0; }
+.tb-spec:nth-child(even) { padding-left:22px; border-left:1px solid var(--hair); }
+.tb-spec:nth-child(n+3) { border-top:1px solid var(--hair); }
+.tb-spec b { display:block; font-family:var(--mono); font-size:13px; font-weight:500; letter-spacing:0.14em; color:var(--hi); margin-bottom:8px; }
+.tb-spec span { font-size:14px; line-height:1.5; color:var(--dim); }
+
+@media (max-width: 900px) {
+  .tb-buyrow { grid-template-columns:1fr; }
+  .tb-buy { order:-1; }   /* phone: plugin, then the price, then the specs */
+}
+@media (max-width: 640px) {
+  .tb-hide-mobile { display:none !important; }
+  .tb-buy { padding:22px 18px 18px; }
+  .tb-spec { padding:16px 12px 16px 0; }
+  .tb-spec:nth-child(even) { padding-left:12px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .tb-bg-fog, .tb-stage::before, .tb-stage::after { animation:none !important; }
+  .tb-curve-dot { display:none; }
+}
+</style>
+<script defer src="/_vercel/insights/script.js"></script>
+</head>
+<body>
+
+<div style="position:relative;">
+
+  <div class="tb-bg">
+    <div class="tb-bg-fog" style="width:82vw; height:82vw; left:-16%; top:-14%; background:radial-gradient(circle at 50% 50%, rgba(0,253,220,0.08) 0%, rgba(0,253,220,0.05) 22%, rgba(0,253,220,0.02) 42%, transparent 62%); animation:tb-fog 34s ease-in-out infinite;"></div>
+    <div class="tb-bg-fog" style="width:70vw; height:70vw; right:-22%; top:22%; background:radial-gradient(circle at 50% 50%, rgba(255,92,72,0.06) 0%, rgba(255,92,72,0.035) 24%, rgba(255,92,72,0.012) 44%, transparent 62%); animation:tb-fog 41s ease-in-out infinite reverse;"></div>
+    <div class="tb-bg-grid"></div>
+    <div class="tb-bg-grain"></div>
+  </div>
+
+  <!-- Soft clip transfer curve as background art, with one light travelling along it. -->
+  <div class="tb-curve" aria-hidden="true">
+    <svg viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMid slice">
+      <defs>
+        <linearGradient id="tb-cg" x1="0" x2="1" y1="0" y2="0">
+          <stop offset="0" stop-color="#00FDDC" stop-opacity="0"/>
+          <stop offset=".35" stop-color="#00FDDC" stop-opacity=".16"/>
+          <stop offset=".7" stop-color="#00FDDC" stop-opacity=".1"/>
+          <stop offset="1" stop-color="#FF5C48" stop-opacity="0"/>
+        </linearGradient>
+        <radialGradient id="tb-dot"><stop offset="0" stop-color="#00FDDC" stop-opacity=".9"/><stop offset="1" stop-color="#00FDDC" stop-opacity="0"/></radialGradient>
+      </defs>
+      <path id="tb-cpath" d="M-40 760 C 420 760, 600 752, 760 560 S 1040 236, 1640 232" fill="none" stroke="url(#tb-cg)" stroke-width="1.5"/>
+      <path d="M-40 760 C 420 760, 600 752, 760 560 S 1040 236, 1640 232" fill="none" stroke="url(#tb-cg)" stroke-width="14" opacity=".12"/>
+      <circle class="tb-curve-dot" r="40" fill="url(#tb-dot)" opacity=".5">
+        <animateMotion dur="11s" repeatCount="indefinite" keyPoints="0;1" keyTimes="0;1" calcMode="spline" keySplines=".45 0 .55 1"><mpath href="#tb-cpath"/></animateMotion>
+      </circle>
+    </svg>
+  </div>
+
+  <nav style="position:fixed; top:0; left:0; right:0; z-index:50; display:flex; align-items:center; justify-content:space-between; padding:clamp(20px,3vw,34px) clamp(24px,6vw,120px); background:linear-gradient(180deg, rgba(18,16,14,0.9), transparent);">
+    <a href="/" style="display:flex; align-items:center; gap:11px; text-decoration:none; color:var(--text);">
+      <span style="width:8px; height:8px; border-radius:50%; background:var(--acc); display:block;"></span>
+      <span style="font-weight:700; font-size:15px; letter-spacing:0.18em;">TAGOBEATS</span>
+    </a>
+    <div style="display:flex; align-items:center; gap:clamp(18px,3vw,40px);">
+      <a href="/tagoclip" class="tb-hide-mobile" style="text-decoration:none; color:rgba(236,231,222,0.7); font-size:13px; letter-spacing:0.14em; font-weight:600;">TAGOCLIP FREE</a>
+      <a href="/" style="text-decoration:none; color:rgba(236,231,222,0.7); font-size:13px; letter-spacing:0.18em; font-weight:600;">HOME</a>
+    </div>
+  </nav>
+
+  <main style="position:relative; z-index:1; padding:clamp(120px,17vh,180px) clamp(16px,6vw,120px) clamp(40px,7vh,80px);">
+
+    <!-- Hero -->
+    <section style="max-width:1160px; margin:0 auto;">
+      <div class="tb-hero">
+        <div>
+          <div class="tb-eyebrow" style="margin-bottom:18px;">Tago Plugins · Pro</div>
+          <h1 style="margin:0 0 16px; font-size:clamp(46px,7.4vw,96px); font-weight:800; letter-spacing:-0.04em; line-height:0.9; color:var(--hi);">TagoClip<span style="color:var(--acc);"> Pro</span></h1>
+          <p style="margin:0 0 14px; font-size:clamp(20px,2.1vw,28px); font-weight:700; letter-spacing:-0.015em; color:var(--hi);">The FL clipper, everywhere.</p>
+          <p style="margin:0; max-width:560px; font-size:clamp(16px,1.35vw,18px); line-height:1.65; color:var(--dim);">Same curve, modern engine. The FL soft clip sound with true peak control, mono low end and level-matched A/B, in every DAW.</p>
+        </div>
+
+      </div>
+
+      <div class="tb-stage">
+        <div class="tb-frame">
+          <iframe id="tb-pro-ui" src="demos/tagoclip-pro-ui/index.html" title="TagoClip Pro interface" tabindex="-1" aria-hidden="true"></iframe>
+        </div>
+      </div>
+
+      <div class="tb-buyrow">
+        <div class="tb-specs">
+          <div class="tb-spec"><b>3 CURVES</b><span>Fruity, Brick and Silky. Fruity is the FL soft clip, measured and cloned.</span></div>
+          <div class="tb-spec"><b>ADAA UP TO 4X</b><span>Anti-aliased clipping, so hard drive stays clean up top.</span></div>
+          <div class="tb-spec"><b>TRUE PEAK</b><span>A ceiling down to −12 dBTP, the very last stage after mix and output.</span></div>
+          <div class="tb-spec"><b>AUTO GAIN</b><span>Level-matched A/B, so you hear the clip and not just louder.</span></div>
+        </div>
+        <aside class="tb-buy" aria-label="Buy TagoClip Pro">
+          <!-- Prices are rendered live from Moonbase. The static text is what shows
+               before the storefront has loaded, or if it never does. -->
+          <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:14px;">
+            <span class="tb-eyebrow" style="font-size:10px;" hidden data-moonbase-if="product.tagoclip-pro.has_discount">Intro price</span>
+            <span style="font-family:var(--mono); font-size:10px; letter-spacing:0.2em; color:var(--faint);">PERPETUAL LICENSE</span>
+          </div>
+          <div style="display:flex; align-items:baseline; gap:14px; margin-bottom:22px;">
+            <span data-moonbase-render="product.tagoclip-pro.price" style="font-size:58px; font-weight:800; letter-spacing:-0.04em; line-height:1; color:var(--hi);">$49</span>
+            <s hidden data-moonbase-if="product.tagoclip-pro.has_discount" data-moonbase-render="product.tagoclip-pro.original_price" style="font-family:var(--mono); font-size:16px; color:var(--faint);">$49</s>
+          </div>
+          <div data-moonbase-if="!product.tagoclip-pro.owned">
+            <a href="https://tagobeats.moonbase.sh/" data-tb-store="buy" class="tb-cta" style="text-decoration:none; color:var(--deep); background:var(--acc); font-weight:800; font-size:14px; letter-spacing:0.12em; padding:18px 24px; border-radius:3px; display:flex; align-items:center; justify-content:center; gap:12px;">
+              BUY NOW <span style="font-size:17px; line-height:1;">→</span>
+            </a>
+            <a href="https://tagobeats.moonbase.sh/" data-tb-store="trial" class="tb-cta-ghost" style="margin-top:10px; text-decoration:none; color:var(--text); background:transparent; border:1px solid rgba(236,231,222,0.22); font-weight:700; font-size:13px; letter-spacing:0.12em; padding:15px 24px; border-radius:3px; display:flex; align-items:center; justify-content:center;">
+              TRY FREE FOR 7 DAYS
+            </a>
+          </div>
+          <div hidden data-moonbase-if="product.tagoclip-pro.owned">
+            <a href="https://tagobeats.moonbase.sh/" data-tb-store="download" class="tb-cta" style="text-decoration:none; color:var(--deep); background:var(--acc); font-weight:800; font-size:14px; letter-spacing:0.12em; padding:18px 24px; border-radius:3px; display:flex; align-items:center; justify-content:center; gap:12px;">
+              DOWNLOAD <span style="font-size:17px; line-height:1;">↓</span>
+            </a>
+            <div style="margin-top:10px; font-family:var(--mono); font-size:11px; letter-spacing:0.14em; color:var(--acc); text-align:center;">ALREADY IN YOUR LIBRARY</div>
+          </div>
+          <div style="margin-top:18px; font-family:var(--mono); font-size:10px; letter-spacing:0.14em; line-height:1.9; color:var(--faint);">MACOS 11+ AU/VST3 · WINDOWS VST3<br>3 ACTIVATIONS · TRIAL WITHOUT ACCOUNT</div>
+        </aside>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<script src="https://assets.moonbase.sh/storefront/moonbase.js"></script>
+<script src="js/tagoclip-pro-store.js"></script>
+<script src="js/tagoclip-pro-hero.js" defer></script>
+</body>
+</html>

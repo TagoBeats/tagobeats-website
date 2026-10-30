@@ -9,6 +9,22 @@
 <meta name="description" content="TagoClip Pro is the FL soft clip curve in every DAW, on a modern engine: three curves, ADAA up to 4x, a true peak ceiling, mono low and level-matched auto gain. macOS AU/VST3 and Windows VST3.">
 <link rel="canonical" href="https://tagobeats.com/tagoclip-pro">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "@id": "https://tagobeats.com/tagoclip-pro#app",
+  "name": "TagoClip Pro",
+  "operatingSystem": "macOS 11+, Windows 10/11 (64-bit)",
+  "softwareRequirements": "macOS 11 (Big Sur) or newer, Apple Silicon and Intel, AU/VST3. Windows 10 or 11 64-bit, VST3; the interface needs the Edge WebView2 runtime, which ships with Windows 11.",
+  "applicationCategory": "MultimediaApplication",
+  "softwareVersion": "1.0.0",
+  "offers": { "@type": "Offer", "price": "49", "priceCurrency": "USD" },
+  "description": "Soft clipper plugin (AU/VST3): the FL soft clip curve on a modern engine with three curves, ADAA up to 4x, a true peak ceiling and level-matched auto gain, made by TagoBeats (Robin Busse).",
+  "url": "https://tagobeats.com/tagoclip-pro",
+  "author": { "@type": "Person", "name": "Robin Busse", "alternateName": "TagoBeats" }
+}
+</script>
 <style>
 /* latin */
 @font-face { font-family:'Archivo'; font-style:normal; font-weight:300; font-display:swap; src:url("fonts/archivo-3babba83.woff2") format('woff2'); }
@@ -102,6 +118,73 @@ body { margin: 0; background:var(--bg); color:var(--text); font-family:'Archivo'
 @media (prefers-reduced-motion: reduce) {
   .tb-bg-fog, .tb-stage::before, .tb-stage::after { animation:none !important; }
   .tb-curve-dot { display:none; }
+}
+
+/* ---------- Sections below the hero ---------- */
+.tb-sec { max-width:1160px; margin:clamp(88px,14vh,150px) auto 0; position:relative; z-index:1; }
+.tb-sec h2.tb-eyebrow { margin:0 0 14px; }
+.tb-lede { margin:0 0 26px; max-width:620px; font-size:16px; line-height:1.65; color:var(--dim); }
+.tb-card { background:linear-gradient(160deg, rgba(34,31,27,0.75), rgba(22,20,18,0.75)); border:1px solid var(--hair); border-radius:14px; }
+
+/* A/B player, same behaviour as on /tagoclip: all variants run in lockstep. */
+.tb-ab { padding:clamp(18px,2.6vw,28px); display:flex; align-items:center; gap:20px; flex-wrap:wrap; }
+.tb-play-btn { width:56px; height:56px; flex:0 0 56px; border-radius:50%; border:1px solid rgba(var(--acc-rgb),0.5); background:rgba(var(--acc-rgb),0.08); color:var(--acc); cursor:pointer; display:flex; align-items:center; justify-content:center; transition:background .2s, transform .2s; }
+.tb-play-btn:hover { background:rgba(var(--acc-rgb),0.18); transform:scale(1.05); }
+.tb-ab-track { flex:1; min-width:200px; }
+.tb-ab-title { font-weight:700; font-size:16px; color:var(--hi); margin-bottom:6px; }
+.tb-ab-meta { font-family:var(--mono); font-size:10px; letter-spacing:0.14em; color:var(--faint); margin-top:8px; }
+.tb-progress { position:relative; height:3px; background:rgba(236,231,222,0.12); border-radius:2px; overflow:hidden; }
+.tb-progress > div { position:absolute; inset:0 auto 0 0; width:0%; background:var(--acc); }
+.tb-ab-chips { display:flex; gap:8px; flex-wrap:wrap; }
+.tb-ab-chip { font-family:var(--mono); font-size:11px; letter-spacing:0.12em; padding:10px 14px; border-radius:3px; border:1px solid rgba(236,231,222,0.18); background:transparent; color:rgba(236,231,222,0.55); cursor:pointer; transition:color .2s, border-color .2s, background .2s; }
+.tb-ab-chip { display:flex; flex-direction:column; align-items:center; gap:6px; min-width:72px; }
+.tb-ab-chip svg { width:26px; height:17px; overflow:visible; }
+.tb-ab-chip svg path { fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; }
+.tb-ab-chip svg .tb-ab-ceil { stroke-width:1; stroke-dasharray:2 3; opacity:.45; }
+.tb-ab-chip:hover { color:var(--hi); border-color:rgba(236,231,222,0.35); }
+.tb-byline { display:flex; align-items:center; gap:10px; font-family:var(--mono); font-size:10.5px; letter-spacing:0.16em; line-height:1.6; color:var(--faint); }
+.tb-byline span { width:6px; height:6px; flex:0 0 6px; border-radius:50%; background:var(--acc); box-shadow:0 0 10px rgba(var(--acc-rgb),0.7); }
+.tb-ab-chip[data-active="1"] { color:var(--deep); background:var(--acc); border-color:var(--acc); font-weight:600; }
+
+/* Signal path */
+.tb-sig { --sig-accent:var(--acc); --sig-surface:#1A1815; --sig-deep:#0E0D0C; --sig-hi:var(--hi); --sig-dim:rgba(236,231,222,0.5); --sig-faint:rgba(236,231,222,0.26); --sig-hairline:rgba(236,231,222,0.14); padding:clamp(20px,3vw,34px) clamp(16px,2.6vw,30px) clamp(16px,2.4vw,28px); }
+.tb-sig svg { width:100%; height:auto; display:block; }
+.tb-sig .tb-sig-mobile { display:none; max-width:400px; margin:0 auto; }
+.tb-sig-wave { animation:tb-sig-slide 2.4s linear infinite; }
+@keyframes tb-sig-slide { to { transform:translateX(-32px); } }
+.tb-sig-dot { offset-path:path('M30 110 L1010 110'); animation:tb-sig-travel 7s linear infinite; }
+.tb-sig-dot-m { offset-path:path('M140 28 L140 740'); animation:tb-sig-travel 7s linear infinite; }
+@keyframes tb-sig-travel { from { offset-distance:0%; } to { offset-distance:100%; } }
+
+/* Requirements and FAQ */
+.tb-req { display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); }
+.tb-req > div { padding:24px 26px; }
+.tb-req > div + div { border-left:1px solid var(--hair); }
+.tb-req b { display:block; font-family:var(--mono); font-size:12px; font-weight:500; letter-spacing:0.16em; color:var(--acc); margin-bottom:12px; }
+.tb-req ul { margin:0; padding:0; list-style:none; }
+.tb-req li { font-size:14px; line-height:1.55; color:var(--text); padding:3px 0; }
+.tb-req li span { color:var(--dim); }
+.tb-faq { border-top:1px solid var(--hair); }
+.tb-faq details { border-bottom:1px solid var(--hair); }
+.tb-faq summary { list-style:none; cursor:pointer; display:flex; justify-content:space-between; align-items:center; gap:20px; padding:22px 0; font-size:17px; font-weight:700; color:var(--hi); }
+.tb-faq summary::-webkit-details-marker { display:none; }
+.tb-faq summary::after { content:'+'; font-family:var(--mono); font-weight:400; font-size:18px; color:var(--acc); transition:transform .2s; flex:0 0 auto; }
+.tb-faq details[open] summary::after { transform:rotate(45deg); }
+.tb-faq p { margin:0 0 22px; max-width:700px; font-size:15px; line-height:1.7; color:var(--dim); }
+
+@media (max-width: 900px) {
+  .tb-req { grid-template-columns:1fr; }
+  .tb-req > div + div { border-left:0; border-top:1px solid var(--hair); }
+}
+@media (max-width: 640px) {
+  .tb-sig .tb-sig-desktop { display:none; }
+  .tb-sig .tb-sig-mobile { display:block; }
+  .tb-ab-chips { width:100%; }
+  .tb-ab-chip { flex:1 1 0; padding:10px 4px; min-width:0; }
+  .tb-req > div { padding:20px 18px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .tb-sig-wave, .tb-sig-dot, .tb-sig-dot-m { animation:none; }
 }
 </style>
 <script defer src="/_vercel/insights/script.js"></script>
@@ -205,11 +288,277 @@ body { margin: 0; background:var(--bg); color:var(--text); font-family:'Archivo'
       </div>
     </section>
 
+    <!-- Listen. Rendered offline through the shipping engine (TagoClipProRender),
+         then every version gain-matched to the same true peak (-1.5 dBTP before
+         mp3), so the loudness gain the clipper buys is what you hear. -->
+    <section class="tb-sec" aria-label="Audio demo">
+      <h2 class="tb-eyebrow">Hear it</h2>
+      <p class="tb-lede">Same master, same peak level. The clipper takes the peaks, so everything else comes up. Hit play, then switch while it runs.</p>
+
+      <div class="tb-card tb-ab" data-ab-player data-ab-id="master">
+        <button type="button" class="tb-play-btn" data-ab-play aria-label="Play demo">
+          <svg data-ab-icon-play width="18" height="18" viewBox="0 0 18 18" fill="currentColor" aria-hidden="true"><path d="M4 2.5v13l11-6.5z"/></svg>
+          <svg data-ab-icon-pause width="18" height="18" viewBox="0 0 18 18" fill="currentColor" aria-hidden="true" style="display:none;"><path d="M4 2.5h3.4v13H4zM10.6 2.5H14v13h-3.4z"/></svg>
+        </button>
+        <div class="tb-ab-track">
+          <div class="tb-ab-title">Dive inside, by TagoBeats</div>
+          <div class="tb-progress"><div data-ab-bar></div></div>
+          <div class="tb-ab-meta">DRIVE +10 DB · THRESHOLD 60 · ADAA 4X · ALL PEAKS AT −1 DBTP</div>
+        </div>
+        <div class="tb-ab-chips" data-ab-chips>
+          <button type="button" class="tb-ab-chip" data-variant="dry" data-active="1"><svg viewBox="0 0 24 16" aria-hidden="true"><path d="M2 2 L22 2" class="tb-ab-ceil"/><path d="M2 14 L22 2"/></svg>DRY</button>
+          <button type="button" class="tb-ab-chip" data-variant="fruity" data-active="0"><svg viewBox="0 0 24 16" aria-hidden="true"><path d="M2 2 L22 2" class="tb-ab-ceil"/><path d="M2 14 L13 5 Q16 2 22 2"/></svg>FRUITY</button>
+          <button type="button" class="tb-ab-chip" data-variant="silky" data-active="0"><svg viewBox="0 0 24 16" aria-hidden="true"><path d="M2 2 L22 2" class="tb-ab-ceil"/><path d="M2 14 Q9 6 13 4 Q17 2 22 2"/></svg>SILKY</button>
+          <button type="button" class="tb-ab-chip" data-variant="brick" data-active="0"><svg viewBox="0 0 24 16" aria-hidden="true"><path d="M2 2 L22 2" class="tb-ab-ceil"/><path d="M2 14 L14 2 L22 2"/></svg>BRICK</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Signal path, mirrors the chain comment in plugin/ClipEngine.h -->
+    <section class="tb-sec" aria-label="Signal path">
+      <h2 class="tb-eyebrow">The signal path</h2>
+      <p class="tb-lede">In to out, in this order. The ceiling always comes last, so nothing gets past it.</p>
+
+      <div class="tb-card tb-sig">
+        <svg class="tb-sig-desktop" viewBox="0 0 1040 290" xmlns="http://www.w3.org/2000/svg" font-family="'Martian Mono',monospace" role="img" aria-label="Signal flow: input, mono low, drive, clip, mix, auto gain, true peak ceiling, output, with a delta tap after the clipper">
+          <defs>
+            <clipPath id="tb-sig-inwin"><rect x="8" y="38" width="64" height="48"/></clipPath>
+            <clipPath id="tb-sig-outwin"><rect x="946" y="38" width="64" height="48"/></clipPath>
+          </defs>
+          <line x1="30" y1="110" x2="1010" y2="110" stroke="rgba(0,253,220,0.22)" stroke-width="2"/>
+
+          <g clip-path="url(#tb-sig-inwin)"><g class="tb-sig-wave">
+            <path d="M8 62 q8 -22 16 0 q8 22 16 0 q8 -22 16 0 q8 22 16 0 q8 -22 16 0 q8 22 16 0" stroke="var(--sig-accent)" stroke-width="1.6" fill="none" opacity="0.85"/>
+          </g></g>
+          <text x="8" y="98" font-size="10" fill="var(--sig-dim)">IN</text>
+          <circle cx="30" cy="110" r="4" fill="var(--sig-accent)"/>
+          <circle class="tb-sig-dot" r="3" fill="var(--sig-accent)" opacity="0.55"/>
+
+          <text x="134" y="64" font-size="9" fill="var(--sig-faint)" text-anchor="middle">01</text>
+          <rect x="80" y="78" width="108" height="64" rx="2" fill="var(--sig-surface)" stroke="var(--sig-hairline)"/>
+          <text x="134" y="105" font-size="12" font-weight="600" fill="var(--sig-hi)" text-anchor="middle" letter-spacing="1.5">MONO LOW</text>
+          <text x="134" y="126" font-size="9.5" fill="var(--sig-dim)" text-anchor="middle">side highpass</text>
+          <path d="M198 110 l14 0 m-5 -4 l5 4 l-5 4" stroke="var(--sig-accent)" stroke-width="1.6" fill="none"/>
+
+          <text x="276" y="64" font-size="9" fill="var(--sig-faint)" text-anchor="middle">02</text>
+          <rect x="222" y="78" width="108" height="64" rx="2" fill="var(--sig-surface)" stroke="var(--sig-hairline)"/>
+          <text x="276" y="105" font-size="12" font-weight="600" fill="var(--sig-hi)" text-anchor="middle" letter-spacing="1.5">DRIVE</text>
+          <text x="276" y="126" font-size="9.5" fill="var(--sig-dim)" text-anchor="middle">into the curve</text>
+          <path d="M340 110 l14 0 m-5 -4 l5 4 l-5 4" stroke="var(--sig-accent)" stroke-width="1.6" fill="none"/>
+
+          <text x="439" y="48" font-size="9" fill="var(--sig-faint)" text-anchor="middle">03</text>
+          <rect x="364" y="58" width="150" height="104" rx="2" fill="var(--sig-surface)" stroke="rgba(0,253,220,0.45)"/>
+          <text x="439" y="83" font-size="12" font-weight="600" fill="var(--sig-accent)" text-anchor="middle" letter-spacing="1.5">CLIP</text>
+          <g transform="translate(394,94)">
+            <line x1="0" y1="54" x2="90" y2="54" stroke="var(--sig-faint)" stroke-width="1"/>
+            <line x1="0" y1="54" x2="0" y2="0" stroke="var(--sig-faint)" stroke-width="1"/>
+            <line x1="0" y1="3" x2="90" y2="3" stroke="var(--sig-faint)" stroke-width="1" stroke-dasharray="3 4"/>
+            <path d="M0 54 L51 3 L90 3" stroke="var(--sig-dim)" stroke-width="1.2" fill="none" opacity="0.6"/>
+            <path d="M0 54 Q28 24 48 12 Q66 4 90 3" stroke="var(--sig-dim)" stroke-width="1.2" fill="none" opacity="0.6"/>
+            <path d="M0 54 L52 15 Q64 5 90 3" stroke="var(--sig-accent)" stroke-width="2" fill="none"/>
+          </g>
+          <text x="439" y="178" font-size="9.5" fill="var(--sig-dim)" text-anchor="middle">3 curves · ADAA 4x</text>
+
+          <circle cx="531" cy="110" r="3.5" fill="#0E0D0C" stroke="var(--sig-faint)" stroke-width="1.5"/>
+
+          <text x="602" y="64" font-size="9" fill="var(--sig-faint)" text-anchor="middle">04</text>
+          <rect x="548" y="78" width="108" height="64" rx="2" fill="var(--sig-surface)" stroke="var(--sig-hairline)"/>
+          <text x="602" y="105" font-size="12" font-weight="600" fill="var(--sig-hi)" text-anchor="middle" letter-spacing="1.5">MIX</text>
+          <text x="602" y="126" font-size="9.5" fill="var(--sig-dim)" text-anchor="middle">parallel blend</text>
+          <path d="M666 110 l14 0 m-5 -4 l5 4 l-5 4" stroke="var(--sig-accent)" stroke-width="1.6" fill="none"/>
+
+          <text x="744" y="64" font-size="9" fill="var(--sig-faint)" text-anchor="middle">05</text>
+          <rect x="690" y="78" width="108" height="64" rx="2" fill="var(--sig-surface)" stroke="var(--sig-hairline)"/>
+          <text x="744" y="105" font-size="12" font-weight="600" fill="var(--sig-hi)" text-anchor="middle" letter-spacing="1.5">AUTO GAIN</text>
+          <text x="744" y="126" font-size="9.5" fill="var(--sig-dim)" text-anchor="middle">level-matched</text>
+          <path d="M808 110 l14 0 m-5 -4 l5 4 l-5 4" stroke="var(--sig-accent)" stroke-width="1.6" fill="none"/>
+
+          <text x="886" y="64" font-size="9" fill="var(--sig-faint)" text-anchor="middle">06</text>
+          <rect x="832" y="78" width="108" height="64" rx="2" fill="var(--sig-surface)" stroke="rgba(0,253,220,0.45)"/>
+          <text x="886" y="105" font-size="12" font-weight="600" fill="var(--sig-accent)" text-anchor="middle" letter-spacing="1.5">TRUE PEAK</text>
+          <text x="886" y="126" font-size="9.5" fill="var(--sig-dim)" text-anchor="middle">always last</text>
+
+          <path d="M984 110 l14 0 m-5 -4 l5 4 l-5 4" stroke="var(--sig-accent)" stroke-width="1.6" fill="none"/>
+          <circle cx="1010" cy="110" r="4" fill="var(--sig-accent)"/>
+          <g clip-path="url(#tb-sig-outwin)"><g class="tb-sig-wave">
+            <path d="M946 74 L949 62 L952 50 L962 50 L965 62 L968 74 L978 74 L981 62 L984 50 L994 50 L997 62 L1000 74 L1010 74 L1013 62 L1016 50 L1026 50 L1029 62 L1032 74 L1042 74" stroke="var(--sig-accent)" stroke-width="1.6" fill="none" opacity="0.85"/>
+          </g></g>
+          <text x="992" y="98" font-size="10" fill="var(--sig-dim)">OUT</text>
+
+          <path d="M531 118 L531 236 L560 236" stroke="var(--sig-faint)" stroke-width="1.5" stroke-dasharray="4 5" fill="none"/>
+          <path d="M556 232 l6 4 l-6 4" stroke="var(--sig-faint)" stroke-width="1.5" fill="none"/>
+          <rect x="566" y="204" width="140" height="64" rx="2" fill="var(--sig-deep)" stroke="var(--sig-hairline)" stroke-dasharray="5 4"/>
+          <text x="636" y="231" font-size="12" font-weight="600" fill="var(--sig-hi)" text-anchor="middle" letter-spacing="1.5">DELTA</text>
+          <text x="636" y="252" font-size="9.5" fill="var(--sig-dim)" text-anchor="middle">what got removed</text>
+          <g stroke="var(--sig-accent)" stroke-width="1.6" fill="none" opacity="0.7">
+            <path d="M720 236 q3 -9 6 -10 q3 1 6 10"/>
+            <path d="M740 236 q3 -9 6 -10 q3 1 6 10"/>
+            <path d="M760 236 q3 -9 6 -10 q3 1 6 10"/>
+          </g>
+        </svg>
+
+        <svg class="tb-sig-mobile" viewBox="0 0 400 780" xmlns="http://www.w3.org/2000/svg" font-family="'Martian Mono',monospace" role="img" aria-label="Signal flow: input, mono low, drive, clip, mix, auto gain, true peak ceiling, output, with a delta tap after the clipper">
+          <defs>
+            <clipPath id="tb-sig-inwin-m"><rect x="170" y="8" width="64" height="44"/></clipPath>
+            <clipPath id="tb-sig-outwin-m"><rect x="170" y="718" width="64" height="44"/></clipPath>
+          </defs>
+          <line x1="140" y1="28" x2="140" y2="740" stroke="rgba(0,253,220,0.22)" stroke-width="2"/>
+
+          <circle cx="140" cy="28" r="4" fill="var(--sig-accent)"/>
+          <g clip-path="url(#tb-sig-inwin-m)"><g class="tb-sig-wave">
+            <path d="M170 28 q8 -18 16 0 q8 18 16 0 q8 -18 16 0 q8 18 16 0 q8 -18 16 0 q8 18 16 0" stroke="var(--sig-accent)" stroke-width="1.6" fill="none" opacity="0.85"/>
+          </g></g>
+          <text x="246" y="32" font-size="10" fill="var(--sig-dim)">IN</text>
+          <circle class="tb-sig-dot-m" r="3" fill="var(--sig-accent)" opacity="0.55"/>
+
+          <rect x="60" y="56" width="160" height="64" rx="2" fill="var(--sig-surface)" stroke="var(--sig-hairline)"/>
+          <text x="140" y="83" font-size="12" font-weight="600" fill="var(--sig-hi)" text-anchor="middle" letter-spacing="1.5">MONO LOW</text>
+          <text x="140" y="103" font-size="9.5" fill="var(--sig-dim)" text-anchor="middle">side highpass</text>
+          <text x="236" y="66" font-size="9" fill="var(--sig-faint)">01</text>
+          <path d="M140 128 l0 12 m-4 -5 l4 5 l4 -5" stroke="var(--sig-accent)" stroke-width="1.6" fill="none"/>
+
+          <rect x="60" y="150" width="160" height="64" rx="2" fill="var(--sig-surface)" stroke="var(--sig-hairline)"/>
+          <text x="140" y="177" font-size="12" font-weight="600" fill="var(--sig-hi)" text-anchor="middle" letter-spacing="1.5">DRIVE</text>
+          <text x="140" y="197" font-size="9.5" fill="var(--sig-dim)" text-anchor="middle">into the curve</text>
+          <text x="236" y="160" font-size="9" fill="var(--sig-faint)">02</text>
+          <path d="M140 222 l0 12 m-4 -5 l4 5 l4 -5" stroke="var(--sig-accent)" stroke-width="1.6" fill="none"/>
+
+          <rect x="50" y="244" width="180" height="104" rx="2" fill="var(--sig-surface)" stroke="rgba(0,253,220,0.45)"/>
+          <text x="140" y="270" font-size="12" font-weight="600" fill="var(--sig-accent)" text-anchor="middle" letter-spacing="1.5">CLIP</text>
+          <g transform="translate(95,280)">
+            <line x1="0" y1="54" x2="90" y2="54" stroke="var(--sig-faint)" stroke-width="1"/>
+            <line x1="0" y1="54" x2="0" y2="0" stroke="var(--sig-faint)" stroke-width="1"/>
+            <line x1="0" y1="3" x2="90" y2="3" stroke="var(--sig-faint)" stroke-width="1" stroke-dasharray="3 4"/>
+            <path d="M0 54 L51 3 L90 3" stroke="var(--sig-dim)" stroke-width="1.2" fill="none" opacity="0.6"/>
+            <path d="M0 54 Q28 24 48 12 Q66 4 90 3" stroke="var(--sig-dim)" stroke-width="1.2" fill="none" opacity="0.6"/>
+            <path d="M0 54 L52 15 Q64 5 90 3" stroke="var(--sig-accent)" stroke-width="2" fill="none"/>
+          </g>
+          <text x="236" y="254" font-size="9" fill="var(--sig-faint)">03</text>
+          <text x="140" y="366" font-size="9.5" fill="var(--sig-dim)" text-anchor="middle">3 curves · ADAA 4x</text>
+
+          <circle cx="140" cy="394" r="3.5" fill="#0E0D0C" stroke="var(--sig-faint)" stroke-width="1.5"/>
+          <path d="M148 394 L240 394" stroke="var(--sig-faint)" stroke-width="1.5" stroke-dasharray="4 5" fill="none"/>
+          <path d="M236 390 l6 4 l-6 4" stroke="var(--sig-faint)" stroke-width="1.5" fill="none"/>
+          <rect x="248" y="362" width="144" height="64" rx="2" fill="var(--sig-deep)" stroke="var(--sig-hairline)" stroke-dasharray="5 4"/>
+          <text x="320" y="389" font-size="12" font-weight="600" fill="var(--sig-hi)" text-anchor="middle" letter-spacing="1.5">DELTA</text>
+          <text x="320" y="409" font-size="9.5" fill="var(--sig-dim)" text-anchor="middle">what got removed</text>
+          <path d="M140 412 l0 12 m-4 -5 l4 5 l4 -5" stroke="var(--sig-accent)" stroke-width="1.6" fill="none"/>
+
+          <rect x="60" y="440" width="160" height="64" rx="2" fill="var(--sig-surface)" stroke="var(--sig-hairline)"/>
+          <text x="140" y="467" font-size="12" font-weight="600" fill="var(--sig-hi)" text-anchor="middle" letter-spacing="1.5">MIX</text>
+          <text x="140" y="487" font-size="9.5" fill="var(--sig-dim)" text-anchor="middle">parallel blend</text>
+          <text x="236" y="450" font-size="9" fill="var(--sig-faint)">04</text>
+          <path d="M140 512 l0 12 m-4 -5 l4 5 l4 -5" stroke="var(--sig-accent)" stroke-width="1.6" fill="none"/>
+
+          <rect x="60" y="534" width="160" height="64" rx="2" fill="var(--sig-surface)" stroke="var(--sig-hairline)"/>
+          <text x="140" y="561" font-size="12" font-weight="600" fill="var(--sig-hi)" text-anchor="middle" letter-spacing="1.5">AUTO GAIN</text>
+          <text x="140" y="581" font-size="9.5" fill="var(--sig-dim)" text-anchor="middle">level-matched</text>
+          <text x="236" y="544" font-size="9" fill="var(--sig-faint)">05</text>
+          <path d="M140 606 l0 12 m-4 -5 l4 5 l4 -5" stroke="var(--sig-accent)" stroke-width="1.6" fill="none"/>
+
+          <rect x="60" y="628" width="160" height="64" rx="2" fill="var(--sig-surface)" stroke="rgba(0,253,220,0.45)"/>
+          <text x="140" y="655" font-size="12" font-weight="600" fill="var(--sig-accent)" text-anchor="middle" letter-spacing="1.5">TRUE PEAK</text>
+          <text x="140" y="675" font-size="9.5" fill="var(--sig-dim)" text-anchor="middle">always last</text>
+          <text x="236" y="638" font-size="9" fill="var(--sig-faint)">06</text>
+          <path d="M140 700 l0 12 m-4 -5 l4 5 l4 -5" stroke="var(--sig-accent)" stroke-width="1.6" fill="none"/>
+
+          <circle cx="140" cy="740" r="4" fill="var(--sig-accent)"/>
+          <g clip-path="url(#tb-sig-outwin-m)"><g class="tb-sig-wave">
+            <path d="M170 752 L173 740 L176 728 L186 728 L189 740 L192 752 L202 752 L205 740 L208 728 L218 728 L221 740 L224 752 L234 752 L237 740 L240 728 L250 728 L253 740 L256 752 L266 752" stroke="var(--sig-accent)" stroke-width="1.6" fill="none" opacity="0.85"/>
+          </g></g>
+          <text x="246" y="744" font-size="10" fill="var(--sig-dim)">OUT</text>
+        </svg>
+      </div>
+    </section>
+
+    <!-- System requirements: from scripts/build_release.sh (universal, macOS 11.0)
+         and the Windows CI (x64 VST3, WebView2 UI). -->
+    <section class="tb-sec" id="requirements" aria-label="System requirements">
+      <h2 class="tb-eyebrow">System requirements</h2>
+      <div class="tb-card tb-req" style="margin-top:22px;">
+        <div>
+          <b>MACOS</b>
+          <ul>
+            <li>macOS 11 Big Sur or newer</li>
+            <li>Apple Silicon and Intel <span>(universal)</span></li>
+            <li>AU and VST3</li>
+          </ul>
+        </div>
+        <div>
+          <b>WINDOWS</b>
+          <ul>
+            <li>Windows 10 or 11, 64-bit</li>
+            <li>VST3</li>
+            <li>Edge WebView2 runtime <span>(ships with Windows 11)</span></li>
+          </ul>
+        </div>
+        <div>
+          <b>LICENSE</b>
+          <ul>
+            <li>One payment, yours to keep</li>
+            <li>3 activations</li>
+            <li>7-day trial, every feature, no account</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Maker line, placed right before the FAQ that opens with "Who makes this?" -->
+    <div class="tb-sec tb-byline"><span></span>BUILT BY ROBIN BUSSE · STUDIED AUDIO ENGINEERING · 7+ YEARS MIXING TRAP</div>
+
+    <!-- FAQ -->
+    <section class="tb-sec" aria-label="FAQ" style="margin-top:clamp(28px,4vh,44px);">
+      <h2 class="tb-eyebrow" style="margin-bottom:22px;">FAQ</h2>
+      <div class="tb-faq">
+        <details>
+          <summary>Who makes this?</summary>
+          <p>Me, Robin Busse. I'm finishing my B.Eng in audio engineering, I've produced and mixed hip-hop and trap for over seven years, and I write the DSP myself. The Fruity curve wasn't eyeballed: I measured the FL soft clipper until the clone matched it down to float noise.</p>
+        </details>
+        <details>
+          <summary>How is it different from TagoClip Free?</summary>
+          <p>Free stays free: the FL curve plus hard and tanh, oversampling, delta listening and mono low end. Pro runs the curves on a newer engine with ADAA up to 4x against aliasing, adds a true peak ceiling as the very last stage, and level-matched auto gain, in a new interface.</p>
+        </details>
+        <details>
+          <summary>Does it sound like the FL soft clipper?</summary>
+          <p>The Fruity curve is the FL soft clip, measured and cloned. Brick and Silky are there for when you want it harder or rounder.</p>
+        </details>
+        <details>
+          <summary>Do I need FL Studio?</summary>
+          <p>No. It runs in any DAW that loads AU or VST3 on macOS, or VST3 on Windows.</p>
+        </details>
+        <details>
+          <summary>Why does the true peak ceiling sit after the mix?</summary>
+          <p>So nothing gets past it. Mix, auto gain and output can move wherever you like, the ceiling still holds.</p>
+        </details>
+        <details>
+          <summary>What does auto gain actually do?</summary>
+          <p>It takes back the level the drive adds, so switching the plugin on and off compares the sound, not the loudness. Louder always sounds better at first, auto gain takes that trick out.</p>
+        </details>
+        <details>
+          <summary>How does the trial work?</summary>
+          <p>Seven days with every feature and no account. After that it needs a license.</p>
+        </details>
+        <details>
+          <summary>Is it a subscription?</summary>
+          <p>No. You pay once and keep it, with 3 activations.</p>
+        </details>
+      </div>
+    </section>
+
   </main>
+
+  <footer style="position:relative; z-index:1; max-width:1160px; margin:clamp(80px,12vh,130px) auto 0; padding:28px clamp(16px,6vw,120px) 40px; border-top:1px solid var(--hair); display:flex; justify-content:space-between; align-items:center; gap:20px; flex-wrap:wrap;">
+    <p style="margin:0; max-width:620px; font-size:12px; line-height:1.6; color:var(--faint);">FL Studio and Fruity Soft Clipper are trademarks of Image-Line. TagoClip Pro is an independent product and not affiliated with Image-Line.</p>
+    <div style="display:flex; gap:24px; font-family:var(--mono); font-size:11px; letter-spacing:0.16em;">
+      <a href="/imprint" style="color:var(--dim); text-decoration:none;">IMPRINT</a>
+      <a href="/privacy" style="color:var(--dim); text-decoration:none;">PRIVACY</a>
+    </div>
+  </footer>
 </div>
 
 <script src="https://assets.moonbase.sh/storefront/moonbase.js"></script>
 <script src="js/tagoclip-pro-store.js"></script>
 <script src="js/tagoclip-pro-hero.js" defer></script>
+<script src="js/tagoclip-pro-ab.js" defer></script>
 </body>
 </html>

@@ -110,6 +110,7 @@
 <script defer src="js/react-dom.production.min.js"></script>
 <script defer src="js/dc-runtime.js"></script>
 <script defer src="/_vercel/insights/script.js"></script>
+<script defer src="js/tagoclip-pro-hero.js"></script>
 
 
 
@@ -535,6 +536,9 @@
 .tb-cta:hover .tb-cta-arrow { transform: translateX(6px); }
 .tb-demo-link { transition: background .25s ease, border-color .25s ease, transform .25s ease; }
 .tb-demo-link:hover { background: rgba(0,253,220,0.1); border-color: rgba(0,253,220,0.8); transform: translateY(-2px); }
+/* Free plugins section: two cards side by side, CTA and details link share a row. */
+.tb-free-grid .tb-cta { padding: 16px 28px !important; font-size: 13px !important; }
+.tb-free-grid .tb-demo-link { padding: 12px 18px !important; font-size: 12px !important; margin-left: 8px; vertical-align: middle; }
 .tb-proj-card { transition: transform .35s cubic-bezier(.2,.8,.2,1), border-color .35s ease, box-shadow .35s ease; }
 .tb-proj-card:hover { transform: translateY(-6px); border-color: rgba(0,253,220,0.35); box-shadow: 0 26px 50px -24px rgba(0,0,0,0.65); }
 html, body, #dc-root, #dc-root > .sc-host { height: auto !important; min-height: 100%; }
@@ -569,6 +573,7 @@ body { margin: 0; }
   #tb-catalog-grid { grid-template-columns: repeat(3, minmax(0,1fr)) !important; gap: 18px 10px !important; }
   .tb-proj-card { flex-direction: column !important; }
   .tb-plugin-hero { flex-direction: column !important; }
+  .tb-free-grid { grid-template-columns: 1fr !important; }
   .tb-plugin-hero > div:first-child { flex-basis: auto !important; width: 100% !important; max-width: 100% !important; min-height: 0 !important; }
   .tb-plugin-form { flex-direction: column !important; align-items: stretch !important; }
   .tb-plugin-form input { width: 100% !important; }
@@ -633,8 +638,8 @@ body { margin: 0; }
       <nav style="flex:1; display:flex; flex-direction:column; justify-content:center; gap:clamp(6px,1.2vw,16px);">
         <a onclick="{{ closeMenu }}" href="#tb-hero" style="text-decoration:none; color:#F2EEE6; font-size:clamp(40px,8vw,92px); font-weight:800; letter-spacing:-0.035em; line-height:1.02;">Home</a>
         <a onclick="{{ closeMenu }}" href="/music" style="text-decoration:none; color:#F2EEE6; font-size:clamp(40px,8vw,92px); font-weight:800; letter-spacing:-0.035em; line-height:1.02;">Catalog</a>
-        <a onclick="{{ closeMenu }}" href="#tb-tagoclip" style="text-decoration:none; color:#F2EEE6; font-size:clamp(40px,8vw,92px); font-weight:800; letter-spacing:-0.035em; line-height:1.02;">TagoClip</a>
-        <a onclick="{{ closeMenu }}" href="#tb-plugins" style="text-decoration:none; color:#F2EEE6; font-size:clamp(40px,8vw,92px); font-weight:800; letter-spacing:-0.035em; line-height:1.02;">TagoPitch</a>
+        <a onclick="{{ closeMenu }}" href="#tb-pro" style="text-decoration:none; color:#F2EEE6; font-size:clamp(40px,8vw,92px); font-weight:800; letter-spacing:-0.035em; line-height:1.02;">TagoClip Pro</a>
+        <a onclick="{{ closeMenu }}" href="#tb-plugins" style="text-decoration:none; color:#F2EEE6; font-size:clamp(40px,8vw,92px); font-weight:800; letter-spacing:-0.035em; line-height:1.02;">Free Plugins</a>
         <a onclick="{{ closeMenu }}" href="#tb-about" style="text-decoration:none; color:#F2EEE6; font-size:clamp(40px,8vw,92px); font-weight:800; letter-spacing:-0.035em; line-height:1.02;">About</a>
         <a onclick="{{ closeMenu }}" href="#tb-loops" style="text-decoration:none; color:#F2EEE6; font-size:clamp(40px,8vw,92px); font-weight:800; letter-spacing:-0.035em; line-height:1.02;">Loops</a>
         <a href="https://robinbusse.dev" target="_blank" rel="noopener noreferrer" style="text-decoration:none; color:rgba(236,231,222,0.55); font-size:clamp(26px,4vw,46px); font-weight:300; letter-spacing:-0.01em; line-height:1.3; margin-top:18px;">Engineering <span style="color:#00FDDC;">↗</span></a>
@@ -711,75 +716,89 @@ body { margin: 0; }
     </div>
   </section>
 
-  <section id="tb-tagoclip" data-screen-label="TagoClip" class="tb-snap-section" style="position:relative; z-index:1; min-height:100vh; padding:clamp(80px,8vh,100px) clamp(24px,6vw,120px) clamp(12px,1.6vh,22px); display:flex; flex-direction:column; border-top:1px solid rgba(236,231,222,0.14);">
+  <section id="tb-pro" data-screen-label="TagoClip Pro" class="tb-snap-section" style="position:relative; z-index:1; min-height:100vh; padding:clamp(80px,8vh,100px) clamp(24px,6vw,120px) clamp(12px,1.6vh,22px); display:flex; flex-direction:column; border-top:1px solid rgba(236,231,222,0.14);">
     <div style="display:flex; align-items:flex-end; justify-content:space-between; flex-wrap:wrap; gap:16px; margin-bottom:clamp(10px,1.4vh,16px);">
       <div>
-        <div style="font-family:'Space Mono',monospace; font-size:11px; letter-spacing:0.3em; color:#00FDDC; margin-bottom:6px;">Tago Plugins</div>
-        <h2 style="margin:0; font-size:clamp(26px,3.4vw,40px); font-weight:800; letter-spacing:-0.03em; line-height:0.9; color:#F2EEE6;">TagoClip</h2>
+        <div style="font-family:'Space Mono',monospace; font-size:11px; letter-spacing:0.3em; color:#00FDDC; margin-bottom:6px;">Tago Plugins · Pro</div>
+        <h2 style="margin:0; font-size:clamp(26px,3.4vw,40px); font-weight:800; letter-spacing:-0.03em; line-height:0.9; color:#F2EEE6;">TagoClip <span style="color:#00FDDC;">Pro</span></h2>
       </div>
     </div>
 
     <div style="flex:1; min-height:0; display:flex; align-items:center; border-top:1px solid rgba(236,231,222,0.12); padding-top:clamp(18px,2.76vh,32px);">
       <div class="tb-proj-card tb-plugin-hero" style="background:#1A1815; border-radius:10px; overflow:hidden; border:1px solid rgba(236,231,222,0.08); display:flex; align-items:stretch; width:100%; max-width:1357px; margin:0 auto;">
-        <div style="position:relative; flex:0 0 56%; aspect-ratio:1224/752; min-height:clamp(200px,36vh,380px); overflow:hidden; background:#181917;">
-          <div style="position:absolute; inset:0; background:url('uploads_opt/TagoClip_800.jpg?v=6') center/cover no-repeat;"></div>
+        <div style="position:relative; flex:0 0 60%; aspect-ratio:1000/520; overflow:hidden; background:#0E0D0C;">
+          <iframe data-tb-pro-demo="" src="demos/tagoclip-pro-ui/index.html?embed=1" title="TagoClip Pro interface" tabindex="-1" aria-hidden="true" loading="lazy" style="position:absolute; inset:0; width:100%; height:100%; border:0; pointer-events:none;"></iframe>
         </div>
         <div style="flex:1; min-width:0; padding:clamp(20px,3.2vh,38px) clamp(23px,2.76vw,37px); display:flex; flex-direction:column; justify-content:center;">
-          <div style="font-family:'Space Mono',monospace; font-size:11px; letter-spacing:0.18em; color:rgba(236,231,222,0.45); margin-bottom:8px;">V1.1.0 · MACOS 11+ AU/VST3 · WINDOWS VST3 · FREE</div>
-          <h3 style="margin:0; font-size:clamp(23px,2.53vw,32px); font-weight:800; letter-spacing:-0.02em; color:#F2EEE6;">Soft clipper for 808s and drums</h3>
-          <p style="margin:clamp(7px,1.15vh,12px) 0 0; max-width:560px; font-size:clamp(15px,1.27vw,17px); line-height:1.5; color:rgba(236,231,222,0.55);">The FL soft clip sound in every DAW: the exact curve, measured and cloned, plus optional 4x/8x oversampling against its aliasing. Delta listening plays only what gets clipped away, mono low keeps the sub centered. On the left is the real UI.</p>
-
-          <div id="tb-tc-gate" style="margin-top:clamp(16px,2.4vh,26px);">
-            <button id="tb-tc-cta" type="button" class="tb-cta" style="border:none; cursor:pointer; font-family:inherit; color:#0A0908; background:#00FDDC; font-weight:800; font-size:14px; letter-spacing:0.1em; padding:19px 46px; border-radius:2px; display:inline-flex; align-items:center; gap:12px; white-space:nowrap;">
-              DOWNLOAD FREE <span class="tb-cta-arrow" style="font-size:17px; line-height:1;">→</span>
-            </button>
-            <form id="tb-tc-form" class="tb-plugin-form" novalidate style="display:none; align-items:center; gap:10px; flex-wrap:wrap;">
-              <input id="tb-tc-email" type="email" name="email" required autocomplete="email" placeholder="your@email.com" style="flex:1 1 220px; min-width:0; max-width:340px; background:rgba(236,231,222,0.06); border:1px solid rgba(236,231,222,0.18); border-radius:2px; padding:15px 16px; color:#ECE7DE; font-family:'Space Mono',monospace; font-size:14px; outline:none; transition:border-color .3s, box-shadow .3s;">
-              <button id="tb-tc-send" type="submit" class="tb-cta" style="border:none; cursor:pointer; font-family:inherit; color:#0A0908; background:#00FDDC; font-weight:800; font-size:13px; letter-spacing:0.1em; padding:16px 28px; border-radius:2px; display:inline-flex; align-items:center; gap:10px; white-space:nowrap;">
-                SEND LINK <span class="tb-cta-arrow" style="font-size:15px; line-height:1;">→</span>
-              </button>
-              <div style="flex-basis:100%; font-size:13px; line-height:1.5; color:rgba(236,231,222,0.4);">We mail you the download link, plus a heads-up when the next Tago plugin drops. Nothing else.</div>
-            </form>
-            <div id="tb-tc-msg" role="status" style="display:none; margin-top:12px; font-family:'Space Mono',monospace; font-size:13px; line-height:1.5;"></div>
-            <a href="/tagoclip" class="tb-demo-link" style="display:inline-flex; align-items:center; gap:10px; margin-top:14px; text-decoration:none; font-family:'Space Mono',monospace; font-size:13px; letter-spacing:0.14em; color:#00FDDC; border:1px solid rgba(0,253,220,0.45); border-radius:2px; padding:14px 26px;">AUDIO DEMO &amp; DETAILS →</a>
-            <div><a href="/tagoclip-pro" style="display:inline-block; margin-top:16px; text-decoration:none; font-family:'Space Mono',monospace; font-size:12px; letter-spacing:0.14em; color:rgba(236,231,222,0.6);">NEED TRUE PEAK, ADAA AND AUTO GAIN? <span style="color:#00FDDC;">TAGOCLIP PRO →</span></a></div>
+          <div style="font-family:'Space Mono',monospace; font-size:11px; letter-spacing:0.18em; color:rgba(236,231,222,0.45); margin-bottom:8px;">V1.0 · MACOS 11+ AU/VST3 · WINDOWS VST3</div>
+          <h3 style="margin:0; font-size:clamp(23px,2.53vw,32px); font-weight:800; letter-spacing:-0.02em; color:#F2EEE6;">The FL clipper, everywhere.</h3>
+          <p style="margin:clamp(7px,1.15vh,12px) 0 0; max-width:560px; font-size:clamp(15px,1.27vw,17px); line-height:1.5; color:rgba(236,231,222,0.55);">Same curve, modern engine. The FL soft clip sound with true peak control, anti-aliased clipping up to 4x, mono low end and auto gain, in every DAW.</p>
+          <div style="margin-top:clamp(16px,2.4vh,26px);">
+            <a href="/tagoclip-pro" class="tb-cta" style="text-decoration:none; color:#0A0908; background:#00FDDC; font-weight:800; font-size:14px; letter-spacing:0.1em; padding:19px 46px; border-radius:2px; display:inline-flex; align-items:center; gap:12px; white-space:nowrap;">SEE TAGOCLIP PRO <span class="tb-cta-arrow" style="font-size:17px; line-height:1;">→</span></a>
+            <div style="margin-top:12px; font-family:'Space Mono',monospace; font-size:11px; letter-spacing:0.18em; color:rgba(236,231,222,0.45);">7-DAY FREE TRIAL</div>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <section id="tb-plugins" data-screen-label="TagoPitch" class="tb-snap-section" style="position:relative; z-index:1; min-height:100vh; padding:clamp(80px,8vh,100px) clamp(24px,6vw,120px) clamp(12px,1.6vh,22px); display:flex; flex-direction:column; border-top:1px solid rgba(236,231,222,0.14);">
+  <section id="tb-plugins" data-screen-label="Free Plugins" class="tb-snap-section" style="position:relative; z-index:1; min-height:100vh; padding:clamp(80px,8vh,100px) clamp(24px,6vw,120px) clamp(12px,1.6vh,22px); display:flex; flex-direction:column; border-top:1px solid rgba(236,231,222,0.14);">
     <div style="display:flex; align-items:flex-end; justify-content:space-between; flex-wrap:wrap; gap:16px; margin-bottom:clamp(10px,1.4vh,16px);">
       <div>
-        <div style="font-family:'Space Mono',monospace; font-size:11px; letter-spacing:0.3em; color:#00FDDC; margin-bottom:6px;">Tago Plugins</div>
-        <h2 style="margin:0; font-size:clamp(26px,3.4vw,40px); font-weight:800; letter-spacing:-0.03em; line-height:0.9; color:#F2EEE6;">TagoPitch</h2>
+        <div style="font-family:'Space Mono',monospace; font-size:11px; letter-spacing:0.3em; color:#00FDDC; margin-bottom:6px;">Tago Plugins · Free</div>
+        <h2 style="margin:0; font-size:clamp(26px,3.4vw,40px); font-weight:800; letter-spacing:-0.03em; line-height:0.9; color:#F2EEE6;">Free Plugins</h2>
       </div>
     </div>
 
     <div style="flex:1; min-height:0; display:flex; align-items:center; border-top:1px solid rgba(236,231,222,0.12); padding-top:clamp(18px,2.76vh,32px);">
-      <div class="tb-proj-card tb-plugin-hero" style="background:#1A1815; border-radius:10px; overflow:hidden; border:1px solid rgba(236,231,222,0.08); display:flex; align-items:stretch; width:100%; max-width:1357px; margin:0 auto;">
-        <div style="position:relative; flex:0 0 56%; aspect-ratio:14/9; min-height:clamp(200px,36vh,380px); overflow:hidden; background:#181917;">
-          <div style="position:absolute; inset:0; background:url('uploads_opt/TagoPitch_800.jpg?v=2') center/cover no-repeat;"></div>
-        </div>
-        <div style="flex:1; min-width:0; padding:clamp(20px,3.2vh,38px) clamp(23px,2.76vw,37px); display:flex; flex-direction:column; justify-content:center;">
-          <div style="font-family:'Space Mono',monospace; font-size:11px; letter-spacing:0.18em; color:rgba(236,231,222,0.45); margin-bottom:8px;">V1.0.0 · MACOS 11+ AU/VST3 · WINDOWS VST3 · FREE</div>
-          <h3 style="margin:0; font-size:clamp(23px,2.53vw,32px); font-weight:800; letter-spacing:-0.02em; color:#F2EEE6;">TagoPitch</h3>
-          <p style="margin:clamp(7px,1.15vh,12px) 0 0; max-width:560px; font-size:clamp(15px,1.27vw,17px); line-height:1.5; color:rgba(236,231,222,0.55);">Vocal pitcher with separate pitch and formant control, plus mix and gain for quick parallel blends. Shift a vocal up or down without losing its character. The macOS installer is notarized, Windows ships as VST3.</p>
-
-          <div id="tb-tp-gate" style="margin-top:clamp(16px,2.4vh,26px);">
-            <button id="tb-tp-cta" type="button" class="tb-cta" style="border:none; cursor:pointer; font-family:inherit; color:#0A0908; background:#00FDDC; font-weight:800; font-size:14px; letter-spacing:0.1em; padding:19px 46px; border-radius:2px; display:inline-flex; align-items:center; gap:12px; white-space:nowrap;">
-              DOWNLOAD FREE <span class="tb-cta-arrow" style="font-size:17px; line-height:1;">→</span>
-            </button>
-            <form id="tb-tp-form" class="tb-plugin-form" novalidate style="display:none; align-items:center; gap:10px; flex-wrap:wrap;">
-              <input id="tb-tp-email" type="email" name="email" required autocomplete="email" placeholder="your@email.com" style="flex:1 1 220px; min-width:0; max-width:340px; background:rgba(236,231,222,0.06); border:1px solid rgba(236,231,222,0.18); border-radius:2px; padding:15px 16px; color:#ECE7DE; font-family:'Space Mono',monospace; font-size:14px; outline:none; transition:border-color .3s, box-shadow .3s;">
-              <button id="tb-tp-send" type="submit" class="tb-cta" style="border:none; cursor:pointer; font-family:inherit; color:#0A0908; background:#00FDDC; font-weight:800; font-size:13px; letter-spacing:0.1em; padding:16px 28px; border-radius:2px; display:inline-flex; align-items:center; gap:10px; white-space:nowrap;">
-                SEND LINK <span class="tb-cta-arrow" style="font-size:15px; line-height:1;">→</span>
+      <div class="tb-free-grid" style="display:grid; grid-template-columns:1fr 1fr; gap:clamp(16px,2vw,28px); width:100%; max-width:1357px; margin:0 auto; align-items:stretch;">
+        <div class="tb-proj-card" style="background:#1A1815; border-radius:10px; overflow:hidden; border:1px solid rgba(236,231,222,0.08); display:flex; flex-direction:column; min-width:0;">
+          <div style="position:relative; height:clamp(220px,36vh,380px); overflow:hidden; background:#181917; border-bottom:1px solid rgba(236,231,222,0.08);">
+            <iframe src="demos/tagoclip.html" title="TagoClip interface" tabindex="-1" aria-hidden="true" loading="lazy" style="position:absolute; inset:0; width:100%; height:100%; border:0; pointer-events:none;"></iframe>
+          </div>
+          <div style="flex:1; padding:clamp(18px,2.6vh,30px) clamp(20px,2.2vw,32px); display:flex; flex-direction:column;">
+            <div style="font-family:'Space Mono',monospace; font-size:11px; letter-spacing:0.18em; color:rgba(236,231,222,0.45); margin-bottom:8px;">V1.1.3 · MACOS 11+ AU/VST3 · WINDOWS VST3 · FREE</div>
+            <h3 style="margin:0; font-size:clamp(23px,2.2vw,30px); font-weight:800; letter-spacing:-0.02em; color:#F2EEE6;">TagoClip</h3>
+            <p style="margin:clamp(6px,1vh,10px) 0 0; font-size:clamp(14px,1.1vw,16px); line-height:1.5; color:rgba(236,231,222,0.55);">Soft clipper for 808s and drums. The FL soft clip curve, measured and cloned, with oversampling against its aliasing.</p>
+            <div id="tb-tc-gate" style="margin-top:clamp(16px,2.4vh,26px);">
+              <button id="tb-tc-cta" type="button" class="tb-cta" style="border:none; cursor:pointer; font-family:inherit; color:#0A0908; background:#00FDDC; font-weight:800; font-size:14px; letter-spacing:0.1em; padding:19px 46px; border-radius:2px; display:inline-flex; align-items:center; gap:12px; white-space:nowrap;">
+                DOWNLOAD FREE <span class="tb-cta-arrow" style="font-size:17px; line-height:1;">→</span>
               </button>
-              <div style="flex-basis:100%; font-size:13px; line-height:1.5; color:rgba(236,231,222,0.4);">We mail you the download link, plus a heads-up when the next Tago plugin drops. Nothing else.</div>
-            </form>
-            <div id="tb-tp-msg" role="status" style="display:none; margin-top:12px; font-family:'Space Mono',monospace; font-size:13px; line-height:1.5;"></div>
-            <a href="/tagopitch" class="tb-demo-link" style="display:inline-flex; align-items:center; gap:10px; margin-top:14px; text-decoration:none; font-family:'Space Mono',monospace; font-size:13px; letter-spacing:0.14em; color:#00FDDC; border:1px solid rgba(0,253,220,0.45); border-radius:2px; padding:14px 26px;">AUDIO DEMO &amp; DETAILS →</a>
+              <form id="tb-tc-form" class="tb-plugin-form" novalidate style="display:none; align-items:center; gap:10px; flex-wrap:wrap;">
+                <input id="tb-tc-email" type="email" name="email" required autocomplete="email" placeholder="your@email.com" style="flex:1 1 220px; min-width:0; max-width:340px; background:rgba(236,231,222,0.06); border:1px solid rgba(236,231,222,0.18); border-radius:2px; padding:15px 16px; color:#ECE7DE; font-family:'Space Mono',monospace; font-size:14px; outline:none; transition:border-color .3s, box-shadow .3s;">
+                <button id="tb-tc-send" type="submit" class="tb-cta" style="border:none; cursor:pointer; font-family:inherit; color:#0A0908; background:#00FDDC; font-weight:800; font-size:13px; letter-spacing:0.1em; padding:16px 28px; border-radius:2px; display:inline-flex; align-items:center; gap:10px; white-space:nowrap;">
+                  SEND LINK <span class="tb-cta-arrow" style="font-size:15px; line-height:1;">→</span>
+                </button>
+                <div style="flex-basis:100%; font-size:13px; line-height:1.5; color:rgba(236,231,222,0.4);">We mail you the download link, plus a heads-up when the next Tago plugin drops. Nothing else.</div>
+              </form>
+              <div id="tb-tc-msg" role="status" style="display:none; margin-top:12px; font-family:'Space Mono',monospace; font-size:13px; line-height:1.5;"></div>
+              <a href="/tagoclip" class="tb-demo-link" style="display:inline-flex; align-items:center; gap:10px; margin-top:14px; text-decoration:none; font-family:'Space Mono',monospace; font-size:13px; letter-spacing:0.14em; color:#00FDDC; border:1px solid rgba(0,253,220,0.45); border-radius:2px; padding:14px 26px;">AUDIO DEMO &amp; DETAILS →</a>
+              <div><a href="/tagoclip-pro" style="display:inline-block; margin-top:16px; text-decoration:none; font-family:'Space Mono',monospace; font-size:12px; letter-spacing:0.14em; color:rgba(236,231,222,0.6);">NEED TRUE PEAK, ADAA AND AUTO GAIN? <span style="color:#00FDDC;">TAGOCLIP PRO →</span></a></div>
+            </div>
+          </div>
+        </div>
+        <div class="tb-proj-card" style="background:#1A1815; border-radius:10px; overflow:hidden; border:1px solid rgba(236,231,222,0.08); display:flex; flex-direction:column; min-width:0;">
+          <div style="position:relative; height:clamp(220px,36vh,380px); overflow:hidden; background:#181917; border-bottom:1px solid rgba(236,231,222,0.08);">
+            <iframe src="demos/tagopitch.html" title="TagoPitch interface" tabindex="-1" aria-hidden="true" loading="lazy" style="position:absolute; inset:0; width:100%; height:100%; border:0; pointer-events:none;"></iframe>
+          </div>
+          <div style="flex:1; padding:clamp(18px,2.6vh,30px) clamp(20px,2.2vw,32px); display:flex; flex-direction:column;">
+            <div style="font-family:'Space Mono',monospace; font-size:11px; letter-spacing:0.18em; color:rgba(236,231,222,0.45); margin-bottom:8px;">V1.0.0 · MACOS 11+ AU/VST3 · WINDOWS VST3 · FREE</div>
+            <h3 style="margin:0; font-size:clamp(23px,2.2vw,30px); font-weight:800; letter-spacing:-0.02em; color:#F2EEE6;">TagoPitch</h3>
+            <p style="margin:clamp(6px,1vh,10px) 0 0; font-size:clamp(14px,1.1vw,16px); line-height:1.5; color:rgba(236,231,222,0.55);">Vocal pitcher with separate pitch and formant control, plus mix and gain for quick parallel blends.</p>
+            <div id="tb-tp-gate" style="margin-top:clamp(16px,2.4vh,26px);">
+              <button id="tb-tp-cta" type="button" class="tb-cta" style="border:none; cursor:pointer; font-family:inherit; color:#0A0908; background:#00FDDC; font-weight:800; font-size:14px; letter-spacing:0.1em; padding:19px 46px; border-radius:2px; display:inline-flex; align-items:center; gap:12px; white-space:nowrap;">
+                DOWNLOAD FREE <span class="tb-cta-arrow" style="font-size:17px; line-height:1;">→</span>
+              </button>
+              <form id="tb-tp-form" class="tb-plugin-form" novalidate style="display:none; align-items:center; gap:10px; flex-wrap:wrap;">
+                <input id="tb-tp-email" type="email" name="email" required autocomplete="email" placeholder="your@email.com" style="flex:1 1 220px; min-width:0; max-width:340px; background:rgba(236,231,222,0.06); border:1px solid rgba(236,231,222,0.18); border-radius:2px; padding:15px 16px; color:#ECE7DE; font-family:'Space Mono',monospace; font-size:14px; outline:none; transition:border-color .3s, box-shadow .3s;">
+                <button id="tb-tp-send" type="submit" class="tb-cta" style="border:none; cursor:pointer; font-family:inherit; color:#0A0908; background:#00FDDC; font-weight:800; font-size:13px; letter-spacing:0.1em; padding:16px 28px; border-radius:2px; display:inline-flex; align-items:center; gap:10px; white-space:nowrap;">
+                  SEND LINK <span class="tb-cta-arrow" style="font-size:15px; line-height:1;">→</span>
+                </button>
+                <div style="flex-basis:100%; font-size:13px; line-height:1.5; color:rgba(236,231,222,0.4);">We mail you the download link, plus a heads-up when the next Tago plugin drops. Nothing else.</div>
+              </form>
+              <div id="tb-tp-msg" role="status" style="display:none; margin-top:12px; font-family:'Space Mono',monospace; font-size:13px; line-height:1.5;"></div>
+              <a href="/tagopitch" class="tb-demo-link" style="display:inline-flex; align-items:center; gap:10px; margin-top:14px; text-decoration:none; font-family:'Space Mono',monospace; font-size:13px; letter-spacing:0.14em; color:#00FDDC; border:1px solid rgba(0,253,220,0.45); border-radius:2px; padding:14px 26px;">AUDIO DEMO &amp; DETAILS →</a>
+            </div>
           </div>
         </div>
       </div>
@@ -1010,8 +1029,8 @@ class Component extends DCLogic {
 
   SECTIONS = [
     { id: 'tb-hero', label: 'Home' },
-    { id: 'tb-tagoclip', label: 'TagoClip' },
-    { id: 'tb-plugins', label: 'TagoPitch' },
+    { id: 'tb-pro', label: 'TagoClip Pro' },
+    { id: 'tb-plugins', label: 'Free Plugins' },
     { id: 'tb-catalog', label: 'Catalog' },
     { id: 'tb-loops', label: 'Loops' },
     { id: 'tb-about', label: 'About' },

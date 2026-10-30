@@ -40,13 +40,17 @@
     return keys[keys.length - 1][1];
   }
 
-  var frame = document.getElementById("tb-pro-ui");
-  if (!frame) return;
   var reduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+  // One loop per demo frame: #tb-pro-ui on the product page, any
+  // iframe[data-tb-pro-demo] elsewhere (the home page). On the home page the
+  // dc-runtime renders the frame after this script runs and may replace it
+  // after hydration, so frames are picked up by a scan, not once at load.
+  function attach(frame) {
   function boot() {
     var w = frame.contentWindow;
     var m = w && w.__tagoMock;
+    if (!frame.isConnected) return;
     if (!m || !m.params || !m.params.drive_db) { setTimeout(boot, 100); return; }
 
     var last = {};
@@ -112,6 +116,17 @@
     sync();
   }
 
-  if (frame.contentDocument && frame.contentDocument.readyState === "complete") boot();
-  else frame.addEventListener("load", boot);
+  boot();
+  }
+
+  function scan() {
+    var frames = document.querySelectorAll("#tb-pro-ui, iframe[data-tb-pro-demo]");
+    for (var i = 0; i < frames.length; i++) {
+      if (frames[i].__tbBooted) continue;
+      frames[i].__tbBooted = true;
+      attach(frames[i]);
+    }
+  }
+  scan();
+  setInterval(scan, 1000);
 })();

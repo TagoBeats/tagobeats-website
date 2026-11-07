@@ -16,6 +16,17 @@
     el.textContent = days <= 1 ? "LAST DAY" : days + " DAYS LEFT";
   });
 
+  // The ticker scrolls by half its width, so the quotes need a second copy
+  // behind them for a seamless loop. Hidden from screen readers.
+  var track = document.querySelector(".tb-ticker-track");
+  if (track) {
+    [].slice.call(track.children).forEach(function (li) {
+      var copy = li.cloneNode(true);
+      copy.setAttribute("aria-hidden", "true");
+      track.appendChild(copy);
+    });
+  }
+
   var hero = document.getElementById("tb-herobuy");
   if (!hero || !("IntersectionObserver" in window)) return;
 

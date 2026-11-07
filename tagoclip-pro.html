@@ -214,30 +214,23 @@ body { margin: 0; background:var(--bg); color:var(--text); font-family:'Archivo'
 .tb-sticky-price s { font-family:var(--mono); font-size:11px; letter-spacing:0; }
 .tb-sticky .tb-btn { padding:15px 18px; font-size:13px; }
 
-/* Testimonials: one big quote, two small ones stacked next to it. */
-.tb-quotes { display:grid; grid-template-columns:1.25fr 1fr; grid-template-rows:auto auto; gap:16px; }
-.tb-quote { position:relative; margin:0; padding:clamp(22px,2.6vw,32px); border-radius:14px; background:linear-gradient(160deg, rgba(34,31,27,0.8), rgba(20,18,16,0.8)); border:1px solid var(--hair); display:flex; flex-direction:column; gap:22px; transition:transform .3s cubic-bezier(.2,.8,.2,1), border-color .3s; }
-.tb-quote:hover { transform:translateY(-3px); border-color:rgba(var(--acc-rgb),0.3); }
-.tb-quote blockquote { margin:0; font-size:17px; line-height:1.6; color:var(--text); flex:1; }
-.tb-quote em { font-style:normal; color:var(--hi); background:linear-gradient(transparent 60%, rgba(var(--acc-rgb),0.26) 60%); }
-.tb-quote-mark { display:block; height:34px; font-size:72px; font-weight:800; line-height:0.9; color:var(--acc); text-shadow:0 0 24px rgba(var(--acc-rgb),0.5); }
-.tb-quote-big { grid-row:span 2; border:0; background:radial-gradient(ellipse 80% 60% at 0% 0%, rgba(var(--acc-rgb),0.1), transparent 70%), radial-gradient(ellipse 70% 60% at 100% 100%, rgba(var(--warm-rgb),0.08), transparent 70%), linear-gradient(160deg, rgba(34,31,27,0.92), rgba(18,16,14,0.92)); }
-.tb-quote-big::before { content:''; position:absolute; inset:0; border-radius:inherit; padding:1px; background:linear-gradient(150deg, rgba(var(--acc-rgb),0.55), rgba(236,231,222,0.08) 40%, rgba(var(--warm-rgb),0.35)); -webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite:xor; mask-composite:exclude; pointer-events:none; }
-.tb-quote-big .tb-quote-mark { height:60px; font-size:120px; }
-.tb-quote-big blockquote { flex:0 0 auto; margin:auto 0; font-size:clamp(22px,2.4vw,32px); font-weight:700; line-height:1.3; letter-spacing:-0.015em; color:var(--hi); }
-.tb-quote figcaption { display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; }
-.tb-quote-who { display:flex; align-items:center; gap:12px; }
-.tb-quote-who b { display:block; font-size:14px; color:var(--hi); }
-.tb-quote-who > span:last-child { font-size:13px; color:var(--dim); line-height:1.4; }
-.tb-avatar { width:36px; height:36px; flex:0 0 36px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:14px; color:var(--deep); background:linear-gradient(135deg, var(--acc), rgba(var(--warm-rgb),0.9)); }
-.tb-quote-src { font-family:var(--mono); font-size:9.5px; letter-spacing:0.16em; color:var(--faint); padding:6px 9px; border:1px solid var(--hair); border-radius:3px; }
-@media (min-width: 641px) {
-  .tb-quote-src { position:absolute; top:clamp(22px,2.6vw,32px); right:clamp(22px,2.6vw,32px); }
+/* Testimonials as a slow ticker, faded out at both edges, paused on hover. */
+.tb-ticker { overflow:hidden; border-top:1px solid var(--hair); border-bottom:1px solid var(--hair); -webkit-mask-image:linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); mask-image:linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
+.tb-ticker-track { display:flex; width:max-content; margin:0; padding:0; list-style:none; animation:tb-ticker 60s linear infinite; }
+.tb-ticker:hover .tb-ticker-track { animation-play-state:paused; }
+@keyframes tb-ticker { to { transform:translateX(-50%); } }
+.tb-ticker li { display:flex; align-items:baseline; gap:14px; padding:22px 0; white-space:nowrap; }
+.tb-ticker li::after { content:''; width:5px; height:5px; margin:0 36px; align-self:center; border-radius:50%; background:var(--acc); box-shadow:0 0 8px rgba(var(--acc-rgb),0.7); }
+.tb-ticker q { font-size:17px; font-weight:600; color:var(--hi); quotes:'\201C' '\201D'; }
+.tb-ticker li span { font-family:var(--mono); font-size:10px; letter-spacing:0.16em; color:var(--faint); }
+
+/* Hero split on desktop: copy left, plugin right. */
+@media (min-width: 1024px) {
+  .tb-herogrid { display:grid; grid-template-columns:minmax(0,0.85fr) minmax(0,1.15fr); gap:clamp(40px,4vw,64px); align-items:center; }
+  .tb-herogrid .tb-hero h1 { font-size:clamp(56px,5.4vw,84px) !important; }
+  .tb-herogrid .tb-stage { margin-top:0; }
+  .tb-herogrid + .tb-buyrow { margin-top:clamp(64px,9vh,104px); }
 }
-.tb-switch { display:flex; align-items:center; gap:10px; font-family:var(--mono); font-size:10.5px; letter-spacing:0.14em; }
-.tb-switch s { color:var(--faint); }
-.tb-switch span { color:var(--dim); }
-.tb-switch b { font-weight:600; color:var(--acc); }
 
 /* Closing card */
 .tb-final { overflow:hidden; display:grid; grid-template-columns:minmax(0,1fr) 380px; gap:clamp(32px,5vw,72px); align-items:center; padding:clamp(28px,5vw,64px); border-radius:18px; background:radial-gradient(ellipse 60% 80% at 15% 100%, rgba(var(--acc-rgb),0.12), transparent 70%), radial-gradient(ellipse 50% 70% at 100% 0%, rgba(var(--warm-rgb),0.09), transparent 70%), linear-gradient(160deg, rgba(30,27,24,0.95), rgba(14,13,12,0.95)); box-shadow:0 0 0 1px var(--hair), 0 50px 110px -40px rgba(0,0,0,0.95); }
@@ -253,21 +246,20 @@ body { margin: 0; background:var(--bg); color:var(--text); font-family:'Archivo'
 @media (max-width: 900px) {
   .tb-navbuy { display:none; }
   .tb-sticky { display:flex; }
-  .tb-quotes { grid-template-columns:1fr; }
-  .tb-quote-big { grid-row:auto; }
   .tb-final { grid-template-columns:1fr; }
 }
 @media (max-width: 640px) {
   .tb-herobuy { margin-top:24px; }
   .tb-herobuy-btns .tb-btn { flex:1 1 auto; padding:17px 14px; gap:7px; font-size:13px; letter-spacing:0.08em; }
   .tb-herobuy-btns .tb-btn-ghost { flex:0 1 auto; padding:16px 14px; font-size:12px; }
-  .tb-quote-big .tb-quote-mark { height:44px; font-size:90px; }
 }
 @media (max-width: 400px) {
   .tb-hide-xs { display:none; }
 }
 @media (prefers-reduced-motion: reduce) {
   .tb-shine::before, .tb-live i { animation:none; }
+  .tb-ticker { overflow-x:auto; }
+  .tb-ticker-track { animation:none; }
   .tb-sticky, .tb-navbuy { transition:none; }
 }
 </style>
@@ -320,6 +312,8 @@ body { margin: 0; background:var(--bg); color:var(--text); font-family:'Archivo'
 
     <!-- Hero -->
     <section style="max-width:1160px; margin:0 auto;">
+      <!-- Desktop: copy left, plugin right. Below 1024px they stack. -->
+      <div class="tb-herogrid">
       <div class="tb-hero">
         <div>
           <div class="tb-eyebrow" style="margin-bottom:18px;">Tago Plugins · Pro</div>
@@ -332,7 +326,7 @@ body { margin: 0; background:var(--bg); color:var(--text); font-family:'Archivo'
           <div id="tb-herobuy" class="tb-herobuy">
             <div class="tb-herobuy-btns" data-moonbase-if="!product.tagoclip-pro.owned">
               <a href="https://tagobeats.moonbase.sh/" data-tb-store="buy" class="tb-cta tb-btn tb-shine">BUY FOR <span data-moonbase-render="product.tagoclip-pro.price">$49</span><s hidden data-moonbase-if="product.tagoclip-pro.has_discount" data-moonbase-render="product.tagoclip-pro.original_price">$49</s><span aria-hidden="true" style="font-size:17px; line-height:1;">→</span></a>
-              <a href="https://tagobeats.moonbase.sh/" data-tb-store="trial" class="tb-cta-ghost tb-btn-ghost">TRY <span class="tb-hide-xs">7 DAYS&nbsp;</span>FREE</a>
+              <a href="https://tagobeats.moonbase.sh/" data-tb-store="trial" class="tb-cta-ghost tb-btn-ghost">TRY&nbsp;<span class="tb-hide-xs">7 DAYS&nbsp;</span>FREE</a>
             </div>
             <div class="tb-herobuy-btns" hidden data-moonbase-if="product.tagoclip-pro.owned">
               <a href="https://tagobeats.moonbase.sh/" data-tb-store="download" class="tb-cta tb-btn">DOWNLOAD <span aria-hidden="true" style="font-size:17px; line-height:1;">↓</span></a>
@@ -351,6 +345,7 @@ body { margin: 0; background:var(--bg); color:var(--text); font-family:'Archivo'
         <div class="tb-frame">
           <iframe id="tb-pro-ui" src="demos/tagoclip-pro-ui/index.html?embed=1" title="TagoClip Pro interface" tabindex="-1" aria-hidden="true"></iframe>
         </div>
+      </div>
       </div>
 
       <div class="tb-buyrow">
@@ -605,36 +600,18 @@ body { margin: 0; background:var(--bg); color:var(--text); font-family:'Archivo'
       </div>
     </section>
 
-    <!-- Social proof. Verbatim lines from beta tester mails, cuts marked with an
-         ellipsis, never reworded. Source and dates: vault, TagoClip Pro Beta-Tester. -->
+    <!-- Social proof as a slow ticker. Verbatim lines from tester mails, cuts
+         marked with an ellipsis, never reworded. Source: vault, TagoClip Pro
+         Beta-Tester. Add a line by adding an <li>, the loop copy is made in
+         js/tagoclip-pro-cta.js. -->
     <section class="tb-sec" aria-label="What testers say">
-      <h2 class="tb-eyebrow">From the beta</h2>
-      <p class="tb-lede">Straight from tester mails. Trimmed, never reworded.</p>
-      <div class="tb-quotes">
-        <figure class="tb-quote tb-quote-big">
-          <span class="tb-quote-mark" aria-hidden="true">“</span>
-          <blockquote>How closely it captures that <em>FL Studio Fruity Clipper sound and feel</em>, which is exactly the kind of clipping I'm after.</blockquote>
-          <figcaption>
-            <span class="tb-quote-who"><span class="tb-avatar" aria-hidden="true">M</span><span><b>Marcos</b>Trap producer · Ableton Live 12</span></span>
-            <span class="tb-quote-src">PRO BETA · OCT 26</span>
-          </figcaption>
-        </figure>
-        <figure class="tb-quote">
-          <span class="tb-quote-mark" aria-hidden="true">“</span>
-          <blockquote>How much clarity I'm still getting when pushing it hard … <em>clear and punchy</em> … without everything becoming muddy.</blockquote>
-          <figcaption>
-            <span class="tb-quote-who"><span class="tb-avatar" aria-hidden="true">M</span><span><b>Marcos</b>Trap producer · Ableton Live 12</span></span>
-            <span class="tb-quote-src">PRO BETA · OCT 26</span>
-          </figcaption>
-        </figure>
-        <figure class="tb-quote">
-          <div class="tb-switch" aria-hidden="true"><s>STANDARDCLIP</s><span>→</span><b>TAGOCLIP</b></div>
-          <blockquote>Used to rely heavily on StandardCLIP, but I've recently <em>replaced it with your clipper</em>.</blockquote>
-          <figcaption>
-            <span class="tb-quote-who"><span class="tb-avatar" aria-hidden="true">M</span><span><b>Marcos</b>Trap producer · Ableton Live 12</span></span>
-            <span class="tb-quote-src">ON TAGOCLIP FREE · OCT 24</span>
-          </figcaption>
-        </figure>
+      <h2 class="tb-eyebrow">From the beta · straight from tester mails</h2>
+      <div class="tb-ticker">
+        <ul class="tb-ticker-track">
+          <li><q>…captures that FL Studio Fruity Clipper sound and feel, which is exactly the kind of clipping I'm after.</q><span>MARCOS · ABLETON</span></li>
+          <li><q>…clear and punchy … without everything becoming muddy.</q><span>MARCOS · ABLETON</span></li>
+          <li><q>Used to rely heavily on StandardCLIP, but I've recently replaced it with your clipper.</q><span>MARCOS · ABLETON · ON TAGOCLIP FREE</span></li>
+        </ul>
       </div>
     </section>
 

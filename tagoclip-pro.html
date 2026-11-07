@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>TagoClip Pro — The FL Clipper, Everywhere (AU/VST3) by TagoBeats</title>
+<title>TagoClip Pro: The FL Clipper, Everywhere (AU/VST3) by TagoBeats</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- Not launched yet: keep it out of search until the page and checkout are final. -->
@@ -185,6 +185,91 @@ body { margin: 0; background:var(--bg); color:var(--text); font-family:'Archivo'
 @media (prefers-reduced-motion: reduce) {
   .tb-sig-wave, .tb-sig-dot, .tb-sig-dot-m { animation:none; }
 }
+
+/* ---------- Buy prompts: hero row, nav button, sticky bar, closing card ---------- */
+.tb-btn { display:inline-flex; align-items:center; justify-content:center; gap:10px; text-decoration:none; color:var(--deep); background:var(--acc); font-weight:800; font-size:14px; letter-spacing:0.12em; padding:18px 26px; border-radius:3px; white-space:nowrap; }
+.tb-btn s { font-family:var(--mono); font-size:11px; font-weight:400; letter-spacing:0; opacity:.5; }
+.tb-btn-ghost { display:inline-flex; align-items:center; justify-content:center; text-decoration:none; color:var(--text); background:transparent; border:1px solid rgba(236,231,222,0.22); font-weight:700; font-size:13px; letter-spacing:0.12em; padding:17px 22px; border-radius:3px; white-space:nowrap; }
+/* The light sweep from the hover, also on its own every few seconds. */
+@keyframes tb-shine { 0%, 72% { left:-60%; } 88%, 100% { left:130%; } }
+.tb-shine::before { animation:tb-shine 6.5s ease-in-out 1.5s infinite; }
+
+.tb-herobuy { margin-top:30px; }
+.tb-herobuy-btns { display:flex; flex-wrap:wrap; gap:12px; }
+.tb-note { margin-top:16px; display:flex; flex-wrap:wrap; gap:6px 18px; font-family:var(--mono); font-size:10px; letter-spacing:0.16em; line-height:1.7; color:var(--faint); }
+.tb-live { display:inline-flex; flex-wrap:wrap; align-items:center; gap:4px 8px; color:var(--acc); }
+.tb-live > * { white-space:nowrap; }
+.tb-live i { width:6px; height:6px; border-radius:50%; background:var(--acc); box-shadow:0 0 10px rgba(var(--acc-rgb),0.8); animation:tb-breathe 2.4s ease-in-out infinite; }
+.tb-live b { font-weight:500; }
+
+.tb-navbuy { text-decoration:none; color:var(--deep); background:var(--acc); font-weight:800; font-size:12px; letter-spacing:0.14em; padding:11px 16px; border-radius:3px; opacity:0; transform:translateY(-6px); pointer-events:none; transition:opacity .3s ease, transform .3s ease; box-shadow:0 12px 30px -14px rgba(var(--acc-rgb),0.7); }
+.tb-sticky-on .tb-navbuy { opacity:1; transform:none; pointer-events:auto; }
+
+/* No backdrop-filter, same reason as on the price card. */
+.tb-sticky { display:none; position:fixed; z-index:60; left:12px; right:12px; bottom:calc(12px + env(safe-area-inset-bottom)); align-items:center; justify-content:space-between; gap:14px; padding:10px 10px 10px 18px; border-radius:12px; background:linear-gradient(160deg, rgba(36,33,29,0.98), rgba(18,16,14,0.98)); box-shadow:0 0 0 1px rgba(var(--acc-rgb),0.22), 0 24px 50px -12px rgba(0,0,0,0.9); transform:translateY(calc(100% + 30px)); transition:transform .4s cubic-bezier(.2,.8,.2,1); }
+.tb-sticky-on .tb-sticky { transform:none; }
+.tb-sticky-info { display:flex; flex-direction:column; gap:3px; min-width:0; font-family:var(--mono); font-size:9.5px; letter-spacing:0.16em; color:var(--faint); }
+.tb-sticky-price { display:flex; align-items:baseline; gap:8px; font-family:'Archivo',sans-serif; letter-spacing:-0.02em; }
+.tb-sticky-price b { font-size:22px; font-weight:800; color:var(--hi); line-height:1; }
+.tb-sticky-price s { font-family:var(--mono); font-size:11px; letter-spacing:0; }
+.tb-sticky .tb-btn { padding:15px 18px; font-size:13px; }
+
+/* Testimonials: one big quote, two small ones stacked next to it. */
+.tb-quotes { display:grid; grid-template-columns:1.25fr 1fr; grid-template-rows:auto auto; gap:16px; }
+.tb-quote { position:relative; margin:0; padding:clamp(22px,2.6vw,32px); border-radius:14px; background:linear-gradient(160deg, rgba(34,31,27,0.8), rgba(20,18,16,0.8)); border:1px solid var(--hair); display:flex; flex-direction:column; gap:22px; transition:transform .3s cubic-bezier(.2,.8,.2,1), border-color .3s; }
+.tb-quote:hover { transform:translateY(-3px); border-color:rgba(var(--acc-rgb),0.3); }
+.tb-quote blockquote { margin:0; font-size:17px; line-height:1.6; color:var(--text); flex:1; }
+.tb-quote em { font-style:normal; color:var(--hi); background:linear-gradient(transparent 60%, rgba(var(--acc-rgb),0.26) 60%); }
+.tb-quote-mark { display:block; height:34px; font-size:72px; font-weight:800; line-height:0.9; color:var(--acc); text-shadow:0 0 24px rgba(var(--acc-rgb),0.5); }
+.tb-quote-big { grid-row:span 2; border:0; background:radial-gradient(ellipse 80% 60% at 0% 0%, rgba(var(--acc-rgb),0.1), transparent 70%), radial-gradient(ellipse 70% 60% at 100% 100%, rgba(var(--warm-rgb),0.08), transparent 70%), linear-gradient(160deg, rgba(34,31,27,0.92), rgba(18,16,14,0.92)); }
+.tb-quote-big::before { content:''; position:absolute; inset:0; border-radius:inherit; padding:1px; background:linear-gradient(150deg, rgba(var(--acc-rgb),0.55), rgba(236,231,222,0.08) 40%, rgba(var(--warm-rgb),0.35)); -webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite:xor; mask-composite:exclude; pointer-events:none; }
+.tb-quote-big .tb-quote-mark { height:60px; font-size:120px; }
+.tb-quote-big blockquote { flex:0 0 auto; margin:auto 0; font-size:clamp(22px,2.4vw,32px); font-weight:700; line-height:1.3; letter-spacing:-0.015em; color:var(--hi); }
+.tb-quote figcaption { display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; }
+.tb-quote-who { display:flex; align-items:center; gap:12px; }
+.tb-quote-who b { display:block; font-size:14px; color:var(--hi); }
+.tb-quote-who > span:last-child { font-size:13px; color:var(--dim); line-height:1.4; }
+.tb-avatar { width:36px; height:36px; flex:0 0 36px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:14px; color:var(--deep); background:linear-gradient(135deg, var(--acc), rgba(var(--warm-rgb),0.9)); }
+.tb-quote-src { font-family:var(--mono); font-size:9.5px; letter-spacing:0.16em; color:var(--faint); padding:6px 9px; border:1px solid var(--hair); border-radius:3px; }
+@media (min-width: 641px) {
+  .tb-quote-src { position:absolute; top:clamp(22px,2.6vw,32px); right:clamp(22px,2.6vw,32px); }
+}
+.tb-switch { display:flex; align-items:center; gap:10px; font-family:var(--mono); font-size:10.5px; letter-spacing:0.14em; }
+.tb-switch s { color:var(--faint); }
+.tb-switch span { color:var(--dim); }
+.tb-switch b { font-weight:600; color:var(--acc); }
+
+/* Closing card */
+.tb-final { overflow:hidden; display:grid; grid-template-columns:minmax(0,1fr) 380px; gap:clamp(32px,5vw,72px); align-items:center; padding:clamp(28px,5vw,64px); border-radius:18px; background:radial-gradient(ellipse 60% 80% at 15% 100%, rgba(var(--acc-rgb),0.12), transparent 70%), radial-gradient(ellipse 50% 70% at 100% 0%, rgba(var(--warm-rgb),0.09), transparent 70%), linear-gradient(160deg, rgba(30,27,24,0.95), rgba(14,13,12,0.95)); box-shadow:0 0 0 1px var(--hair), 0 50px 110px -40px rgba(0,0,0,0.95); }
+.tb-final-curve { position:absolute; inset:0; width:100%; height:100%; pointer-events:none; }
+.tb-final-copy, .tb-final-buy { position:relative; }
+.tb-final h2 { margin:0 0 18px; font-size:clamp(36px,5vw,64px); font-weight:800; letter-spacing:-0.04em; line-height:0.95; color:var(--hi); }
+.tb-final h2 span { color:var(--acc); }
+.tb-final-copy p { margin:0; max-width:460px; font-size:16px; line-height:1.65; color:var(--dim); }
+.tb-ticks { margin:20px 0 0; padding:0; list-style:none; display:grid; gap:8px; }
+.tb-ticks li { display:flex; align-items:center; gap:10px; font-size:14px; color:var(--text); }
+.tb-ticks li::before { content:''; width:14px; height:8px; flex:0 0 14px; margin-top:-4px; border-left:2px solid var(--acc); border-bottom:2px solid var(--acc); transform:rotate(-45deg) scale(.8); }
+
+@media (max-width: 900px) {
+  .tb-navbuy { display:none; }
+  .tb-sticky { display:flex; }
+  .tb-quotes { grid-template-columns:1fr; }
+  .tb-quote-big { grid-row:auto; }
+  .tb-final { grid-template-columns:1fr; }
+}
+@media (max-width: 640px) {
+  .tb-herobuy { margin-top:24px; }
+  .tb-herobuy-btns .tb-btn { flex:1 1 auto; padding:17px 14px; gap:7px; font-size:13px; letter-spacing:0.08em; }
+  .tb-herobuy-btns .tb-btn-ghost { flex:0 1 auto; padding:16px 14px; font-size:12px; }
+  .tb-quote-big .tb-quote-mark { height:44px; font-size:90px; }
+}
+@media (max-width: 400px) {
+  .tb-hide-xs { display:none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .tb-shine::before, .tb-live i { animation:none; }
+  .tb-sticky, .tb-navbuy { transition:none; }
+}
 </style>
 <script defer src="/_vercel/insights/script.js"></script>
 </head>
@@ -227,6 +312,7 @@ body { margin: 0; background:var(--bg); color:var(--text); font-family:'Archivo'
     <div style="display:flex; align-items:center; gap:clamp(18px,3vw,40px);">
       <a href="/tagoclip" class="tb-hide-mobile" style="text-decoration:none; color:rgba(236,231,222,0.7); font-size:13px; letter-spacing:0.14em; font-weight:600;">TAGOCLIP FREE</a>
       <a href="/" style="text-decoration:none; color:rgba(236,231,222,0.7); font-size:13px; letter-spacing:0.18em; font-weight:600;">HOME</a>
+      <a href="https://tagobeats.moonbase.sh/" data-tb-store="buy" class="tb-cta tb-navbuy" data-moonbase-if="!product.tagoclip-pro.owned">BUY · <span data-moonbase-render="product.tagoclip-pro.price">$49</span></a>
     </div>
   </nav>
 
@@ -240,6 +326,23 @@ body { margin: 0; background:var(--bg); color:var(--text); font-family:'Archivo'
           <h1 style="margin:0 0 16px; font-size:clamp(46px,7.4vw,96px); font-weight:800; letter-spacing:-0.04em; line-height:0.9; color:var(--hi);">TagoClip<span style="color:var(--acc);"> Pro</span></h1>
           <p style="margin:0 0 14px; font-size:clamp(20px,2.1vw,28px); font-weight:700; letter-spacing:-0.015em; color:var(--hi);">The FL clipper, everywhere.</p>
           <p style="margin:0; max-width:560px; font-size:clamp(16px,1.35vw,18px); line-height:1.65; color:var(--dim);">Same curve, modern engine. The FL soft clip sound with true peak control, mono low end and level-matched A/B, in every DAW.</p>
+
+          <!-- First buy button, above the fold on every screen. When it scrolls
+               away, the sticky buy button takes over (js/tagoclip-pro-cta.js). -->
+          <div id="tb-herobuy" class="tb-herobuy">
+            <div class="tb-herobuy-btns" data-moonbase-if="!product.tagoclip-pro.owned">
+              <a href="https://tagobeats.moonbase.sh/" data-tb-store="buy" class="tb-cta tb-btn tb-shine">BUY FOR <span data-moonbase-render="product.tagoclip-pro.price">$49</span><s hidden data-moonbase-if="product.tagoclip-pro.has_discount" data-moonbase-render="product.tagoclip-pro.original_price">$49</s><span aria-hidden="true" style="font-size:17px; line-height:1;">→</span></a>
+              <a href="https://tagobeats.moonbase.sh/" data-tb-store="trial" class="tb-cta-ghost tb-btn-ghost">TRY <span class="tb-hide-xs">7 DAYS&nbsp;</span>FREE</a>
+            </div>
+            <div class="tb-herobuy-btns" hidden data-moonbase-if="product.tagoclip-pro.owned">
+              <a href="https://tagobeats.moonbase.sh/" data-tb-store="download" class="tb-cta tb-btn">DOWNLOAD <span aria-hidden="true" style="font-size:17px; line-height:1;">↓</span></a>
+            </div>
+            <div class="tb-note">
+              <span class="tb-live" hidden data-moonbase-if="product.tagoclip-pro.has_discount"><i></i><span>INTRO PRICE · ENDS DEC 4 ·</span><b data-tb-days></b></span>
+              <span>PAY ONCE · NO SUBSCRIPTION</span>
+              <span>TRIAL WITHOUT ACCOUNT</span>
+            </div>
+          </div>
         </div>
 
       </div>
@@ -257,7 +360,7 @@ body { margin: 0; background:var(--bg); color:var(--text); font-family:'Archivo'
           <div class="tb-spec"><b>TRUE PEAK</b><span>A ceiling down to −12 dBTP, the very last stage after mix and output.</span></div>
           <div class="tb-spec"><b>AUTO GAIN</b><span>Level-matched A/B, so you hear the clip and not just louder.</span></div>
         </div>
-        <aside class="tb-buy" aria-label="Buy TagoClip Pro">
+        <aside class="tb-buy" aria-label="Buy TagoClip Pro" data-tb-hides-sticky>
           <!-- Prices are rendered live from Moonbase. The static text is what shows
                before the storefront has loaded, or if it never does. -->
           <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:14px;">
@@ -502,6 +605,39 @@ body { margin: 0; background:var(--bg); color:var(--text); font-family:'Archivo'
       </div>
     </section>
 
+    <!-- Social proof. Verbatim lines from beta tester mails, cuts marked with an
+         ellipsis, never reworded. Source and dates: vault, TagoClip Pro Beta-Tester. -->
+    <section class="tb-sec" aria-label="What testers say">
+      <h2 class="tb-eyebrow">From the beta</h2>
+      <p class="tb-lede">Straight from tester mails. Trimmed, never reworded.</p>
+      <div class="tb-quotes">
+        <figure class="tb-quote tb-quote-big">
+          <span class="tb-quote-mark" aria-hidden="true">“</span>
+          <blockquote>How closely it captures that <em>FL Studio Fruity Clipper sound and feel</em>, which is exactly the kind of clipping I'm after.</blockquote>
+          <figcaption>
+            <span class="tb-quote-who"><span class="tb-avatar" aria-hidden="true">M</span><span><b>Marcos</b>Trap producer · Ableton Live 12</span></span>
+            <span class="tb-quote-src">PRO BETA · OCT 26</span>
+          </figcaption>
+        </figure>
+        <figure class="tb-quote">
+          <span class="tb-quote-mark" aria-hidden="true">“</span>
+          <blockquote>How much clarity I'm still getting when pushing it hard … <em>clear and punchy</em> … without everything becoming muddy.</blockquote>
+          <figcaption>
+            <span class="tb-quote-who"><span class="tb-avatar" aria-hidden="true">M</span><span><b>Marcos</b>Trap producer · Ableton Live 12</span></span>
+            <span class="tb-quote-src">PRO BETA · OCT 26</span>
+          </figcaption>
+        </figure>
+        <figure class="tb-quote">
+          <div class="tb-switch" aria-hidden="true"><s>STANDARDCLIP</s><span>→</span><b>TAGOCLIP</b></div>
+          <blockquote>Used to rely heavily on StandardCLIP, but I've recently <em>replaced it with your clipper</em>.</blockquote>
+          <figcaption>
+            <span class="tb-quote-who"><span class="tb-avatar" aria-hidden="true">M</span><span><b>Marcos</b>Trap producer · Ableton Live 12</span></span>
+            <span class="tb-quote-src">ON TAGOCLIP FREE · OCT 24</span>
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+
     <!-- Maker line, placed right before the FAQ that opens with "Who makes this?" -->
     <div class="tb-sec tb-byline"><span></span>BUILT BY ROBIN BUSSE · STUDIED AUDIO ENGINEERING · 7+ YEARS MIXING TRAP</div>
 
@@ -548,6 +684,42 @@ body { margin: 0; background:var(--bg); color:var(--text); font-family:'Archivo'
       </div>
     </section>
 
+    <!-- Closing buy card for everyone who read to the end. -->
+    <section class="tb-sec tb-final" aria-label="Get TagoClip Pro" data-tb-hides-sticky>
+      <svg class="tb-final-curve" viewBox="0 0 1000 400" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M-20 340 C 260 340, 380 334, 480 230 S 660 70, 1020 66" fill="none" stroke="url(#tb-cg)" stroke-width="1.5"/>
+        <path d="M-20 340 C 260 340, 380 334, 480 230 S 660 70, 1020 66" fill="none" stroke="url(#tb-cg)" stroke-width="12" opacity=".14"/>
+      </svg>
+      <div class="tb-final-copy">
+        <div class="tb-eyebrow" style="margin-bottom:18px;">TagoClip Pro · V1.0</div>
+        <h2>The FL clipper,<br><span>everywhere.</span></h2>
+        <p>The sound you know from FL, in any DAW that loads AU or VST3. Try every feature for a week, then decide.</p>
+      </div>
+      <div class="tb-final-buy">
+        <div style="display:flex; align-items:baseline; gap:14px; margin-bottom:6px;">
+          <span data-moonbase-render="product.tagoclip-pro.price" style="font-size:clamp(48px,5vw,64px); font-weight:800; letter-spacing:-0.04em; line-height:1; color:var(--hi);">$49</span>
+          <s hidden data-moonbase-if="product.tagoclip-pro.has_discount" data-moonbase-render="product.tagoclip-pro.original_price" style="font-family:var(--mono); font-size:16px; color:var(--faint);">$49</s>
+        </div>
+        <div class="tb-note" style="margin:0 0 20px;">
+          <span class="tb-live" hidden data-moonbase-if="product.tagoclip-pro.has_discount"><i></i><span>INTRO PRICE ·</span><b data-tb-days></b></span>
+          <span>PERPETUAL LICENSE</span>
+        </div>
+        <div data-moonbase-if="!product.tagoclip-pro.owned" style="display:grid; gap:10px;">
+          <a href="https://tagobeats.moonbase.sh/" data-tb-store="buy" class="tb-cta tb-btn tb-shine">BUY NOW <span aria-hidden="true" style="font-size:17px; line-height:1;">→</span></a>
+          <a href="https://tagobeats.moonbase.sh/" data-tb-store="trial" class="tb-cta-ghost tb-btn-ghost">TRY 7 DAYS FREE</a>
+        </div>
+        <div hidden data-moonbase-if="product.tagoclip-pro.owned">
+          <a href="https://tagobeats.moonbase.sh/" data-tb-store="download" class="tb-cta tb-btn" style="width:100%;">DOWNLOAD <span aria-hidden="true" style="font-size:17px; line-height:1;">↓</span></a>
+        </div>
+        <ul class="tb-ticks">
+          <li>7-day trial, every feature</li>
+          <li>No account needed to try</li>
+          <li>Pay once, 3 activations</li>
+          <li>macOS and Windows</li>
+        </ul>
+      </div>
+    </section>
+
   </main>
 
   <footer style="position:relative; z-index:1; max-width:1160px; margin:clamp(80px,12vh,130px) auto 0; padding:28px clamp(16px,6vw,120px) 40px; border-top:1px solid var(--hair); display:flex; justify-content:space-between; align-items:center; gap:20px; flex-wrap:wrap;">
@@ -560,9 +732,20 @@ body { margin: 0; background:var(--bg); color:var(--text); font-family:'Archivo'
   </footer>
 </div>
 
+<!-- Sticky buy bar for phone and tablet, shown by js/tagoclip-pro-cta.js. -->
+<div class="tb-sticky" data-moonbase-if="!product.tagoclip-pro.owned">
+  <div class="tb-sticky-info">
+    <span>TAGOCLIP PRO</span>
+    <span class="tb-sticky-price"><b data-moonbase-render="product.tagoclip-pro.price">$49</b><s hidden data-moonbase-if="product.tagoclip-pro.has_discount" data-moonbase-render="product.tagoclip-pro.original_price">$49</s></span>
+    <span class="tb-live" hidden data-moonbase-if="product.tagoclip-pro.has_discount"><i></i><b data-tb-days></b></span>
+  </div>
+  <a href="https://tagobeats.moonbase.sh/" data-tb-store="buy" class="tb-cta tb-btn tb-shine">BUY NOW <span aria-hidden="true" style="font-size:16px; line-height:1;">→</span></a>
+</div>
+
 <script src="https://assets.moonbase.sh/storefront/moonbase.js"></script>
 <script src="js/tagoclip-pro-store.js"></script>
 <script src="js/tagoclip-pro-hero.js" defer></script>
 <script src="js/tagoclip-pro-ab.js" defer></script>
+<script src="js/tagoclip-pro-cta.js" defer></script>
 </body>
 </html>

@@ -8,13 +8,12 @@
   var ACCOUNT = "https://tagobeats.moonbase.sh";
   var PRODUCT = "tagoclip-pro";
 
-  if (!window.Moonbase) return;
-
   // Only take over the clicks once the storefront has really loaded. Until
-  // then (or if setup fails, e.g. CORS on a domain Moonbase does not know)
-  // the links simply open the customer portal.
+  // then (or if setup fails, e.g. CORS on a domain Moonbase does not know, or
+  // moonbase.js is blocked) the links simply open the customer portal. The
+  // trial gate below works either way.
   var ready = false;
-  Moonbase.setup(ACCOUNT, {
+  if (window.Moonbase) Moonbase.setup(ACCOUNT, {
     // One product, no cart: the default "Log in | Cart" toolbar would only sit
     // on top of the page's own navigation.
     toolbar: { enabled: false },
@@ -38,7 +37,7 @@
   });
   // setup() resolves even when its data request is blocked, so readiness is
   // taken from the first successful data load instead.
-  Moonbase.on("storefront-updated", function () { ready = true; });
+  if (window.Moonbase) Moonbase.on("storefront-updated", function () { ready = true; });
 
   var ACTIONS = {
     buy: function () { Moonbase.purchase({ product_id: PRODUCT }); },
@@ -50,8 +49,112 @@
 
   document.addEventListener("click", function (e) {
     var el = e.target.closest && e.target.closest("[data-tb-store]");
-    if (!ready || !el || !ACTIONS[el.getAttribute("data-tb-store")]) return;
+    if (!el) return;
+    var action = el.getAttribute("data-tb-store");
+    // Trial goes through the mail gate first (see below), whether or not the
+    // storefront has loaded.
+    if (action === "trial") { e.preventDefault(); openGate(el.href); return; }
+    if (!ready || !ACTIONS[action]) return;
     e.preventDefault();
-    ACTIONS[el.getAttribute("data-tb-store")]();
+    ACTIONS[action]();
+  });
+
+  // ---------- Trial gate ----------
+  // The trial runs without an account, so this is the only moment we learn
+  // who is trying Pro. api/trial.js stores the address and schedules the two
+  // trial mails (tips on day 1, "ends soon" on day 5), then the download starts
+  // as before.
+  var gate = null;
+  var fallbackHref = ACCOUNT;
+
+  function startDownload() {
+    if (ready) ACTIONS.trial();
+    else window.location.href = fallbackHref;
+  }
+
+  function buildGate() {
+    var css = [
+      ".tbg-back{position:fixed;inset:0;z-index:90;display:flex;align-items:center;justify-content:center;padding:16px;background:rgba(10,9,8,0.78);opacity:0;pointer-events:none;transition:opacity .2s}",
+      ".tbg-open .tbg-back{opacity:1;pointer-events:auto}",
+      ".tbg-box{position:relative;width:min(420px,100%);padding:28px 26px 24px;border-radius:14px;background:linear-gradient(160deg,#221F1B,#141210);box-shadow:0 0 0 1px rgba(0,253,220,0.3),0 40px 90px -30px rgba(0,0,0,0.95);font-family:'Archivo',system-ui,sans-serif;color:#ECE7DE;transform:translateY(10px);transition:transform .25s}",
+      ".tbg-open .tbg-box{transform:none}",
+      ".tbg-eb{font:500 10.5px/1 'Martian Mono',ui-monospace,monospace;letter-spacing:0.22em;color:#00FDDC;margin-bottom:12px}",
+      ".tbg-box h3{margin:0 0 8px;font-size:24px;font-weight:800;letter-spacing:-0.02em;color:#F2EEE6}",
+      ".tbg-box p{margin:0 0 18px;font-size:14.5px;line-height:1.55;color:rgba(236,231,222,0.62)}",
+      ".tbg-box input[type=email]{width:100%;box-sizing:border-box;margin:0 0 10px;padding:13px 14px;border-radius:4px;border:1px solid rgba(236,231,222,0.16);background:#0E0D0C;color:#ECE7DE;font:16px/1.4 'Archivo',system-ui,sans-serif}",
+      ".tbg-box input[type=email]:focus{outline:none;border-color:rgba(0,253,220,0.6)}",
+      ".tbg-hp{position:absolute!important;left:-9999px!important;width:1px;height:1px;opacity:0}",
+      ".tbg-go{width:100%;padding:16px;border:0;border-radius:3px;background:#00FDDC;color:#0A0908;font:800 14px/1 'Archivo',system-ui,sans-serif;letter-spacing:0.12em;cursor:pointer}",
+      ".tbg-go[disabled]{opacity:.55;cursor:default}",
+      ".tbg-fine{margin:12px 0 0;font-size:12px;line-height:1.5;color:rgba(236,231,222,0.42)}",
+      ".tbg-fine a{color:rgba(236,231,222,0.6)}",
+      ".tbg-msg{margin:10px 0 0;font:500 11px/1.5 'Martian Mono',ui-monospace,monospace;letter-spacing:0.06em;color:#ECE7DE}",
+      ".tbg-x{position:absolute;top:12px;right:14px;background:none;border:0;color:rgba(236,231,222,0.5);font-size:22px;line-height:1;cursor:pointer}",
+      "@media (prefers-reduced-motion:reduce){.tbg-back,.tbg-box{transition:none}}"
+    ].join("\n");
+    var root = document.createElement("div");
+    root.className = "tbg";
+    root.innerHTML =
+      "<style>" + css + "</style>" +
+      '<div class="tbg-back">' +
+        '<form class="tbg-box" role="dialog" aria-modal="true" aria-label="Start your free trial" novalidate>' +
+          '<button type="button" class="tbg-x" aria-label="Close">×</button>' +
+          '<div class="tbg-eb">7-DAY FREE TRIAL</div>' +
+          "<h3>Try TagoClip Pro</h3>" +
+          "<p>Every feature, no account, no card. Drop your email and the download starts right away.</p>" +
+          '<input type="email" name="email" required autocomplete="email" placeholder="your@email.com" aria-label="Email">' +
+          '<input type="text" name="website" class="tbg-hp" tabindex="-1" autocomplete="off" aria-hidden="true">' +
+          '<button type="submit" class="tbg-go">START MY TRIAL →</button>' +
+          '<p class="tbg-msg" aria-live="polite"></p>' +
+          '<p class="tbg-fine">Two short mails during your trial (tips, and a heads-up before it ends), plus news when the next Tago plugin drops. Unsubscribe anytime. <a href="/privacy">Privacy</a></p>' +
+        "</form>" +
+      "</div>";
+    document.body.appendChild(root);
+    return root;
+  }
+
+  function openGate(href) {
+    if (href) fallbackHref = href;
+    if (!gate) gate = buildGate();
+    gate.classList.add("tbg-open");
+    setTimeout(function () { gate.querySelector("input[type=email]").focus(); }, 60);
+  }
+  function closeGate() { if (gate) gate.classList.remove("tbg-open"); }
+
+  document.addEventListener("click", function (e) {
+    if (!gate || !gate.classList.contains("tbg-open")) return;
+    if (e.target.closest(".tbg-x") || e.target.classList.contains("tbg-back")) closeGate();
+  });
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape") closeGate();
+  });
+
+  document.addEventListener("submit", function (e) {
+    if (!gate || !gate.contains(e.target)) return;
+    e.preventDefault();
+    var form = e.target;
+    var msg = form.querySelector(".tbg-msg");
+    var go = form.querySelector(".tbg-go");
+    var email = form.email.value.trim();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { msg.textContent = "That email address looks off."; return; }
+    go.disabled = true;
+    msg.textContent = "";
+    fetch("/api/trial", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email: email, website: form.website.value })
+    }).then(function (r) {
+      return r.json().catch(function () { return {}; }).then(function (d) { return { ok: r.ok, status: r.status, d: d }; });
+    }).then(function (res) {
+      // Only a bad address stops the download. Anything else (rate limit,
+      // network, our own outage) must not cost us the trial.
+      if (res.status === 400) throw new Error(res.d.error || "That email address looks off.");
+      closeGate();
+      startDownload();
+    }).catch(function (err) {
+      if (err && err.message && /email/i.test(err.message)) { msg.textContent = err.message; return; }
+      closeGate();
+      startDownload();
+    }).then(function () { go.disabled = false; });
   });
 })();

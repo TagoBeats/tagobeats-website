@@ -216,6 +216,22 @@ body { margin: 0; background:var(--bg); color:var(--text); font-family:'Archivo'
 .tb-live i { width:6px; height:6px; border-radius:50%; background:var(--acc); box-shadow:0 0 10px rgba(var(--acc-rgb),0.8); animation:tb-breathe 2.4s ease-in-out infinite; }
 .tb-live b { font-weight:500; }
 
+/* Launch sale: a teal outline tag, no fill, no glow. Only shown while
+   Moonbase reports a discount. */
+/* Two-part tag: "-40%" in its own cell, then the label and the countdown. */
+.tb-sale { display:inline-flex; align-items:stretch; margin-bottom:18px; border:1px solid rgba(var(--acc-rgb),0.55); border-radius:3px; overflow:hidden; font-family:var(--mono); font-size:11px; letter-spacing:0.16em; line-height:1; white-space:nowrap; }
+.tb-sale-tag { display:flex; align-items:center; padding:9px 11px; background:rgba(var(--acc-rgb),0.14); border-right:1px solid rgba(var(--acc-rgb),0.55); font-weight:700; letter-spacing:0.04em; color:var(--acc); }
+.tb-sale-text { display:flex; align-items:center; gap:8px; padding:9px 13px; color:var(--text); }
+.tb-sale-text b { font-weight:500; color:var(--acc); }
+.tb-buy .tb-sale { margin-bottom:0; font-size:10px; }
+.tb-buy .tb-sale-tag, .tb-buy .tb-sale-text { padding:7px 10px; }
+.tb-note .tb-sale { margin-bottom:0; }
+.tb-note .tb-sale-tag, .tb-note .tb-sale-text { padding:6px 9px; }
+.tb-sticky .tb-sale-tag { padding:2px 5px; border:1px solid rgba(var(--acc-rgb),0.55); border-radius:2px; font-size:9px; }
+.tb-was { font-family:var(--mono); font-size:22px; color:var(--faint); }
+.tb-save { font-family:var(--mono); font-size:11px; letter-spacing:0.16em; color:var(--acc); }
+.tb-save b { font-weight:500; }
+
 .tb-navbuy { text-decoration:none; color:var(--deep); background:var(--acc); font-weight:800; font-size:12px; letter-spacing:0.14em; padding:11px 16px; border-radius:3px; opacity:0; transform:translateY(-6px); pointer-events:none; transition:opacity .3s ease, transform .3s ease; box-shadow:0 12px 30px -14px rgba(var(--acc-rgb),0.7); }
 .tb-sticky-on .tb-navbuy { opacity:1; transform:none; pointer-events:auto; }
 
@@ -338,6 +354,12 @@ body { margin: 0; background:var(--bg); color:var(--text); font-family:'Archivo'
           <!-- First buy button, above the fold on every screen. When it scrolls
                away, the sticky buy button takes over (js/tagoclip-pro-cta.js). -->
           <div id="tb-herobuy" class="tb-herobuy">
+            <!-- Sale badge. "−40%" is static text: 20 off 49 is 40.8 %, so it
+                 understates. Change it if the Moonbase discount changes. -->
+            <div class="tb-sale" hidden data-moonbase-if="product.tagoclip-pro.has_discount">
+              <span class="tb-sale-tag">−40%</span>
+              <span class="tb-sale-text">LAUNCH PRICE<span aria-hidden="true">·</span><b data-tb-days></b></span>
+            </div>
             <div class="tb-herobuy-btns" data-moonbase-if="!product.tagoclip-pro.owned">
               <a href="https://tagobeats.moonbase.sh/" data-tb-store="buy" class="tb-cta tb-btn tb-shine">BUY FOR <span data-moonbase-render="product.tagoclip-pro.price">$49</span><s hidden data-moonbase-if="product.tagoclip-pro.has_discount" data-moonbase-render="product.tagoclip-pro.original_price">$49</s><span aria-hidden="true" style="font-size:17px; line-height:1;">→</span></a>
               <a href="https://tagobeats.moonbase.sh/" data-tb-store="trial" class="tb-cta-ghost tb-btn-ghost">TRY&nbsp;<span class="tb-hide-xs">7 DAYS&nbsp;</span>FREE</a>
@@ -346,7 +368,6 @@ body { margin: 0; background:var(--bg); color:var(--text); font-family:'Archivo'
               <a href="https://tagobeats.moonbase.sh/" data-tb-store="download" class="tb-cta tb-btn">DOWNLOAD <span aria-hidden="true" style="font-size:17px; line-height:1;">↓</span></a>
             </div>
             <div class="tb-note">
-              <span class="tb-live" hidden data-moonbase-if="product.tagoclip-pro.has_discount"><i></i><span>INTRO PRICE · ENDS DEC 4 ·</span><b data-tb-days></b></span>
               <span>PAY ONCE · NO SUBSCRIPTION</span>
               <span>TRIAL WITHOUT ACCOUNT</span>
             </div>
@@ -373,13 +394,15 @@ body { margin: 0; background:var(--bg); color:var(--text); font-family:'Archivo'
           <!-- Prices are rendered live from Moonbase. The static text is what shows
                before the storefront has loaded, or if it never does. -->
           <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:14px;">
-            <span class="tb-eyebrow" style="font-size:10px;" hidden data-moonbase-if="product.tagoclip-pro.has_discount">Intro price</span>
-            <span style="font-family:var(--mono); font-size:10px; letter-spacing:0.2em; color:var(--faint);">PERPETUAL LICENSE</span>
+            <span class="tb-sale" hidden data-moonbase-if="product.tagoclip-pro.has_discount"><span class="tb-sale-tag">−40%</span><span class="tb-sale-text">LAUNCH PRICE</span></span>
+            <span data-moonbase-if="!product.tagoclip-pro.has_discount" style="font-family:var(--mono); font-size:10px; letter-spacing:0.2em; color:var(--faint);">PERPETUAL LICENSE</span>
           </div>
-          <div style="display:flex; align-items:baseline; gap:14px; margin-bottom:22px;">
+          <div style="display:flex; align-items:baseline; gap:14px; margin-bottom:8px;">
             <span data-moonbase-render="product.tagoclip-pro.price" style="font-size:58px; font-weight:800; letter-spacing:-0.04em; line-height:1; color:var(--hi);">$49</span>
-            <s hidden data-moonbase-if="product.tagoclip-pro.has_discount" data-moonbase-render="product.tagoclip-pro.original_price" style="font-family:var(--mono); font-size:16px; color:var(--faint);">$49</s>
+            <s class="tb-was" hidden data-moonbase-if="product.tagoclip-pro.has_discount" data-moonbase-render="product.tagoclip-pro.original_price">$49</s>
           </div>
+          <div class="tb-save" hidden data-moonbase-if="product.tagoclip-pro.has_discount">YOU SAVE $20 · <b data-tb-days></b></div>
+          <div style="height:22px;"></div>
           <div data-moonbase-if="!product.tagoclip-pro.owned">
             <a href="https://tagobeats.moonbase.sh/" data-tb-store="buy" class="tb-cta" style="text-decoration:none; color:var(--deep); background:var(--acc); font-weight:800; font-size:14px; letter-spacing:0.12em; padding:18px 24px; border-radius:3px; display:flex; align-items:center; justify-content:center; gap:12px;">
               BUY NOW <span style="font-size:17px; line-height:1;">→</span>
@@ -394,7 +417,7 @@ body { margin: 0; background:var(--bg); color:var(--text); font-family:'Archivo'
             </a>
             <div style="margin-top:10px; font-family:var(--mono); font-size:11px; letter-spacing:0.14em; color:var(--acc); text-align:center;">ALREADY IN YOUR LIBRARY</div>
           </div>
-          <div style="margin-top:18px; font-family:var(--mono); font-size:10px; letter-spacing:0.14em; line-height:1.9; color:var(--faint);">MACOS 11+ AU/VST3 · WINDOWS VST3<br>3 ACTIVATIONS · TRIAL WITHOUT ACCOUNT</div>
+          <div style="margin-top:18px; font-family:var(--mono); font-size:10px; letter-spacing:0.14em; line-height:1.9; color:var(--faint);">PERPETUAL LICENSE · 3 ACTIVATIONS<br>MACOS 11+ AU/VST3 · WINDOWS VST3<br>TRIAL WITHOUT ACCOUNT</div>
         </aside>
       </div>
     </section>
@@ -697,7 +720,7 @@ body { margin: 0; background:var(--bg); color:var(--text); font-family:'Archivo'
           <s hidden data-moonbase-if="product.tagoclip-pro.has_discount" data-moonbase-render="product.tagoclip-pro.original_price" style="font-family:var(--mono); font-size:16px; color:var(--faint);">$49</s>
         </div>
         <div class="tb-note" style="margin:0 0 20px;">
-          <span class="tb-live" hidden data-moonbase-if="product.tagoclip-pro.has_discount"><i></i><span>INTRO PRICE ·</span><b data-tb-days></b></span>
+          <span class="tb-sale" hidden data-moonbase-if="product.tagoclip-pro.has_discount"><span class="tb-sale-tag">−40%</span><span class="tb-sale-text">LAUNCH PRICE<span aria-hidden="true">·</span><b data-tb-days></b></span></span>
           <span>PERPETUAL LICENSE</span>
         </div>
         <div data-moonbase-if="!product.tagoclip-pro.owned" style="display:grid; gap:10px;">
@@ -733,7 +756,7 @@ body { margin: 0; background:var(--bg); color:var(--text); font-family:'Archivo'
   <div class="tb-sticky-info">
     <span>TAGOCLIP PRO</span>
     <span class="tb-sticky-price"><b data-moonbase-render="product.tagoclip-pro.price">$49</b><s hidden data-moonbase-if="product.tagoclip-pro.has_discount" data-moonbase-render="product.tagoclip-pro.original_price">$49</s></span>
-    <span class="tb-live" hidden data-moonbase-if="product.tagoclip-pro.has_discount"><i></i><b data-tb-days></b></span>
+    <span class="tb-live" hidden data-moonbase-if="product.tagoclip-pro.has_discount"><span class="tb-sale-tag">−40%</span><b data-tb-days></b></span>
   </div>
   <a href="https://tagobeats.moonbase.sh/" data-tb-store="buy" class="tb-cta tb-btn tb-shine">BUY NOW <span aria-hidden="true" style="font-size:16px; line-height:1;">→</span></a>
 </div>

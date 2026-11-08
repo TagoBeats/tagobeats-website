@@ -541,6 +541,8 @@
 .tb-free-grid .tb-demo-link { padding: 12px 18px !important; font-size: 12px !important; margin-left: 8px; vertical-align: middle; }
 .tb-proj-card { transition: transform .35s cubic-bezier(.2,.8,.2,1), border-color .35s ease, box-shadow .35s ease; }
 .tb-proj-card:hover { transform: translateY(-6px); border-color: rgba(0,253,220,0.35); box-shadow: 0 26px 50px -24px rgba(0,0,0,0.65); }
+.tb-card-link { cursor: pointer; }
+.tb-card-overlay { position: absolute; inset: 0; z-index: 1; }
 html, body, #dc-root, #dc-root > .sc-host { height: auto !important; min-height: 100%; }
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
@@ -725,7 +727,9 @@ body { margin: 0; }
     </div>
 
     <div style="flex:1; min-height:0; display:flex; align-items:center; border-top:1px solid rgba(236,231,222,0.12); padding-top:clamp(18px,2.76vh,32px);">
-      <div class="tb-proj-card tb-plugin-hero" style="background:#1A1815; border-radius:10px; overflow:hidden; border:1px solid rgba(236,231,222,0.08); display:flex; align-items:stretch; width:100%; max-width:1357px; margin:0 auto;">
+      <div class="tb-proj-card tb-plugin-hero tb-card-link" style="position:relative; background:#1A1815; border-radius:10px; overflow:hidden; border:1px solid rgba(236,231,222,0.08); display:flex; align-items:stretch; width:100%; max-width:1357px; margin:0 auto;">
+        <!-- The whole card opens the Pro page. The button sits above this overlay, so it keeps its own hover. -->
+        <a href="/tagoclip-pro" class="tb-card-overlay" aria-hidden="true" tabindex="-1"></a>
         <div style="position:relative; flex:0 0 60%; aspect-ratio:1000/520; overflow:hidden; background:#0E0D0C;">
           <iframe data-tb-pro-demo="" src="demos/tagoclip-pro-ui/index.html?embed=1" title="TagoClip Pro interface" tabindex="-1" aria-hidden="true" loading="lazy" style="position:absolute; inset:0; width:100%; height:100%; border:0; pointer-events:none;"></iframe>
         </div>
@@ -733,7 +737,7 @@ body { margin: 0; }
           <div style="font-family:'Space Mono',monospace; font-size:11px; letter-spacing:0.18em; color:rgba(236,231,222,0.45); margin-bottom:8px;">V1.0 · MACOS 11+ AU/VST3 · WINDOWS VST3</div>
           <h3 style="margin:0; font-size:clamp(23px,2.53vw,32px); font-weight:800; letter-spacing:-0.02em; color:#F2EEE6;">The FL clipper, everywhere.</h3>
           <p style="margin:clamp(7px,1.15vh,12px) 0 0; max-width:560px; font-size:clamp(15px,1.27vw,17px); line-height:1.5; color:rgba(236,231,222,0.55);">Same curve, modern engine. The FL soft clip sound with true peak control, anti-aliased clipping up to 4x, mono low end and auto gain, in every DAW.</p>
-          <div style="margin-top:clamp(16px,2.4vh,26px);">
+          <div style="position:relative; z-index:2; margin-top:clamp(16px,2.4vh,26px);">
             <a href="/tagoclip-pro" class="tb-cta" style="text-decoration:none; color:#0A0908; background:#00FDDC; font-weight:800; font-size:14px; letter-spacing:0.1em; padding:19px 46px; border-radius:2px; display:inline-flex; align-items:center; gap:12px; white-space:nowrap;">SEE TAGOCLIP PRO <span class="tb-cta-arrow" style="font-size:17px; line-height:1;">→</span></a>
             <div style="margin-top:12px; font-family:'Space Mono',monospace; font-size:11px; letter-spacing:0.18em; color:rgba(236,231,222,0.45);">7-DAY FREE TRIAL</div>
           </div>

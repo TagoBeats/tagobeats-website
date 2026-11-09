@@ -4,7 +4,7 @@
 // Copy finalized in chat, source of truth: 02 Projekte/TagoClip Pro Listen-Mail
 // Launch.md in the vault.
 
-const GIF = 'https://tagobeats.com/uploads_opt/TagoClipPro_mail_launch.gif?v=1'
+const GIF = 'https://tagobeats.com/uploads_opt/TagoClipPro_mail_launch.gif?v=2'
 const PAGE = 'https://tagobeats.com/tagoclip-pro'
 
 const FEATURES = [
@@ -38,17 +38,26 @@ export function render({ intro, staysFree, ps }, unsubUrl) {
     `Unsubscribe from future plugin drops: ${unsubUrl}`,
   ].join('\n')
 
+  // Gmail's iOS app inverts text and border colours in dark mode but leaves
+  // gradient backgrounds alone. So: every background and every line is a
+  // gradient (never a plain colour or a border), and every text block sits in
+  // g(), two wrappers whose blend modes invert Gmail's inversion back. The
+  // "u + .body" selector only matches inside Gmail, other clients ignore it.
+  const g = (inner) => `<div class="gm-screen"><div class="gm-diff">${inner}</div></div>`
+  const bg = (c) => `background-color:${c};background-image:linear-gradient(${c},${c});`
+  const line = (c = '#2A2723') => `<div style="height:1px;line-height:1px;font-size:1px;${bg(c)}">&nbsp;</div>`
+  const font = 'font-family:Arial,Helvetica,sans-serif;'
+  const mono = "font-family:'Courier New',Courier,monospace;"
+
   const features = FEATURES.map(([h, b]) =>
-    `<div style="padding-bottom:14px;"><span style="color:#ECE7DE;font-weight:bold;">${h}</span> ${b}</div>`
+    `<div style="padding-bottom:14px;"><span style="color:#F2EEE6;font-weight:bold;">${h}</span> ${b}</div>`
   ).join('')
 
-  // Same dark-mode-proof pattern as the earlier broadcasts and api/lead.js:
-  // forced color-scheme plus doubled linear-gradient backgrounds so Gmail's
-  // dark theme does not invert flat background-colors.
   const html = `<!DOCTYPE html>
   <html lang="en">
   <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="color-scheme" content="dark">
     <meta name="supported-color-schemes" content="dark">
     <style>
@@ -57,64 +66,59 @@ export function render({ intro, staysFree, ps }, unsubUrl) {
         body, .tb-bg { background-color: #0A0908 !important; }
         .tb-card { background-color: #1A1815 !important; }
       }
+      u + .body .gm-screen { background: #000; mix-blend-mode: screen; }
+      u + .body .gm-diff { background: #000; mix-blend-mode: difference; }
     </style>
   </head>
-  <body class="tb-bg" style="margin:0;padding:0;background-color:#0A0908;background-image:linear-gradient(#0A0908,#0A0908);">
-  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" class="tb-bg" bgcolor="#0A0908" style="background-color:#0A0908;background-image:linear-gradient(#0A0908,#0A0908);">
+  <body class="body tb-bg" style="margin:0;padding:0;${bg('#0A0908')}">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" class="tb-bg" bgcolor="#0A0908" style="${bg('#0A0908')}">
     <tr><td align="center" style="padding:32px 16px;">
       <table role="presentation" width="560" cellpadding="0" cellspacing="0" border="0" style="max-width:560px;width:100%;">
 
         <tr><td style="padding:0 4px 18px;">
-          <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background-color:#00FDDC;background-image:linear-gradient(#00FDDC,#00FDDC);"></span>
-          <span style="font-family:Arial,Helvetica,sans-serif;font-size:14px;font-weight:bold;letter-spacing:3px;color:#ECE7DE;">&nbsp;TAGOBEATS</span>
+          <span style="display:inline-block;width:8px;height:8px;border-radius:50%;${bg('#00FDDC')}"></span>
+          ${g(`<span style="${font}font-size:14px;font-weight:bold;letter-spacing:3px;color:#ECE7DE;">&nbsp;TAGOBEATS</span>`).replace('<div class="gm-screen">', '<div class="gm-screen" style="display:inline-block;">').replace('<div class="gm-diff">', '<div class="gm-diff" style="display:inline-block;">')}
         </td></tr>
 
-        <tr><td class="tb-card" bgcolor="#1A1815" style="background-color:#1A1815;background-image:linear-gradient(#1A1815,#1A1815);border:1px solid #2A2723;border-radius:10px;overflow:hidden;">
-          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+        <!-- Card. The 1px frame is the outer cell's gradient, not a border. -->
+        <tr><td style="${bg('#2A2723')}padding:1px;border-radius:10px;">
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" class="tb-card" bgcolor="#1A1815" style="${bg('#1A1815')}border-radius:9px;">
             <tr><td style="padding:0;line-height:0;">
               <a href="${PAGE}"><img src="${GIF}" alt="TagoClip Pro: drive turning up, the waveform showing clipped peaks in red" width="558" style="width:100%;max-width:558px;height:auto;display:block;border:0;border-radius:9px 9px 0 0;"></a>
             </td></tr>
             <tr><td style="padding:28px 32px 30px;">
-              <div style="font-family:'Courier New',Courier,monospace;font-size:11px;letter-spacing:2px;color:#00FDDC;padding-bottom:10px;">NEW &middot; TAGOCLIP PRO 1.0</div>
-              <div style="font-family:Arial,Helvetica,sans-serif;font-size:24px;font-weight:800;letter-spacing:-0.5px;color:#F2EEE6;padding-bottom:16px;line-height:1.3;">The FL clipper, everywhere.</div>
+              ${g(`<div style="${mono}font-size:11px;letter-spacing:2px;color:#00FDDC;padding-bottom:10px;">NEW &middot; TAGOCLIP PRO 1.0</div>
+              <div style="${font}font-size:24px;font-weight:800;letter-spacing:-0.5px;color:#F2EEE6;padding-bottom:16px;line-height:1.3;">The FL clipper, everywhere.</div>
+              <div style="${font}font-size:15px;line-height:1.65;color:#C9C3B8;padding-bottom:22px;">Hey,<br><br>${intro.join(' ')}</div>`)}
 
-              <div style="font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:1.65;color:#B5AFA4;padding-bottom:22px;">
-                Hey,<br><br>${intro.join(' ')}
+              ${line()}
+              <div style="padding:18px 0 6px;">
+                ${g(`<div style="${mono}font-size:11px;letter-spacing:2px;color:#9A958C;padding-bottom:12px;">WHAT'S NEW</div>
+                <div style="${font}font-size:14px;line-height:1.7;color:#C9C3B8;">${features}</div>
+                <div style="${font}font-size:13px;line-height:1.6;color:#9A958C;padding-bottom:12px;">${PLUS}</div>`)}
               </div>
+              ${line()}
 
-              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:22px;">
-                <tr><td style="border-top:1px solid #2A2723;border-bottom:1px solid #2A2723;padding:18px 0 6px;">
-                  <div style="font-family:'Courier New',Courier,monospace;font-size:11px;letter-spacing:2px;color:#8A857C;padding-bottom:12px;">WHAT'S NEW</div>
-                  <div style="font-family:Arial,Helvetica,sans-serif;font-size:14px;line-height:1.7;color:#B5AFA4;">${features}</div>
-                  <div style="font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:1.6;color:#8A857C;padding-bottom:12px;">${PLUS}</div>
-                </td></tr>
-              </table>
-
-              <div style="font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:1.6;color:#ECE7DE;padding-bottom:18px;">
-                <span style="display:inline-block;font-family:'Courier New',Courier,monospace;font-size:12px;font-weight:bold;letter-spacing:1px;color:#00FDDC;border:1px solid #00FDDC;padding:3px 7px;border-radius:3px;">&minus;40%</span>&nbsp;
-                Launch price is <b>$29</b> instead of <s style="color:#8A857C;">$49</s>, until December 4. Or try it free for 7 days first, every feature, no account.
+              <div style="padding:20px 0 18px;">
+                ${g(`<div style="${font}font-size:15px;line-height:1.6;color:#ECE7DE;"><span style="${mono}font-size:12px;font-weight:bold;letter-spacing:1px;color:#00FDDC;">&minus;40%</span>&nbsp; Launch price is <b>$29</b> instead of <s style="color:#9A958C;">$49</s>, until December 4. Or try it free for 7 days first, every feature, no account.</div>`)}
               </div>
 
               <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="width:100%;">
-                <tr><td>
-                  <a href="${PAGE}" style="display:block;background-color:#00FDDC;background-image:linear-gradient(#00FDDC,#00FDDC);color:#0A0908;font-family:Arial,Helvetica,sans-serif;font-size:14px;font-weight:bold;letter-spacing:1.5px;text-decoration:none;text-align:center;padding:17px 20px;border-radius:3px;">SEE TAGOCLIP PRO &nbsp;&rarr;</a>
+                <tr><td style="${bg('#00FDDC')}border-radius:3px;">
+                  <a href="${PAGE}" style="display:block;color:#0A0908;${font}font-size:14px;font-weight:bold;letter-spacing:1.5px;text-decoration:none;text-align:center;padding:17px 20px;">SEE TAGOCLIP PRO &nbsp;&rarr;</a>
                 </td></tr>
               </table>
-              <div style="font-family:Arial,Helvetica,sans-serif;font-size:12.5px;color:#8A857C;padding-top:12px;text-align:center;">${staysFree}</div>
+              <div style="padding-top:12px;">${g(`<div style="${font}font-size:12.5px;color:#9A958C;text-align:center;">${staysFree}</div>`)}</div>
             </td></tr>
-          </table>
+        </table>
         </td></tr>
 
         <tr><td style="padding:22px 4px 0;">
-          <div style="font-family:Arial,Helvetica,sans-serif;font-size:13px;line-height:1.6;color:#8A857C;">
-            Robin<br>TagoBeats<br><br>${ps}
-          </div>
+          ${g(`<div style="${font}font-size:13px;line-height:1.6;color:#9A958C;">Robin<br>TagoBeats<br><br>${ps}</div>`)}
         </td></tr>
 
         <tr><td style="padding:18px 4px 0;">
-          <div style="font-family:Arial,Helvetica,sans-serif;font-size:12px;line-height:1.6;color:#6A655C;">
-            <a href="https://tagobeats.com" style="color:#00FDDC;text-decoration:none;">tagobeats.com</a> &middot; <a href="${unsubUrl}" style="color:#6A655C;text-decoration:underline;">Unsubscribe</a> from future plugin drops.
-          </div>
+          ${g(`<div style="${font}font-size:12px;line-height:1.6;color:#7A756C;"><a href="https://tagobeats.com" style="color:#00FDDC;text-decoration:none;">tagobeats.com</a> &middot; <a href="${unsubUrl}" style="color:#7A756C;text-decoration:underline;">Unsubscribe</a> from future plugin drops.</div>`)}
         </td></tr>
 
       </table>

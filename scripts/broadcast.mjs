@@ -31,6 +31,7 @@
 //     subject: 'TagoClip 1.1 is out',
 //     render(email, unsubUrl) { return { text, html } },
 //     replyTo: 'info@tagobeats.com',           // optional, default plugins@robinbusse.dev
+//     from: 'Robin from TagoBeats <plugins@robinbusse.dev>', // optional, default TagoBeats
 //   }
 
 import { readFileSync } from 'node:fs'
@@ -143,7 +144,7 @@ for (const [index, batch] of chunk(recipients, 100).entries()) {
     const unsubUrl = `https://tagobeats.com/api/unsubscribe?e=${encodeURIComponent(email)}`
     const { text, html } = template.render(email, unsubUrl)
     return {
-      from: 'TagoBeats <plugins@robinbusse.dev>',
+      from: template.from || 'TagoBeats <plugins@robinbusse.dev>',
       to: [email],
       reply_to: replyTo,
       subject: template.subject,

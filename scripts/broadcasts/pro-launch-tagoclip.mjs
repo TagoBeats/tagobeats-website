@@ -11,7 +11,9 @@ export default {
   id: 'pro-launch-tagoclip',
   subject: 'TagoClip Pro is out',
   replyTo: 'info@tagobeats.com',
+  from: 'Robin from TagoBeats <plugins@robinbusse.dev>',
   render: (email, unsubUrl) => render({
+    variant: 'tagoclip',
     intro: ['you\'re using TagoClip, so you\'re the first to hear this: TagoClip Pro is out. Everything you like about TagoClip, on a new engine.'],
     staysFree: 'TagoClip itself stays free, nothing changes there.',
     ps: 'P.S. Questions about the upgrade? Just hit reply.',

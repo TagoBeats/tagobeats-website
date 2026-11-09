@@ -11,7 +11,9 @@ export default {
   id: 'pro-launch-tagopitch',
   subject: 'My first paid plugin is out',
   replyTo: 'info@tagobeats.com',
+  from: 'Robin from TagoBeats <plugins@robinbusse.dev>',
   render: (email, unsubUrl) => render({
+    variant: 'tagopitch',
     intro: ['you grabbed TagoPitch from me a while back. Today I\'m releasing my first paid plugin, TagoClip Pro: the FL Studio soft clip sound in every DAW, on a modern engine.'],
     staysFree: 'TagoPitch stays free, nothing changes there.',
     ps: 'P.S. Questions? Just hit reply.',

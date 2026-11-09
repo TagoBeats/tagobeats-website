@@ -5,7 +5,11 @@
 // Launch.md in the vault.
 
 const GIF = 'https://tagobeats.com/uploads_opt/TagoClipPro_mail_launch.gif?v=2'
-const PAGE = 'https://tagobeats.com/tagoclip-pro'
+const PAGE_BASE = 'https://tagobeats.com/tagoclip-pro'
+const STILL = 'https://tagobeats.com/uploads_opt/TagoClipPro_mail_still.jpg?v=1'
+// Shown next to the subject in the inbox list instead of the first body line.
+const PREHEADER = 'Launch price $29 until December 4. Try it free for 7 days.'
+const QUOTE = ['...captures that FL Studio Fruity Clipper sound and feel, which is exactly the kind of clipping I\'m after.', 'Marcos, beta tester, Ableton Live 12']
 
 const FEATURES = [
   ['See what you\'re cutting.', 'A live waveform shows your signal and marks every peak the clipper takes off in red. You see the clipping instead of guessing it from a curve.'],
@@ -16,7 +20,9 @@ const FEATURES = [
 const PLUS = 'Plus three curves (Fruity, Brick and Silky) and mono low end. AU and VST3 on Mac, VST3 on Windows.'
 const PRICE = 'Launch price is $29 instead of $49, until December 4. Or try it free for 7 days first, every feature, no account.'
 
-export function render({ intro, staysFree, ps }, unsubUrl) {
+export function render({ intro, staysFree, ps, variant }, unsubUrl) {
+  // UTM tags so visits from this mail, per variant, show up in the analytics.
+  const PAGE = `${PAGE_BASE}?utm_source=newsletter&utm_medium=email&utm_campaign=pro-launch&utm_content=${variant}`
   const text = [
     'Hey,',
     '',
@@ -24,6 +30,8 @@ export function render({ intro, staysFree, ps }, unsubUrl) {
     '',
     ...FEATURES.flatMap(([h, b]) => [`${h} ${b}`, '']),
     PLUS,
+    '',
+    `"${QUOTE[0]}" (${QUOTE[1]})`,
     '',
     PRICE,
     '',
@@ -71,6 +79,7 @@ export function render({ intro, staysFree, ps }, unsubUrl) {
     </style>
   </head>
   <body class="body tb-bg" style="margin:0;padding:0;${bg('#0A0908')}">
+  <div style="display:none;max-height:0;overflow:hidden;mso-hide:all;font-size:1px;line-height:1px;color:#0A0908;opacity:0;">${PREHEADER}${'&#847;&zwnj;&nbsp;'.repeat(60)}</div>
   <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" class="tb-bg" bgcolor="#0A0908" style="${bg('#0A0908')}">
     <tr><td align="center" style="padding:32px 16px;">
       <table role="presentation" width="560" cellpadding="0" cellspacing="0" border="0" style="max-width:560px;width:100%;">
@@ -99,7 +108,12 @@ export function render({ intro, staysFree, ps }, unsubUrl) {
               </div>
               ${line()}
 
-              <div style="padding:20px 0 18px;">
+              <div style="padding:20px 0 4px;">
+                ${g(`<div style="${font}font-size:15px;line-height:1.6;color:#F2EEE6;font-style:italic;">&ldquo;${QUOTE[0]}&rdquo;</div>
+                <div style="${mono}font-size:11px;letter-spacing:1px;color:#9A958C;padding-top:8px;">${QUOTE[1].toUpperCase()}</div>`)}
+              </div>
+
+              <div style="padding:18px 0 18px;">
                 ${g(`<div style="${font}font-size:15px;line-height:1.6;color:#ECE7DE;"><span style="${mono}font-size:12px;font-weight:bold;letter-spacing:1px;color:#00FDDC;">&minus;40%</span>&nbsp; Launch price is <b>$29</b> instead of <s style="color:#9A958C;">$49</s>, until December 4. Or try it free for 7 days first, every feature, no account.</div>`)}
               </div>
 
@@ -109,6 +123,10 @@ export function render({ intro, staysFree, ps }, unsubUrl) {
                 </td></tr>
               </table>
               <div style="padding-top:12px;">${g(`<div style="${font}font-size:12.5px;color:#9A958C;text-align:center;">${staysFree}</div>`)}</div>
+            </td></tr>
+            <!-- Static shot at the end, for everyone whose client is still loading the GIF. -->
+            <tr><td style="padding:0 32px 30px;line-height:0;">
+              <a href="${PAGE}"><img src="${STILL}" alt="TagoClip Pro interface: Fruity curve, drive at +8 dB, true peak ceiling at -1.0 dBTP" width="494" style="width:100%;max-width:494px;height:auto;display:block;border:0;border-radius:6px;"></a>
             </td></tr>
         </table>
         </td></tr>

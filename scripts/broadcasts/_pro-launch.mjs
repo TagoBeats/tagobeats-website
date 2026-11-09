@@ -7,8 +7,6 @@
 const GIF = 'https://tagobeats.com/uploads_opt/TagoClipPro_mail_launch.gif?v=2'
 const PAGE_BASE = 'https://tagobeats.com/tagoclip-pro'
 const STILL = 'https://tagobeats.com/uploads_opt/TagoClipPro_mail_still.jpg?v=1'
-// Shown next to the subject in the inbox list instead of the first body line.
-const PREHEADER = 'Launch price $29 until December 4. Try it free for 7 days.'
 const QUOTE = ['...captures that FL Studio Fruity Clipper sound and feel, which is exactly the kind of clipping I\'m after.', 'Marcos, beta tester, Ableton Live 12']
 
 const FEATURES = [
@@ -20,7 +18,9 @@ const FEATURES = [
 const PLUS = 'Plus three curves (Fruity, Brick and Silky) and mono low end. AU and VST3 on Mac, VST3 on Windows.'
 const PRICE = 'Launch price is $29 instead of $49, until December 4. Or try it free for 7 days first, every feature, no account.'
 
-export function render({ intro, staysFree, ps, variant }, unsubUrl) {
+// preheader: shown next to the subject in the inbox list instead of the first
+// body line. Kept personal on purpose, a price there reads like an ad.
+export function render({ intro, staysFree, ps, variant, preheader }, unsubUrl) {
   // UTM tags so visits from this mail, per variant, show up in the analytics.
   const PAGE = `${PAGE_BASE}?utm_source=newsletter&utm_medium=email&utm_campaign=pro-launch&utm_content=${variant}`
   const text = [
@@ -79,7 +79,7 @@ export function render({ intro, staysFree, ps, variant }, unsubUrl) {
     </style>
   </head>
   <body class="body tb-bg" style="margin:0;padding:0;${bg('#0A0908')}">
-  <div style="display:none;max-height:0;overflow:hidden;mso-hide:all;font-size:1px;line-height:1px;color:#0A0908;opacity:0;">${PREHEADER}${'&#847;&zwnj;&nbsp;'.repeat(60)}</div>
+  <div style="display:none;max-height:0;overflow:hidden;mso-hide:all;font-size:1px;line-height:1px;color:#0A0908;opacity:0;">${preheader}${'&#847;&zwnj;&nbsp;'.repeat(60)}</div>
   <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" class="tb-bg" bgcolor="#0A0908" style="${bg('#0A0908')}">
     <tr><td align="center" style="padding:32px 16px;">
       <table role="presentation" width="560" cellpadding="0" cellspacing="0" border="0" style="max-width:560px;width:100%;">

@@ -22,6 +22,10 @@
 <meta name="twitter:description" content="The FL soft clip curve in every DAW, on a modern engine: three curves, ADAA up to 4x, a true peak ceiling and level-matched auto gain. AU and VST3 for macOS and Windows, 7-day free trial.">
 <meta name="twitter:image" content="https://tagobeats.com/uploads_opt/TagoClipPro_og.jpg?v=1">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<!-- The storefront script and its data come from two Moonbase hosts. Opening
+     the connections early brings the live price in sooner. -->
+<link rel="preconnect" href="https://assets.moonbase.sh" crossorigin>
+<link rel="preconnect" href="https://tagobeats.moonbase.sh" crossorigin>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -205,7 +209,10 @@ body { margin: 0; background:var(--bg); color:var(--text); font-family:'Archivo'
 .tb-btn s { font-family:var(--mono); font-size:11px; font-weight:400; letter-spacing:0; opacity:.5; }
 .tb-btn-ghost { display:inline-flex; align-items:center; justify-content:center; text-decoration:none; color:var(--text); background:transparent; border:1px solid rgba(236,231,222,0.22); font-weight:700; font-size:13px; letter-spacing:0.12em; padding:17px 22px; border-radius:3px; white-space:nowrap; }
 /* The light sweep from the hover, also on its own every few seconds. */
-@keyframes tb-shine { 0%, 72% { left:-60%; } 88%, 100% { left:130%; } }
+/* Runs on transform, not on left: left moved the box every frame, which
+   the browser counts as layout shift. 475% of its own width is the same
+   travel as left -60% to 130% of the button. */
+@keyframes tb-shine { 0%, 72% { transform:translateX(0) skewX(-20deg); } 88%, 100% { transform:translateX(475%) skewX(-20deg); } }
 .tb-shine::before { animation:tb-shine 6.5s ease-in-out 1.5s infinite; }
 
 .tb-herobuy { margin-top:30px; }
@@ -216,8 +223,9 @@ body { margin: 0; background:var(--bg); color:var(--text); font-family:'Archivo'
 .tb-live i { width:6px; height:6px; border-radius:50%; background:var(--acc); box-shadow:0 0 10px rgba(var(--acc-rgb),0.8); animation:tb-breathe 2.4s ease-in-out infinite; }
 .tb-live b { font-weight:500; }
 
-/* Launch sale: a teal outline tag, no fill, no glow. Only shown while
-   Moonbase reports a discount. */
+/* Launch sale: a teal outline tag, no fill, no glow. Part of the static
+   markup during the intro period ([data-tb-intro]), taken out by the script
+   above moonbase.js once the period is over or Moonbase reports no discount. */
 /* Two-part tag: "-40%" in its own cell, then the label and the countdown. */
 .tb-sale { display:inline-flex; align-items:stretch; margin-bottom:18px; border:1px solid rgba(var(--acc-rgb),0.55); border-radius:3px; overflow:hidden; font-family:var(--mono); font-size:11px; letter-spacing:0.16em; line-height:1; white-space:nowrap; }
 .tb-sale-tag { display:flex; align-items:center; padding:9px 11px; background:rgba(var(--acc-rgb),0.14); border-right:1px solid rgba(var(--acc-rgb),0.55); font-weight:700; letter-spacing:0.04em; color:var(--acc); }
@@ -283,7 +291,11 @@ body { margin: 0; background:var(--bg); color:var(--text); font-family:'Archivo'
   .tb-herobuy-btns .tb-btn { flex:1 1 auto; padding:17px 14px; gap:7px; font-size:13px; letter-spacing:0.08em; }
   .tb-herobuy-btns .tb-btn-ghost { flex:0 1 auto; padding:16px 14px; font-size:12px; }
 }
-@media (max-width: 400px) {
+/* Up to 480px the trial button says TRY FREE. At 400px (the old limit) the
+   two hero buttons sat exactly at the wrap point between 401 and 430px: they
+   fit or not depending on the price format ("$29" or "29 $") and on whether
+   the web font had loaded yet, and the row jumped when that changed. */
+@media (max-width: 480px) {
   .tb-hide-xs { display:none; }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -334,7 +346,7 @@ body { margin: 0; background:var(--bg); color:var(--text); font-family:'Archivo'
     <div style="display:flex; align-items:center; gap:clamp(18px,3vw,40px);">
       <a href="/tagoclip" class="tb-hide-mobile" style="text-decoration:none; color:rgba(236,231,222,0.7); font-size:13px; letter-spacing:0.14em; font-weight:600;">TAGOCLIP FREE</a>
       <a href="/" style="text-decoration:none; color:rgba(236,231,222,0.7); font-size:13px; letter-spacing:0.18em; font-weight:600;">HOME</a>
-      <a href="https://tagobeats.moonbase.sh/" data-tb-store="buy" class="tb-cta tb-navbuy" data-moonbase-if="!product.tagoclip-pro.owned">BUY · <span data-moonbase-render="product.tagoclip-pro.price">$49</span></a>
+      <a href="https://tagobeats.moonbase.sh/" data-tb-store="buy" class="tb-cta tb-navbuy" data-moonbase-if="!product.tagoclip-pro.owned">BUY · <span data-moonbase-render="product.tagoclip-pro.price" data-tb-intro-price>$29</span></a>
     </div>
   </nav>
 
@@ -356,12 +368,12 @@ body { margin: 0; background:var(--bg); color:var(--text); font-family:'Archivo'
           <div id="tb-herobuy" class="tb-herobuy">
             <!-- Sale badge. "−40%" is static text: 20 off 49 is 40.8 %, so it
                  understates. Change it if the Moonbase discount changes. -->
-            <div class="tb-sale" hidden data-moonbase-if="product.tagoclip-pro.has_discount">
+            <div class="tb-sale" data-tb-intro>
               <span class="tb-sale-tag">−40%</span>
-              <span class="tb-sale-text">LAUNCH PRICE<span aria-hidden="true">·</span><b data-tb-days></b></span>
+              <span class="tb-sale-text">LAUNCH PRICE<span aria-hidden="true">·</span><b data-tb-days>ENDS DEC 4</b></span>
             </div>
             <div class="tb-herobuy-btns" data-moonbase-if="!product.tagoclip-pro.owned">
-              <a href="https://tagobeats.moonbase.sh/" data-tb-store="buy" class="tb-cta tb-btn tb-shine">BUY FOR <span data-moonbase-render="product.tagoclip-pro.price">$49</span><s hidden data-moonbase-if="product.tagoclip-pro.has_discount" data-moonbase-render="product.tagoclip-pro.original_price">$49</s><span aria-hidden="true" style="font-size:17px; line-height:1;">→</span></a>
+              <a href="https://tagobeats.moonbase.sh/" data-tb-store="buy" class="tb-cta tb-btn tb-shine">BUY FOR <span data-moonbase-render="product.tagoclip-pro.price" data-tb-intro-price>$29</span><s data-tb-intro data-tb-was data-moonbase-render="product.tagoclip-pro.original_price">$49</s><span aria-hidden="true" style="font-size:17px; line-height:1;">→</span></a>
               <a href="https://tagobeats.moonbase.sh/" data-tb-store="trial" class="tb-cta-ghost tb-btn-ghost">TRY&nbsp;<span class="tb-hide-xs">7 DAYS&nbsp;</span>FREE</a>
             </div>
             <div class="tb-herobuy-btns" hidden data-moonbase-if="product.tagoclip-pro.owned">
@@ -392,16 +404,20 @@ body { margin: 0; background:var(--bg); color:var(--text); font-family:'Archivo'
         </div>
         <aside class="tb-buy" aria-label="Buy TagoClip Pro" data-tb-hides-sticky>
           <!-- Prices are rendered live from Moonbase. The static text is what shows
-               before the storefront has loaded, or if it never does. -->
+               before the storefront has loaded, or if it never does. During the
+               intro period that static state is the launch price ($29, badge,
+               strikethrough), so nothing jumps when Moonbase answers. The small
+               script above moonbase.js puts the regular price back once the
+               intro period is over. -->
           <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:14px;">
-            <span class="tb-sale" hidden data-moonbase-if="product.tagoclip-pro.has_discount"><span class="tb-sale-tag">−40%</span><span class="tb-sale-text">LAUNCH PRICE</span></span>
-            <span data-moonbase-if="!product.tagoclip-pro.has_discount" style="font-family:var(--mono); font-size:10px; letter-spacing:0.2em; color:var(--faint);">PERPETUAL LICENSE</span>
+            <span class="tb-sale" data-tb-intro><span class="tb-sale-tag">−40%</span><span class="tb-sale-text">LAUNCH PRICE</span></span>
+            <span hidden data-tb-regular style="font-family:var(--mono); font-size:10px; letter-spacing:0.2em; color:var(--faint);">PERPETUAL LICENSE</span>
           </div>
           <div style="display:flex; align-items:baseline; gap:14px; margin-bottom:8px;">
-            <span data-moonbase-render="product.tagoclip-pro.price" style="font-size:58px; font-weight:800; letter-spacing:-0.04em; line-height:1; color:var(--hi);">$49</span>
-            <s class="tb-was" hidden data-moonbase-if="product.tagoclip-pro.has_discount" data-moonbase-render="product.tagoclip-pro.original_price">$49</s>
+            <span data-moonbase-render="product.tagoclip-pro.price" data-tb-intro-price style="font-size:58px; font-weight:800; letter-spacing:-0.04em; line-height:1; color:var(--hi);">$29</span>
+            <s class="tb-was" data-tb-intro data-tb-was data-moonbase-render="product.tagoclip-pro.original_price">$49</s>
           </div>
-          <div class="tb-save" hidden data-moonbase-if="product.tagoclip-pro.has_discount">YOU SAVE $20 · <b data-tb-days></b></div>
+          <div class="tb-save" data-tb-intro>YOU SAVE $20 · <b data-tb-days>ENDS DEC 4</b></div>
           <div style="margin-top:8px; font-family:var(--mono); font-size:10px; letter-spacing:0.16em; color:var(--faint);">PLUS TAX WHERE APPLICABLE</div>
           <div style="height:22px;"></div>
           <div data-moonbase-if="!product.tagoclip-pro.owned">
@@ -719,11 +735,11 @@ body { margin: 0; background:var(--bg); color:var(--text); font-family:'Archivo'
       </div>
       <div class="tb-final-buy">
         <div style="display:flex; align-items:baseline; gap:14px; margin-bottom:6px;">
-          <span data-moonbase-render="product.tagoclip-pro.price" style="font-size:clamp(48px,5vw,64px); font-weight:800; letter-spacing:-0.04em; line-height:1; color:var(--hi);">$49</span>
-          <s hidden data-moonbase-if="product.tagoclip-pro.has_discount" data-moonbase-render="product.tagoclip-pro.original_price" style="font-family:var(--mono); font-size:16px; color:var(--faint);">$49</s>
+          <span data-moonbase-render="product.tagoclip-pro.price" data-tb-intro-price style="font-size:clamp(48px,5vw,64px); font-weight:800; letter-spacing:-0.04em; line-height:1; color:var(--hi);">$29</span>
+          <s data-tb-intro data-tb-was data-moonbase-render="product.tagoclip-pro.original_price" style="font-family:var(--mono); font-size:16px; color:var(--faint);">$49</s>
         </div>
         <div class="tb-note" style="margin:0 0 20px;">
-          <span class="tb-sale" hidden data-moonbase-if="product.tagoclip-pro.has_discount"><span class="tb-sale-tag">−40%</span><span class="tb-sale-text">LAUNCH PRICE<span aria-hidden="true">·</span><b data-tb-days></b></span></span>
+          <span class="tb-sale" data-tb-intro><span class="tb-sale-tag">−40%</span><span class="tb-sale-text">LAUNCH PRICE<span aria-hidden="true">·</span><b data-tb-days>ENDS DEC 4</b></span></span>
           <span>PERPETUAL LICENSE</span>
         </div>
         <div data-moonbase-if="!product.tagoclip-pro.owned" style="display:grid; gap:10px;">
@@ -758,14 +774,43 @@ body { margin: 0; background:var(--bg); color:var(--text); font-family:'Archivo'
 <div class="tb-sticky" data-moonbase-if="!product.tagoclip-pro.owned">
   <div class="tb-sticky-info">
     <span>TAGOCLIP PRO</span>
-    <span class="tb-sticky-price"><b data-moonbase-render="product.tagoclip-pro.price">$49</b><s hidden data-moonbase-if="product.tagoclip-pro.has_discount" data-moonbase-render="product.tagoclip-pro.original_price">$49</s></span>
-    <span class="tb-live" hidden data-moonbase-if="product.tagoclip-pro.has_discount"><span class="tb-sale-tag">−40%</span><b data-tb-days></b></span>
+    <span class="tb-sticky-price"><b data-moonbase-render="product.tagoclip-pro.price" data-tb-intro-price>$29</b><s data-tb-intro data-tb-was data-moonbase-render="product.tagoclip-pro.original_price">$49</s></span>
+    <span class="tb-live" data-tb-intro><span class="tb-sale-tag">−40%</span><b data-tb-days>ENDS DEC 4</b></span>
   </div>
   <a href="https://tagobeats.moonbase.sh/" data-tb-store="buy" class="tb-cta tb-btn tb-shine">BUY NOW <span aria-hidden="true" style="font-size:16px; line-height:1;">→</span></a>
 </div>
 
-<script src="https://assets.moonbase.sh/storefront/moonbase.js"></script>
-<script src="js/tagoclip-pro-store.js"></script>
+<script>
+// The markup above shows the launch price ([data-tb-intro] visible,
+// [data-tb-regular] hidden, $29). It used to hang on Moonbase's
+// data-moonbase-if, which hides such elements until the storefront data is
+// in and then shows them: badge and strikethrough popped in seconds after
+// the first paint and pushed the page down (CLS 0.146). Now the page decides
+// from the date, and js/tagoclip-pro-store.js corrects it if Moonbase
+// reports something else. Keep the date in step with js/tagoclip-pro-cta.js.
+(function () {
+  var intro = Date.now() < Date.parse("2026-12-05T08:00:00Z");
+  window.tbSetIntro = function (on) {
+    document.querySelectorAll("[data-tb-intro]").forEach(function (el) { el.hidden = !on; });
+    document.querySelectorAll("[data-tb-regular]").forEach(function (el) { el.hidden = on; });
+  };
+  if (!intro) window.tbSetIntro(false);
+  // Same number format Moonbase renders a moment later ("$29" for en-US,
+  // "29 $" for de-DE), so the text keeps its width and no button wraps late.
+  // Locale undefined on purpose: Moonbase formats with the browser default too.
+  var fmt = function (n) { return "$" + n; };
+  try {
+    var nf = new Intl.NumberFormat(undefined, { style: "currency", currency: "USD", currencyDisplay: "narrowSymbol", maximumFractionDigits: 0 });
+    fmt = function (n) { return nf.format(n); };
+  } catch (e) {}
+  document.querySelectorAll("[data-tb-intro-price]").forEach(function (el) { el.textContent = fmt(intro ? 29 : 49); });
+  document.querySelectorAll("[data-tb-was]").forEach(function (el) { el.textContent = fmt(49); });
+})();
+</script>
+<!-- Deferred like the scripts below, so neither blocks the first paint. Order
+     is kept: the loader runs first, then the store script that calls it. -->
+<script src="https://assets.moonbase.sh/storefront/moonbase.js" defer></script>
+<script src="js/tagoclip-pro-store.js" defer></script>
 <script src="js/tagoclip-pro-hero.js" defer></script>
 <script src="js/tagoclip-pro-ab.js" defer></script>
 <script src="js/tagoclip-pro-cta.js" defer></script>

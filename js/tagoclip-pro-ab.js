@@ -16,11 +16,36 @@
     if (!srcs) return;
     var players = {};
     Object.keys(srcs).forEach(function (key) {
-      var a = new Audio(srcs[key]);
+      // No source yet: new Audio(src) makes the browser fetch every file on
+      // page load, played or not. arm() below hands the files over.
+      var a = new Audio();
       a.preload = 'auto';
       players[key] = a;
     });
     var keys = Object.keys(players);
+    // The files are fetched once the player is near the screen and the visitor
+    // has done anything at all (scroll, touch, mouse, key), or on the first
+    // press of play. Someone who opens the page and leaves pays nothing.
+    var armed = false;
+    function arm() {
+      if (armed) return;
+      armed = true;
+      keys.forEach(function (k) { players[k].src = srcs[k]; });
+    }
+    var near = !('IntersectionObserver' in window), touched = false;
+    function maybeArm() { if (near && touched) arm(); }
+    if (!near) {
+      var armIo = new IntersectionObserver(function (entries) {
+        if (!entries[0].isIntersecting) return;
+        near = true;
+        armIo.disconnect();
+        maybeArm();
+      }, { rootMargin: '200px 0px' });
+      armIo.observe(root);
+    }
+    ['scroll', 'pointerdown', 'pointermove', 'touchstart', 'keydown'].forEach(function (type) {
+      window.addEventListener(type, function () { touched = true; maybeArm(); }, { once: true, passive: true });
+    });
     var current = keys[0];
     var playing = false;
     var playBtn = root.querySelector('[data-ab-play]');
@@ -57,6 +82,7 @@
         keys.forEach(function (k) { players[k].pause(); });
         playing = false;
       } else {
+        arm();
         applyMutes();
         resync();
         keys.forEach(function (k) { players[k].play(); });

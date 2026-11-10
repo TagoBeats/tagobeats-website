@@ -79,6 +79,12 @@ body { margin: 0; background:#12100E; color:#ECE7DE; font-family:'Archivo',sans-
   .tb-hide-mobile { display:none !important; }
 }
 </style>
+<style>
+/* The TagoClip Pro bar (js/tago-pro-teaser.js) arrives with a deferred script.
+   Its 38px are reserved here, so the nav does not jump down when it appears. */
+nav { top:38px !important; }
+body::before { content:''; position:fixed; top:0; left:0; right:0; z-index:59; height:38px; background:#0E0D0C; border-bottom:1px solid rgba(0,253,220,0.28); }
+</style>
 <script defer src="/_vercel/insights/script.js"></script>
 </head>
 <body>
@@ -262,11 +268,36 @@ body { margin: 0; background:#12100E; color:#ECE7DE; font-family:'Archivo',sans-
     // That makes switching seamless: no seek, no reload, same position.
     var players = {};
     Object.keys(srcs).forEach(function (key) {
-      var a = new Audio(srcs[key]);
+      // No source yet: new Audio(src) makes the browser fetch every file on
+      // page load, played or not. arm() below hands the files over.
+      var a = new Audio();
       a.preload = 'auto';
       players[key] = a;
     });
     var keys = Object.keys(players);
+    // The files are fetched once the player is near the screen and the visitor
+    // has done anything at all (scroll, touch, mouse, key), or on the first
+    // press of play. Someone who opens the page and leaves pays nothing.
+    var armed = false;
+    function arm() {
+      if (armed) return;
+      armed = true;
+      keys.forEach(function (k) { players[k].src = srcs[k]; });
+    }
+    var near = !('IntersectionObserver' in window), touched = false;
+    function maybeArm() { if (near && touched) arm(); }
+    if (!near) {
+      var armIo = new IntersectionObserver(function (entries) {
+        if (!entries[0].isIntersecting) return;
+        near = true;
+        armIo.disconnect();
+        maybeArm();
+      }, { rootMargin: '200px 0px' });
+      armIo.observe(root);
+    }
+    ['scroll', 'pointerdown', 'pointermove', 'touchstart', 'keydown'].forEach(function (type) {
+      window.addEventListener(type, function () { touched = true; maybeArm(); }, { once: true, passive: true });
+    });
     var current = keys[0];
     var playing = false;
     var playBtn = root.querySelector('[data-ab-play]');
@@ -294,6 +325,7 @@ body { margin: 0; background:#12100E; color:#ECE7DE; font-family:'Archivo',sans-
         keys.forEach(function (k) { players[k].pause(); });
         playing = false;
       } else {
+        arm();
         applyMutes();
         keys.forEach(function (k) { players[k].play(); });
         playing = true;

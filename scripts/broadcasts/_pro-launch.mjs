@@ -11,7 +11,7 @@ const QUOTE = ['...captures that FL Studio Fruity Clipper sound and feel, which 
 
 const FEATURES = [
   ['See what you\'re cutting.', 'A live waveform shows your signal and marks every peak the clipper takes off in red. You see the clipping instead of guessing it from a curve.'],
-  ['Cleaner when you push it.', 'Anti-aliased clipping up to 4x keeps the top end clean, even with the drive way up.'],
+  ['Cleaner when you push it.', 'Anti-aliased clipping keeps the top end clean, even with the drive way up.'],
   ['A true peak ceiling.', 'It\'s the very last stage, so nothing gets past it, whatever you do before.'],
   ['Auto gain.', 'It takes back the level the drive adds, so you hear the clipping and not just louder.'],
 ]

@@ -8,12 +8,14 @@
   // End of the Moonbase discount "Launch price" (validity.to, 4.12. US west
   // coast). The labels only show while Moonbase reports has_discount, so this
   // date only feeds the count. Move it along if the discount moves.
+  // The label names the date instead of counting days: a count rounds
+  // differently here, in the Moonbase checkout and in the launch mail
+  // ("until December 4"), and three numbers for one deadline look sloppy.
   var INTRO_END = Date.parse("2026-12-05T08:00:00Z");
   var left = INTRO_END - Date.now();
-  var days = Math.ceil(left / 86400000);
   document.querySelectorAll("[data-tb-days]").forEach(function (el) {
     if (left <= 0) { el.style.display = "none"; return; }
-    el.textContent = days <= 1 ? "LAST DAY" : days + " DAYS LEFT";
+    el.textContent = left <= 86400000 ? "LAST DAY" : "ENDS DEC 4";
   });
 
   // The ticker scrolls by half its width, so the quotes need a second copy

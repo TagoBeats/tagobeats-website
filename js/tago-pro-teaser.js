@@ -12,8 +12,8 @@
   var INTRO_END = Date.parse("2026-12-05T08:00:00Z");
   var left = INTRO_END - Date.now();
   var sale = left > 0;
-  var days = Math.ceil(left / 86400000);
-  var daysText = days <= 1 ? "LAST DAY" : days + " DAYS LEFT";
+  // Names the date instead of counting days, same as js/tagoclip-pro-cta.js.
+  var daysText = left <= 86400000 ? "LAST DAY" : "ENDS DEC 4";
 
   var css = [
     ".tbt-bar{position:fixed;top:0;left:0;right:0;z-index:60;height:38px;display:flex;align-items:center;justify-content:center;gap:12px;padding:0 16px;background:#0E0D0C;border-bottom:1px solid rgba(0,253,220,0.28);font:500 11px/1 'Space Mono','Martian Mono',ui-monospace,monospace;letter-spacing:0.16em;color:#ECE7DE;text-decoration:none;white-space:nowrap;overflow:hidden}",
@@ -89,7 +89,7 @@
 
   // Card
   var COPY = {
-    tagoclip: "Everything you like about TagoClip, on a new engine: anti-aliased clipping up to 4x, a true peak ceiling and level-matched auto gain.",
+    tagoclip: "Everything you like about TagoClip, on a new engine: anti-aliased clipping, a true peak ceiling and level-matched auto gain.",
     tagopitch: "From the maker of TagoPitch: the FL soft clip sound in every DAW, with a true peak ceiling and level-matched auto gain."
   };
   var slot = document.querySelector("[data-tb-pro-teaser]");

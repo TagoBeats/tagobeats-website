@@ -538,7 +538,10 @@
 .tb-demo-link:hover { background: rgba(0,253,220,0.1); border-color: rgba(0,253,220,0.8); transform: translateY(-2px); }
 /* Free plugins section: two cards side by side, CTA and details link share a row. */
 .tb-free-grid .tb-cta { padding: 16px 28px !important; font-size: 13px !important; }
-.tb-free-grid .tb-demo-link { padding: 12px 18px !important; font-size: 12px !important; margin-left: 8px; vertical-align: middle; }
+/* The gap sits right of the CTA, not left of the link: when the link wraps
+   under the CTA on narrow cards, both start flush left. */
+.tb-free-grid .tb-demo-link { padding: 12px 18px !important; font-size: 12px !important; vertical-align: middle; }
+.tb-free-grid #tb-tc-cta, .tb-free-grid #tb-tp-cta { margin-right: 8px; vertical-align: middle; }
 .tb-proj-card { transition: transform .35s cubic-bezier(.2,.8,.2,1), border-color .35s ease, box-shadow .35s ease; }
 .tb-proj-card:hover { transform: translateY(-6px); border-color: rgba(0,253,220,0.35); box-shadow: 0 26px 50px -24px rgba(0,0,0,0.65); }
 .tb-card-link { cursor: pointer; }

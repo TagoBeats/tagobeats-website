@@ -107,7 +107,7 @@ function tipsMail(unsubUrl) {
 
 function endingMail(unsubUrl, saleOn) {
   const lines = [
-    'Hey, your TagoClip Pro trial runs out in about two days. After that the plugin passes audio through untouched, your projects stay as they are.',
+    'Hey, your TagoClip Pro trial runs out in about two days. After that the audio drops out for 3 seconds every 30 seconds until you activate it. Your projects and settings stay as they are.',
     saleOn
       ? `If it earned its spot in your chain, the launch price is still on: $29 instead of $49, until December 4. ${link(PAGE, 'Get TagoClip Pro')}`
       : `If it earned its spot in your chain, you can keep it here: ${link(PAGE, 'Get TagoClip Pro')}`,

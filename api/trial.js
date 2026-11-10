@@ -65,7 +65,9 @@ function link(href, label) {
 
 function tipsMail(unsubUrl) {
   const lines = [
-    'Hey, Robin here. You grabbed the TagoClip Pro trial yesterday, so here are three things worth trying first:',
+    'Hey, Robin here. You grabbed the TagoClip Pro trial yesterday.',
+    'In case it isn\'t running yet: open the plugin, click Activate and pick the free trial, that starts the 7 days. On Windows the installer isn\'t signed yet, so SmartScreen asks once. Click More info, then Run anyway.',
+    'Three things worth trying first:',
     '1. Put it on your 808 or drum bus, pick FRUITY and push the drive. Then hit LINK, so you compare the clipping and not just the extra loudness.',
     '2. Set the true peak ceiling to -1.0 on your master and push hard. Whatever you do before it, nothing gets past.',
     '3. Click DELTA to hear only what the clipper takes off. If you hear the kick or the vocal in there, back off.',

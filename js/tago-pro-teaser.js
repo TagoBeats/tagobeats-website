@@ -89,7 +89,7 @@
 
   // Card
   var COPY = {
-    tagoclip: "Everything you like about TagoClip, on a new engine: anti-aliased clipping, a true peak ceiling and level-matched auto gain.",
+    tagoclip: "Everything you like about TagoClip, on a new engine: anti-aliased clipping that measures cleaner than the free 8x mode, a true peak ceiling and level-matched auto gain.",
     tagopitch: "From the maker of TagoPitch: the FL soft clip sound in every DAW, with a true peak ceiling and level-matched auto gain."
   };
   var slot = document.querySelector("[data-tb-pro-teaser]");

@@ -9,9 +9,14 @@ const PAGE_BASE = 'https://tagobeats.com/tagoclip-pro'
 const STILL = 'https://tagobeats.com/uploads_opt/TagoClipPro_mail_still.jpg?v=1'
 const QUOTE = ['...captures that FL Studio Fruity Clipper sound and feel, which is exactly the kind of clipping I\'m after.', 'Marcos, beta tester, Ableton Live 12']
 
-const FEATURES = [
+// The anti-aliasing line differs per variant: TagoClip users know the 8x
+// oversampling of the free version, so they get the measured comparison
+// (ADAA 4x below plain 8x at every frequency checked, about half the work).
+// For everyone else that comparison means nothing.
+const CLEAN_DEFAULT = 'Anti-aliased clipping keeps the top end clean, even with the drive way up.'
+const features = (clean) => [
   ['See what you\'re cutting.', 'A live waveform shows your signal and marks every peak the clipper takes off in red. You see the clipping instead of guessing it from a curve.'],
-  ['Cleaner when you push it.', 'Anti-aliased clipping keeps the top end clean, even with the drive way up.'],
+  ['Cleaner when you push it.', clean || CLEAN_DEFAULT],
   ['A true peak ceiling.', 'It\'s the very last stage, so nothing gets past it, whatever you do before.'],
   ['Auto gain.', 'It takes back the level the drive adds, so you hear the clipping and not just louder.'],
 ]
@@ -20,7 +25,8 @@ const PRICE = 'Launch price is $29 instead of $49, until December 4. Or try it f
 
 // preheader: shown next to the subject in the inbox list instead of the first
 // body line. Kept personal on purpose, a price there reads like an ad.
-export function render({ intro, staysFree, ps, variant, preheader }, unsubUrl) {
+export function render({ intro, staysFree, ps, variant, preheader, clean }, unsubUrl) {
+  const FEATURES = features(clean)
   // UTM tags so visits from this mail, per variant, show up in the analytics.
   const PAGE = `${PAGE_BASE}?utm_source=newsletter&utm_medium=email&utm_campaign=pro-launch&utm_content=${variant}`
   const text = [
@@ -57,7 +63,7 @@ export function render({ intro, staysFree, ps, variant, preheader }, unsubUrl) {
   const font = 'font-family:Arial,Helvetica,sans-serif;'
   const mono = "font-family:'Courier New',Courier,monospace;"
 
-  const features = FEATURES.map(([h, b]) =>
+  const featureRows = FEATURES.map(([h, b]) =>
     `<div style="padding-bottom:14px;"><span style="color:#F2EEE6;font-weight:bold;">${h}</span> ${b}</div>`
   ).join('')
 
@@ -103,7 +109,7 @@ export function render({ intro, staysFree, ps, variant, preheader }, unsubUrl) {
               ${line()}
               <div style="padding:18px 0 6px;">
                 ${g(`<div style="${mono}font-size:11px;letter-spacing:2px;color:#9A958C;padding-bottom:12px;">WHAT'S NEW</div>
-                <div style="${font}font-size:14px;line-height:1.7;color:#C9C3B8;">${features}</div>
+                <div style="${font}font-size:14px;line-height:1.7;color:#C9C3B8;">${featureRows}</div>
                 <div style="${font}font-size:13px;line-height:1.6;color:#9A958C;padding-bottom:12px;">${PLUS}</div>`)}
               </div>
               ${line()}

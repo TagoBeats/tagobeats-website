@@ -16,6 +16,7 @@ export default {
     variant: 'tagoclip',
     preheader: "What I've been building since TagoClip. Took a while.",
     intro: ['you\'re using TagoClip, so you\'re the first to hear this: TagoClip Pro is out. Everything you like about TagoClip, on a new engine.'],
+    clean: 'Anti-aliased clipping that measures cleaner than the 8x oversampling in TagoClip, at about half the processing load.',
     staysFree: 'TagoClip itself stays free, nothing changes there.',
     ps: 'P.S. Questions about the upgrade? Just hit reply.',
   }, unsubUrl),

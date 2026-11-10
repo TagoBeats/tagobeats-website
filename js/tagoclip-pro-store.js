@@ -101,7 +101,7 @@
           '<button type="button" class="tbg-x" aria-label="Close">×</button>' +
           '<div class="tbg-eb">7-DAY FREE TRIAL</div>' +
           "<h3>Try TagoClip Pro</h3>" +
-          "<p>Every feature, no account, no card. Drop your email and the download starts right away.</p>" +
+          "<p>Every feature, no account, no card. Drop your email and the download starts right away. After installing, open the plugin, click Activate and pick the free trial.</p>" +
           '<input type="email" name="email" required autocomplete="email" placeholder="your@email.com" aria-label="Email">' +
           '<input type="text" name="website" class="tbg-hp" tabindex="-1" autocomplete="off" aria-hidden="true">' +
           '<button type="submit" class="tbg-go">START MY TRIAL →</button>' +

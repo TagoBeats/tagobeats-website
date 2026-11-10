@@ -36,23 +36,48 @@ async function redis(commands) {
   return res.json()
 }
 
+// Same Gmail iOS dark mode handling as the launch mail
+// (scripts/broadcasts/_pro-launch.mjs): the app inverts text and border
+// colours but leaves gradient backgrounds alone. So every background and the
+// card frame is a gradient, never a plain colour or a border, and every text
+// block sits in g(), two wrappers whose blend modes invert Gmail's inversion
+// back. "u + .body" only matches inside Gmail, other clients ignore it.
 function wrapHtml(paragraphs, unsubUrl) {
+  const g = (inner, inline) => {
+    const s = inline ? ' style="display:inline-block;"' : ''
+    return `<div class="gm-screen"${s}><div class="gm-diff"${s}>${inner}</div></div>`
+  }
+  const bg = (c) => `background-color:${c};background-image:linear-gradient(${c},${c});`
+  const font = 'font-family:Arial,Helvetica,sans-serif;'
   const body = paragraphs
-    .map((p) => `<p style="margin:0 0 16px;font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:1.6;color:#B5AFA4;">${p}</p>`)
+    .map((p) => `<p style="margin:0 0 16px;${font}font-size:15px;line-height:1.6;color:#C9C3B8;">${p}</p>`)
     .join('')
-  return `<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="color-scheme" content="dark"><meta name="supported-color-schemes" content="dark"></head>
-  <body style="margin:0;padding:0;background-color:#0A0908;background-image:linear-gradient(#0A0908,#0A0908);">
-  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#0A0908" style="background-color:#0A0908;background-image:linear-gradient(#0A0908,#0A0908);">
+  return `<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="color-scheme" content="dark"><meta name="supported-color-schemes" content="dark">
+  <style>
+    :root { color-scheme: dark; supported-color-schemes: dark; }
+    @media (prefers-color-scheme: dark) {
+      body, .tb-bg { background-color: #0A0908 !important; }
+      .tb-card { background-color: #1A1815 !important; }
+    }
+    u + .body .gm-screen { background: #000; mix-blend-mode: screen; }
+    u + .body .gm-diff { background: #000; mix-blend-mode: difference; }
+  </style></head>
+  <body class="body tb-bg" style="margin:0;padding:0;${bg('#0A0908')}">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" class="tb-bg" bgcolor="#0A0908" style="${bg('#0A0908')}">
     <tr><td align="center" style="padding:32px 16px;">
       <table role="presentation" width="560" cellpadding="0" cellspacing="0" border="0" style="max-width:560px;width:100%;">
         <tr><td style="padding:0 4px 18px;">
-          <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background-color:#00FDDC;background-image:linear-gradient(#00FDDC,#00FDDC);"></span>
-          <span style="font-family:Arial,Helvetica,sans-serif;font-size:14px;font-weight:bold;letter-spacing:3px;color:#ECE7DE;">&nbsp;TAGOBEATS</span>
+          <span style="display:inline-block;width:8px;height:8px;border-radius:50%;${bg('#00FDDC')}"></span>
+          ${g(`<span style="${font}font-size:14px;font-weight:bold;letter-spacing:3px;color:#ECE7DE;">&nbsp;TAGOBEATS</span>`, true)}
         </td></tr>
-        <tr><td bgcolor="#1A1815" style="background-color:#1A1815;background-image:linear-gradient(#1A1815,#1A1815);border:1px solid #2A2723;border-radius:10px;padding:28px 32px 14px;">${body}</td></tr>
-        <tr><td style="padding:18px 4px 0;font-family:Arial,Helvetica,sans-serif;font-size:12px;line-height:1.6;color:#6A655C;">
-          Robin (TagoBeats) &middot; <a href="https://tagobeats.com" style="color:#00FDDC;text-decoration:none;">tagobeats.com</a><br>
-          <a href="${unsubUrl}" style="color:#8A857C;text-decoration:underline;">Unsubscribe</a>
+        <tr><td style="${bg('#2A2723')}padding:1px;border-radius:10px;">
+          <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" class="tb-card" bgcolor="#1A1815" style="${bg('#1A1815')}border-radius:9px;">
+            <tr><td style="padding:28px 32px 14px;">${g(body)}</td></tr>
+          </table>
+        </td></tr>
+        <tr><td style="padding:18px 4px 0;">
+          ${g(`<div style="${font}font-size:12px;line-height:1.6;color:#7A756C;">Robin (TagoBeats) &middot; <a href="https://tagobeats.com" style="color:#00FDDC;text-decoration:none;">tagobeats.com</a><br>
+          <a href="${unsubUrl}" style="color:#7A756C;text-decoration:underline;">Unsubscribe</a></div>`)}
         </td></tr>
       </table>
     </td></tr>

@@ -37,7 +37,19 @@
   });
   // setup() resolves even when its data request is blocked, so readiness is
   // taken from the first successful data load instead.
-  if (window.Moonbase) Moonbase.on("storefront-updated", function () { ready = true; });
+  if (window.Moonbase) Moonbase.on("storefront-updated", function (e) {
+    ready = true;
+    // The page shows or hides the launch price from the date (inline script
+    // in tagoclip-pro.html). Moonbase has the last word: if the discount was
+    // ended early or extended, the badge and strikethrough follow it.
+    try {
+      var products = (e && e.storefront && e.storefront.products) || [];
+      for (var i = 0; i < products.length; i++) {
+        var v = products[i].id === PRODUCT && products[i].defaultVariation;
+        if (v && typeof v.hasDiscount === "boolean" && window.tbSetIntro) window.tbSetIntro(v.hasDiscount);
+      }
+    } catch (err) {}
+  });
 
   var ACTIONS = {
     buy: function () { Moonbase.purchase({ product_id: PRODUCT }); },

@@ -173,6 +173,30 @@ body { margin: 0; background:var(--bg); color:var(--text); font-family:'Archivo'
 .tb-sig-dot-m { offset-path:path('M140 28 L140 740'); animation:tb-sig-travel 7s linear infinite; }
 @keyframes tb-sig-travel { from { offset-distance:0%; } to { offset-distance:100%; } }
 
+/* Free vs Pro comparison */
+.tb-cmp { margin-top:clamp(40px,6vh,64px); }
+.tb-cmp h2.tb-eyebrow { margin:0 0 14px; }
+.tb-cmp table { width:100%; border-collapse:collapse; table-layout:fixed; }
+.tb-cmp th, .tb-cmp td { text-align:left; vertical-align:top; padding:14px 16px 14px 0; border-top:1px solid var(--hair); font-size:14px; line-height:1.55; color:var(--text); }
+.tb-cmp th { font-family:var(--mono); font-size:11px; font-weight:500; letter-spacing:0.16em; text-transform:uppercase; color:var(--dim); border-top:0; padding-top:0; }
+.tb-cmp th.tb-cmp-pro { color:var(--acc); }
+.tb-cmp th:first-child, .tb-cmp td:first-child { width:44%; }
+.tb-cmp th:nth-child(2), .tb-cmp td:nth-child(2) { width:22%; }
+.tb-cmp td:nth-child(2) { color:var(--dim); font-family:var(--mono); font-size:13px; }
+.tb-cmp td:nth-child(3) { font-family:var(--mono); font-size:13px; }
+.tb-cmp .tb-cmp-yes { color:var(--acc); }
+.tb-cmp td:nth-child(2).tb-cmp-yes { color:var(--dim); }
+.tb-cmp .tb-cmp-no { color:var(--faint); }
+.tb-cmp-note { margin:16px 0 0; font-family:var(--mono); font-size:12px; letter-spacing:0.04em; color:var(--dim); }
+.tb-cmp-note a { color:var(--acc); text-decoration:none; }
+@media (max-width: 640px) {
+  .tb-cmp th, .tb-cmp td { padding:12px 8px 12px 0; font-size:13px; }
+  .tb-cmp th { font-size:10px; letter-spacing:0.1em; }
+  .tb-cmp td:nth-child(2), .tb-cmp td:nth-child(3) { font-size:10.5px; overflow-wrap:anywhere; }
+  .tb-cmp th:first-child, .tb-cmp td:first-child { width:34%; }
+  .tb-cmp th:nth-child(2), .tb-cmp td:nth-child(2) { width:30%; }
+}
+
 /* Requirements and FAQ */
 .tb-req { display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); }
 .tb-req > div { padding:24px 26px; }
@@ -361,7 +385,7 @@ body { margin: 0; background:var(--bg); color:var(--text); font-family:'Archivo'
           <div class="tb-eyebrow" style="margin-bottom:18px;">Tago Plugins · Pro</div>
           <h1 style="margin:0 0 16px; font-size:clamp(46px,7.4vw,96px); font-weight:800; letter-spacing:-0.04em; line-height:0.9; color:var(--hi);">TagoClip<span style="color:var(--acc);"> Pro</span></h1>
           <p style="margin:0 0 14px; font-size:clamp(20px,2.1vw,28px); font-weight:700; letter-spacing:-0.015em; color:var(--hi);">The FL clipper, everywhere.</p>
-          <p style="margin:0; max-width:560px; font-size:clamp(16px,1.35vw,18px); line-height:1.65; color:var(--dim);">Same curve, modern engine. The FL soft clip sound with true peak control, mono low end and level-matched A/B, in every DAW.</p>
+          <p style="margin:0; max-width:560px; font-size:clamp(16px,1.35vw,18px); line-height:1.65; color:var(--dim);">Same curve, modern engine. The FL soft clip sound with anti-aliased clipping, true peak control and level-matched A/B, in every DAW.</p>
 
           <!-- First buy button, above the fold on every screen. When it scrolls
                away, the sticky buy button takes over (js/tagoclip-pro-cta.js). -->
@@ -435,6 +459,20 @@ body { margin: 0; background:var(--bg); color:var(--text); font-family:'Archivo'
           </div>
           <div style="margin-top:18px; font-family:var(--mono); font-size:10px; letter-spacing:0.14em; line-height:1.9; color:var(--faint);">PERPETUAL LICENSE · 3 ACTIVATIONS<br>MACOS 11+ AU/VST3 · WINDOWS VST3<br>TRIAL WITHOUT ACCOUNT</div>
         </aside>
+      </div>
+      <div class="tb-cmp">
+        <h2 class="tb-eyebrow">Free vs Pro</h2>
+        <table>
+          <thead><tr><th scope="col" aria-label="Feature"></th><th scope="col">TagoClip</th><th scope="col" class="tb-cmp-pro">TagoClip Pro</th></tr></thead>
+          <tbody>
+            <tr><td>The FL soft clip curve, plus two more</td><td class="tb-cmp-yes">✓</td><td class="tb-cmp-yes">✓</td></tr>
+            <tr><td>Mono low end, delta listening, mix</td><td class="tb-cmp-yes">✓</td><td class="tb-cmp-yes">✓</td></tr>
+            <tr><td>Anti-aliasing</td><td>Oversampling up to 8x</td><td>ADAA up to 4x. Measures cleaner than 8x oversampling at about half the processing load</td></tr>
+            <tr><td>True peak ceiling, the very last stage</td><td class="tb-cmp-no">–</td><td class="tb-cmp-yes">✓</td></tr>
+            <tr><td>Auto gain with level-matched A/B</td><td class="tb-cmp-no">–</td><td class="tb-cmp-yes">✓</td></tr>
+          </tbody>
+        </table>
+        <p class="tb-cmp-note"><a href="/tagoclip">Free</a> stays free.</p>
       </div>
     </section>
 

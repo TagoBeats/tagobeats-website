@@ -88,6 +88,27 @@ function link(href, label) {
   return `<a href="${href}" style="color:#00FDDC;text-decoration:none;font-weight:bold;">${label}</a>`
 }
 
+// Sent right away. Launch data (11.11.2026): everyone who signed up downloaded,
+// nobody started the trial, because 1.0.0 only shows "Activate" and the trial
+// is picked in the browser after that. This mail spells out those steps.
+function startMail(unsubUrl) {
+  const lines = [
+    'Hey, Robin here. Your TagoClip Pro download should be running.',
+    'To start the 7-day trial:',
+    '1. Run the installer (Mac .pkg or Windows Setup.exe). The download page also lists the manual, that one is just the PDF.',
+    '2. Open TagoClip Pro in your DAW and click Activate.',
+    '3. Your browser opens. Pick Start free trial there and enter your email. No card, no account.',
+    'Until the trial runs, the plugin drops out for 3 seconds every 30 seconds. If you hear that, step 3 is still missing.',
+    'On Windows the installer isn\'t signed yet, so SmartScreen asks once. Click More info, then Run anyway.',
+    'Stuck anywhere? Just reply to this mail, it reaches me directly.',
+  ]
+  return {
+    subject: 'How to start your TagoClip Pro trial',
+    text: [...lines, '', 'Robin (TagoBeats)', PAGE, '', `Unsubscribe: ${unsubUrl}`].join('\n\n'),
+    html: wrapHtml(lines, unsubUrl),
+  }
+}
+
 function tipsMail(unsubUrl) {
   const lines = [
     'Hey, Robin here. You grabbed the TagoClip Pro trial yesterday.',
@@ -174,6 +195,7 @@ module.exports = async function handler(req, res) {
   const unsubUrl = `https://tagobeats.com/api/unsubscribe?e=${encodeURIComponent(email)}`
   const day5 = new Date(now.getTime() + 5 * DAY)
   const mails = [
+    { at: null, ...startMail(unsubUrl) },
     { at: new Date(now.getTime() + 1 * DAY), ...tipsMail(unsubUrl) },
     { at: day5, ...endingMail(unsubUrl, day5.getTime() < INTRO_END) },
   ]
@@ -190,7 +212,7 @@ module.exports = async function handler(req, res) {
           subject: m.subject,
           text: m.text,
           html: m.html,
-          scheduled_at: m.at.toISOString(),
+          ...(m.at ? { scheduled_at: m.at.toISOString() } : {}),
           headers: {
             'List-Unsubscribe': `<${unsubUrl}>, <mailto:plugins@robinbusse.dev?subject=unsubscribe>`,
             'List-Unsubscribe-Post': 'List-Unsubscribe=One-Click',

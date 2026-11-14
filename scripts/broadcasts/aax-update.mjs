@@ -26,7 +26,14 @@ const ALSO = [
 ]
 const WINDOWS = 'On Windows? VST3 works as before, Pro Tools on Windows follows early 2027.'
 const PS = 'P.S. Running Pro Tools? Hit reply and tell me if everything loads fine on your setup.'
-const PPS = 'P.P.S. One question while you\'re here, I\'m picking what to build next: what\'s the last thing in a mix you spent way too long fixing? Just hit reply, one line is enough.'
+// Mom Test block (Robin, 14.11.2026), wording from 02 Projekte/Tago Mom-Test
+// Fragen.md in the vault. The warm-up 50 still got the single-question P.P.S.
+const QUESTIONS_INTRO = 'Two quick questions before you go. Just hit reply, one line is plenty:'
+const QUESTIONS = [
+  'What\'s the last thing in a beat or mix that took you way longer than it should have?',
+  'What\'s the last plugin you actually paid for, and what made you buy it?',
+]
+const QUESTIONS_OUTRO = 'I read every reply.'
 
 function render(unsubUrl) {
   const text = [
@@ -52,7 +59,9 @@ function render(unsubUrl) {
     '',
     PS,
     '',
-    PPS,
+    QUESTIONS_INTRO,
+    ...QUESTIONS.map((q, i) => `${i + 1}. ${q}`),
+    QUESTIONS_OUTRO,
     '',
     `Unsubscribe from future plugin drops: ${unsubUrl}`,
   ].join('\n')
@@ -142,7 +151,13 @@ function render(unsubUrl) {
         </td></tr>
 
         <tr><td style="padding:22px 4px 0;">
-          ${g(`<div style="${font}font-size:13px;line-height:1.6;color:#9A958C;">Robin<br>TagoBeats<br><br>${PS}<br><br>${PPS}</div>`)}
+          ${g(`<div style="${font}font-size:13px;line-height:1.6;color:#9A958C;">Robin<br>TagoBeats<br><br>${PS}</div>`)}
+        </td></tr>
+
+        <tr><td style="padding:18px 4px 0;">
+          ${g(`<div style="${font}font-size:14px;line-height:1.65;color:#C9C3B8;">${QUESTIONS_INTRO}</div>
+          <div style="${font}font-size:14px;line-height:1.65;color:#F2EEE6;padding:10px 0 0 2px;">${QUESTIONS.map((q, i) => `<div style="padding-bottom:8px;"><span style="${mono}color:#00FDDC;">${i + 1}.</span>&nbsp; ${q}</div>`).join('')}</div>
+          <div style="${font}font-size:13px;line-height:1.6;color:#9A958C;padding-top:4px;">${QUESTIONS_OUTRO}</div>`)}
         </td></tr>
 
         <tr><td style="padding:18px 4px 0;">

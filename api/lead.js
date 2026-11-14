@@ -4,21 +4,21 @@ const RESEND_API = 'https://api.resend.com'
 const PRODUCTS = {
   tagopitch: {
     name: 'TagoPitch',
-    metaLine: 'V1.0.3 &middot; MACOS 11+ AU/VST3 &middot; WINDOWS VST3 &middot; FREE',
+    metaLine: 'V1.1.0 &middot; MACOS 11+ AU/VST3/AAX &middot; WINDOWS VST3 &middot; FREE',
     image: 'https://tagobeats.com/uploads_opt/TagoPitch_800.jpg?v=2',
-    mac: 'https://github.com/TagoBeats/TagoPitch/releases/download/v1.0.3/TagoPitch-1.0.3.pkg',
-    win: 'https://github.com/TagoBeats/TagoPitch/releases/download/v1.0.3/TagoPitch-v1.0.3-Windows-VST3.zip',
+    mac: 'https://github.com/TagoBeats/TagoPitch/releases/download/v1.1.0/TagoPitch-1.1.0.pkg',
+    win: 'https://github.com/TagoBeats/TagoPitch/releases/download/v1.1.0/TagoPitch-v1.1.0-Windows-VST3.zip',
     macInstallText: 'run the .pkg and pick the formats you want',
-    macInstallHtml: 'run the .pkg and pick the formats you want (AU + VST3, notarized).',
+    macInstallHtml: 'run the .pkg and pick the formats you want (AU + VST3 + AAX, notarized).',
   },
   tagoclip: {
     name: 'TagoClip',
-    metaLine: 'V1.1.3 &middot; MACOS 11+ AU/VST3 &middot; WINDOWS VST3 &middot; FREE',
+    metaLine: 'V1.2.0 &middot; MACOS 11+ AU/VST3/AAX &middot; WINDOWS VST3 &middot; FREE',
     image: 'https://tagobeats.com/uploads_opt/TagoClip_800.jpg?v=6',
-    mac: 'https://github.com/TagoBeats/TagoClip/releases/download/v1.1.3/TagoClip-1.1.3.dmg',
-    win: 'https://github.com/TagoBeats/TagoClip/releases/download/v1.1.3/TagoClip-v1.1.3-Windows-VST3.zip',
+    mac: 'https://github.com/TagoBeats/TagoClip/releases/download/v1.2.0/TagoClip-1.2.0.dmg',
+    win: 'https://github.com/TagoBeats/TagoClip/releases/download/v1.2.0/TagoClip-v1.2.0-Windows-VST3.zip',
     macInstallText: 'open the .dmg, then run the .pkg inside and pick the formats you want',
-    macInstallHtml: 'open the .dmg, then run the .pkg inside and pick the formats you want (AU + VST3, notarized).',
+    macInstallHtml: 'open the .dmg, then run the .pkg inside and pick the formats you want (AU + VST3 + AAX, notarized).',
   },
 }
 
@@ -26,7 +26,7 @@ function downloadEmail(product, unsubUrl) {
   const text = [
     `Hey, thanks for grabbing ${product.name}.`,
     '',
-    `macOS installer (AU + VST3, notarized): ${product.mac}`,
+    `macOS installer (AU + VST3 + AAX, notarized): ${product.mac}`,
     `Windows VST3 (zip): ${product.win}`,
     '',
     `macOS: ${product.macInstallText}. Windows: unzip and drop ${product.name}.vst3 into C:\\Program Files\\Common Files\\VST3.`,

@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>TagoClip Pro: The FL Clipper, Everywhere (AU/VST3) by TagoBeats</title>
+<title>TagoClip Pro: The FL Clipper, Everywhere (AU/VST3/AAX) by TagoBeats</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="TagoClip Pro is the FL soft clip curve in every DAW, on a modern engine: three curves, ADAA up to 4x, a true peak ceiling, mono low and level-matched auto gain. macOS AU/VST3 and Windows VST3.">
+<meta name="description" content="TagoClip Pro is the FL soft clip curve in every DAW, on a modern engine: three curves, ADAA up to 4x, a true peak ceiling, mono low and level-matched auto gain. macOS AU/VST3/AAX (Pro Tools) and Windows VST3.">
 <link rel="canonical" href="https://tagobeats.com/tagoclip-pro">
 <!-- Link previews (Reddit, Discord, iMessage, X). No price in the image or the
      text, it changes after the intro period. Bump ?v= when the image changes. -->
 <meta property="og:title" content="TagoClip Pro: The FL Clipper, Everywhere">
-<meta property="og:description" content="The FL soft clip curve in every DAW, on a modern engine: three curves, ADAA up to 4x, a true peak ceiling and level-matched auto gain. AU and VST3 for macOS and Windows, 7-day free trial.">
+<meta property="og:description" content="The FL soft clip curve in every DAW, on a modern engine: three curves, ADAA up to 4x, a true peak ceiling and level-matched auto gain. AU, VST3 and AAX for macOS, VST3 for Windows, 7-day free trial.">
 <meta property="og:image" content="https://tagobeats.com/uploads_opt/TagoClipPro_og.jpg?v=1">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -19,7 +19,7 @@
 <meta property="og:site_name" content="TagoBeats">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="TagoClip Pro: The FL Clipper, Everywhere">
-<meta name="twitter:description" content="The FL soft clip curve in every DAW, on a modern engine: three curves, ADAA up to 4x, a true peak ceiling and level-matched auto gain. AU and VST3 for macOS and Windows, 7-day free trial.">
+<meta name="twitter:description" content="The FL soft clip curve in every DAW, on a modern engine: three curves, ADAA up to 4x, a true peak ceiling and level-matched auto gain. AU, VST3 and AAX for macOS, VST3 for Windows, 7-day free trial.">
 <meta name="twitter:image" content="https://tagobeats.com/uploads_opt/TagoClipPro_og.jpg?v=1">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <!-- The storefront script and its data come from two Moonbase hosts. Opening
@@ -33,11 +33,11 @@
   "@id": "https://tagobeats.com/tagoclip-pro#app",
   "name": "TagoClip Pro",
   "operatingSystem": "macOS 11+, Windows 10/11 (64-bit)",
-  "softwareRequirements": "macOS 11 (Big Sur) or newer, Apple Silicon and Intel, AU/VST3. Windows 10 or 11 64-bit, VST3; the interface needs the Edge WebView2 runtime, which ships with Windows 11.",
+  "softwareRequirements": "macOS 11 (Big Sur) or newer, Apple Silicon and Intel, AU/VST3/AAX (Pro Tools). Windows 10 or 11 64-bit, VST3; the interface needs the Edge WebView2 runtime, which ships with Windows 11.",
   "applicationCategory": "MultimediaApplication",
-  "softwareVersion": "1.0.0",
+  "softwareVersion": "1.1.0",
   "offers": { "@type": "Offer", "price": "49", "priceCurrency": "USD" },
-  "description": "Soft clipper plugin (AU/VST3): the FL soft clip curve on a modern engine with three curves, ADAA up to 4x, a true peak ceiling and level-matched auto gain, made by TagoBeats (Robin Busse).",
+  "description": "Soft clipper plugin (AU/VST3/AAX): the FL soft clip curve on a modern engine with three curves, ADAA up to 4x, a true peak ceiling and level-matched auto gain, made by TagoBeats (Robin Busse).",
   "url": "https://tagobeats.com/tagoclip-pro",
   "author": { "@type": "Person", "name": "Robin Busse", "alternateName": "TagoBeats" }
 }
@@ -457,7 +457,7 @@ body { margin: 0; background:var(--bg); color:var(--text); font-family:'Archivo'
             </a>
             <div style="margin-top:10px; font-family:var(--mono); font-size:11px; letter-spacing:0.14em; color:var(--acc); text-align:center;">ALREADY IN YOUR LIBRARY</div>
           </div>
-          <div style="margin-top:18px; font-family:var(--mono); font-size:10px; letter-spacing:0.14em; line-height:1.9; color:var(--faint);">PERPETUAL LICENSE · 3 ACTIVATIONS<br>MACOS 11+ AU/VST3 · WINDOWS VST3<br>TRIAL WITHOUT ACCOUNT</div>
+          <div style="margin-top:18px; font-family:var(--mono); font-size:10px; letter-spacing:0.14em; line-height:1.9; color:var(--faint);">PERPETUAL LICENSE · 3 ACTIVATIONS<br>MACOS 11+ AU/VST3/AAX · WINDOWS VST3<br>TRIAL WITHOUT ACCOUNT</div>
         </aside>
       </div>
       <div class="tb-cmp">
@@ -669,7 +669,7 @@ body { margin: 0; background:var(--bg); color:var(--text); font-family:'Archivo'
           <ul>
             <li>macOS 11 Big Sur or newer</li>
             <li>Apple Silicon and Intel <span>(universal)</span></li>
-            <li>AU and VST3</li>
+            <li>AU, VST3 and AAX <span>(Pro Tools)</span></li>
           </ul>
         </div>
         <div>
@@ -734,11 +734,11 @@ body { margin: 0; background:var(--bg); color:var(--text); font-family:'Archivo'
         </details>
         <details>
           <summary>Do I need FL Studio?</summary>
-          <p>No. It runs in any DAW that loads AU or VST3 on macOS, or VST3 on Windows.</p>
+          <p>No. It runs in any DAW that loads AU or VST3 on macOS, or VST3 on Windows. Pro Tools is covered too, see below.</p>
         </details>
         <details>
           <summary>Does it work in Pro Tools?</summary>
-          <p>Not yet. AAX support is planned and I'm working on it. It will come as a free update, like every 1.x update.</p>
+          <p>Yes, on macOS. AAX is included since 1.1.0 as a free update. Windows AAX follows in early 2027.</p>
         </details>
         <details>
           <summary>Why does the true peak ceiling sit after the mix?</summary>
@@ -768,7 +768,7 @@ body { margin: 0; background:var(--bg); color:var(--text); font-family:'Archivo'
       <div class="tb-final-copy">
         <div class="tb-eyebrow" style="margin-bottom:18px;">TagoClip Pro · V1.0</div>
         <h2>The FL clipper,<br><span>everywhere.</span></h2>
-        <p>The sound you know from FL, in any DAW that loads AU or VST3. Try every feature for a week, then decide.</p>
+        <p>The sound you know from FL, in any DAW that loads AU, VST3 or AAX. Try every feature for a week, then decide.</p>
       </div>
       <div class="tb-final-buy">
         <div style="display:flex; align-items:baseline; gap:14px; margin-bottom:6px;">

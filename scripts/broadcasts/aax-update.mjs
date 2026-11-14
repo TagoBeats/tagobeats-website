@@ -41,12 +41,12 @@ function render(unsubUrl) {
     '',
     INTRO,
     '',
+    'Also new:',
+    ...ALSO.map(([h, b]) => `${h} ${b}`),
+    '',
     `TagoClip Pro ${PRO_PITCH} ${PRICE}`,
     '',
     `See TagoClip Pro: ${PRO}`,
-    '',
-    'Also new:',
-    ...ALSO.map(([h, b]) => `${h} ${b}`),
     '',
     'Get the update:',
     `TagoClip 1.2: ${CLIP}`,
@@ -118,6 +118,12 @@ function render(unsubUrl) {
               <div style="${font}font-size:15px;line-height:1.65;color:#C9C3B8;padding-bottom:22px;">Hey,<br><br>${INTRO}</div>`)}
 
               ${line()}
+              <div style="padding:18px 0 4px;">
+                ${g(`<div style="${mono}font-size:11px;letter-spacing:2px;color:#9A958C;padding-bottom:12px;">ALSO NEW</div>
+                <div style="${font}font-size:14px;line-height:1.7;color:#C9C3B8;">${alsoRows}</div>`)}
+              </div>
+              ${line()}
+
               <div style="padding:20px 0 6px;">
                 ${g(`<div style="${font}font-size:15px;line-height:1.65;color:#C9C3B8;"><span style="color:#F2EEE6;font-weight:bold;">TagoClip Pro</span> ${PRO_PITCH}</div>`)}
               </div>
@@ -131,11 +137,6 @@ function render(unsubUrl) {
               </table>
 
               <div style="padding:24px 0 0;">${line()}</div>
-              <div style="padding:18px 0 4px;">
-                ${g(`<div style="${mono}font-size:11px;letter-spacing:2px;color:#9A958C;padding-bottom:12px;">ALSO NEW</div>
-                <div style="${font}font-size:14px;line-height:1.7;color:#C9C3B8;">${alsoRows}</div>`)}
-              </div>
-              ${line()}
 
               <div style="padding:18px 0 4px;">
                 ${g(`<div style="${mono}font-size:11px;letter-spacing:2px;color:#9A958C;padding-bottom:12px;">GET THE UPDATE</div>

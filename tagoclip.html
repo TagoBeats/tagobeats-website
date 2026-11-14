@@ -412,6 +412,16 @@ body::before { content:''; position:fixed; top:0; left:0; right:0; z-index:59; h
       if (!res.ok) throw new Error('bad status');
       form.style.display = 'none';
       showMsg('Sent. The download link is on its way to your inbox (check spam, just in case).', true);
+      // Pro hint right where the eye already is (Robin, 14.11.2026). A line, not a popup.
+      var m = document.getElementById(PREFIX + '-msg');
+      if (m && !document.getElementById(PREFIX + '-pro')) {
+        var pro = document.createElement('div');
+        pro.id = PREFIX + '-pro';
+        pro.style.cssText = 'margin-top:10px;font-size:14px;line-height:1.6;color:#B5AFA4;';
+        pro.innerHTML = 'While you wait: TagoClip Pro is the same curve with a live waveform, true peak ceiling and auto gain. ' +
+          '<a href="/tagoclip-pro?utm_source=tagoclip-page&utm_medium=site&utm_campaign=while-you-wait" style="color:#00FDDC;text-decoration:none;font-weight:bold;">Try it free for 7 days &rarr;</a>';
+        m.parentNode.insertBefore(pro, m.nextSibling);
+      }
     }).catch(function () {
       if (send) { send.disabled = false; send.firstChild.textContent = 'SEND LINK '; }
       showMsg('Something went wrong. Try again in a minute or mail plugins@robinbusse.dev.', false);

@@ -19,6 +19,14 @@ const PRODUCTS = {
     win: 'https://github.com/TagoBeats/TagoClip/releases/download/v1.2.0/TagoClip-v1.2.0-Windows-VST3.zip',
     macInstallText: 'open the .dmg, then run the .pkg inside and pick the formats you want',
     macInstallHtml: 'open the .dmg, then run the .pkg inside and pick the formats you want (AU + VST3 + AAX, notarized).',
+    // Pro hint in the download mail (Robin, 14.11.2026). Only for TagoClip,
+    // whose users are the natural audience for the paid version.
+    upsell: {
+      title: 'Want to see what you\'re cutting?',
+      body: 'TagoClip Pro is the same Fruity curve on a modern engine, plus a live waveform that marks every peak it takes off, a true peak ceiling and auto gain. Try it free for 7 days, no account.',
+      cta: 'TRY TAGOCLIP PRO FREE',
+      url: 'https://tagobeats.com/tagoclip-pro?utm_source=download-mail&utm_medium=email&utm_campaign=tagoclip-free',
+    },
   },
 }
 
@@ -35,6 +43,11 @@ function downloadEmail(product, unsubUrl) {
     'runtime, which ships with Windows 11. If the plugin loads but its window stays black, that',
     'is the piece that is missing on either system.',
     '',
+    ...(product.upsell ? [
+      `${product.upsell.title} ${product.upsell.body}`,
+      `${product.upsell.url}`,
+      '',
+    ] : []),
     'If anything acts up, just reply to this mail. And if it runs fine, tell me anyway:',
     'CPU load, your DAW and OS, whatever felt off. Every reply reaches me.',
     '',
@@ -100,6 +113,14 @@ function downloadEmail(product, unsubUrl) {
                   </div>
                 </td></tr>
               </table>
+              ${product.upsell ? `
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-top:22px;">
+                <tr><td style="border-top:1px solid #2A2723;padding-top:20px;">
+                  <div style="font-family:'Courier New',Courier,monospace;font-size:11px;letter-spacing:2px;color:#00FDDC;padding-bottom:8px;">TAGOCLIP PRO</div>
+                  <div style="font-family:Arial,Helvetica,sans-serif;font-size:14px;line-height:1.65;color:#B5AFA4;padding-bottom:16px;"><span style="color:#F2EEE6;font-weight:bold;">${product.upsell.title}</span> ${product.upsell.body}</div>
+                  <a href="${product.upsell.url}" style="display:block;background-color:#26231F;background-image:linear-gradient(#26231F,#26231F);color:#00FDDC;font-family:Arial,Helvetica,sans-serif;font-size:13px;font-weight:bold;letter-spacing:1.5px;text-decoration:none;text-align:center;padding:14px 20px;border-radius:3px;border:1px solid #3A362F;">${product.upsell.cta} &nbsp;&rarr;</a>
+                </td></tr>
+              </table>` : ''}
             </td></tr>
           </table>
         </td></tr>

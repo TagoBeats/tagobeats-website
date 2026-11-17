@@ -25,6 +25,15 @@ a { color:#00FDDC; text-decoration:none; }
 nav { position:fixed; top:0; left:0; right:0; display:flex; align-items:center; justify-content:space-between; padding:24px; background:linear-gradient(180deg, rgba(18,16,14,0.9), transparent); }
 nav a { display:flex; align-items:center; gap:11px; color:#ECE7DE; }
 </style>
+<style>
+/* a11y: visible keyboard focus everywhere (WCAG 2.4.7). !important beats inline outline:none on inputs. */
+:focus-visible { outline: 2px solid #00FDDC !important; outline-offset: 3px; }
+/* a11y: honor the OS "reduce motion" setting. No animation here uses fill-mode, so none restores the static look. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  html { scroll-behavior: auto !important; }
+}
+</style>
 </head>
 <body>
 <nav>

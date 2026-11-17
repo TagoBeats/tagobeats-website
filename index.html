@@ -122,6 +122,15 @@
 
 
 
+<style>
+/* a11y: visible keyboard focus everywhere (WCAG 2.4.7). !important beats inline outline:none on inputs. */
+:focus-visible { outline: 2px solid #00FDDC !important; outline-offset: 3px; }
+/* a11y: honor the OS "reduce motion" setting. No animation here uses fill-mode, so none restores the static look. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  html { scroll-behavior: auto !important; }
+}
+</style>
 </head>
 <body>
 <div id="tb-static-hero" style="background:#12100E; color:#ECE7DE; font-family:'Archivo',sans-serif; -webkit-font-smoothing:antialiased; overflow-x:hidden; position:relative;">
@@ -1166,7 +1175,17 @@ class Component extends DCLogic {
       const target = Math.max(0, Math.min(sections.length - 1, i));
       const cur = indexFor(window.scrollY);
       if (target === cur) return;
-      sections[target].scrollIntoView({ behavior: 'smooth', block: 'start' });
+      // Reduced motion: jump instantly. behavior:'auto' would defer to the CSS
+      // scroll-behavior, so force it via the inline style like the fail-open path.
+      if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        const el = document.documentElement;
+        const prev = el.style.scrollBehavior;
+        el.style.scrollBehavior = 'auto';
+        window.scrollTo(0, sections[target].offsetTop);
+        el.style.scrollBehavior = prev;
+      } else {
+        sections[target].scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
       lockUntilSettled(sections[target].offsetTop);
     };
     this._goToSection = goTo;

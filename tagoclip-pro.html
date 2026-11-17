@@ -330,6 +330,15 @@ body { margin: 0; background:var(--bg); color:var(--text); font-family:'Archivo'
 }
 </style>
 <script defer src="/_vercel/insights/script.js"></script>
+<style>
+/* a11y: visible keyboard focus everywhere (WCAG 2.4.7). !important beats inline outline:none on inputs. */
+:focus-visible { outline: 2px solid #00FDDC !important; outline-offset: 3px; }
+/* a11y: honor the OS "reduce motion" setting. No animation here uses fill-mode, so none restores the static look. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  html { scroll-behavior: auto !important; }
+}
+</style>
 </head>
 <body>
 

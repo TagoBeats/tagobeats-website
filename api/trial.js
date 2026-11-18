@@ -15,6 +15,8 @@ const RESEND_API = 'https://api.resend.com'
 //   tago:first_seen / tago:last_seen  HASH  email -> ISO timestamp
 //   tago:trials                       LIST  JSON per trial signup, newest first
 //   tago:trial:rl:<ip>                STRING signups per IP in the current hour
+//   tago:trial:last                   HASH  email -> ISO of the last mailed signup
+//   tago:trial:repeats                STRING repeat signups inside 7 days (no mails)
 
 const FROM = 'Robin from TagoBeats <plugins@robinbusse.dev>'
 const PAGE = 'https://tagobeats.com/tagoclip-pro'
@@ -161,24 +163,39 @@ module.exports = async function handler(req, res) {
   const iso = now.toISOString()
 
   let unsubscribed = false
+  let repeat = false
   try {
     const rl = await redis([
       ['INCR', `tago:trial:rl:${ip}`],
       ['EXPIRE', `tago:trial:rl:${ip}`, 3600, 'NX'],
       ['SISMEMBER', 'tago:unsub', email],
+      ['HGET', 'tago:trial:last', email],
     ])
     if (rl && rl[0] && rl[0].result > MAX_PER_HOUR) {
       return res.status(429).json({ error: 'Too many tries, give it an hour.' })
     }
     unsubscribed = !!(rl && rl[2] && rl[2].result === 1)
-    await redis([
-      ['SADD', 'tago:contacts', email],
-      ['SADD', 'tago:contacts:tagoclip-pro-trial', email],
-      ['HSETNX', 'tago:first_seen', email, iso],
-      ['HSET', 'tago:last_seen', email, iso],
-      ['LPUSH', 'tago:trials', JSON.stringify({ at: iso, email })],
-      ['LTRIM', 'tago:trials', 0, 4999],
-    ])
+    // Same address again inside one trial length (7 days): the first signup
+    // already scheduled the whole mail series, so a second click, which people
+    // do when the download does not visibly start, must not schedule another.
+    const lastTrial = rl && rl[3] && rl[3].result ? Date.parse(rl[3].result) : NaN
+    repeat = Number.isFinite(lastTrial) && now.getTime() - lastTrial < 7 * DAY
+    if (repeat) {
+      await redis([
+        ['HSET', 'tago:last_seen', email, iso],
+        ['INCR', 'tago:trial:repeats'],
+      ])
+    } else {
+      await redis([
+        ['SADD', 'tago:contacts', email],
+        ['SADD', 'tago:contacts:tagoclip-pro-trial', email],
+        ['HSETNX', 'tago:first_seen', email, iso],
+        ['HSET', 'tago:last_seen', email, iso],
+        ['HSET', 'tago:trial:last', email, iso],
+        ['LPUSH', 'tago:trials', JSON.stringify({ at: iso, email })],
+        ['LTRIM', 'tago:trials', 0, 4999],
+      ])
+    }
   } catch (err) {
     // Never block the download over the store.
     console.error('[trial] Upstash failed', err)
@@ -186,7 +203,7 @@ module.exports = async function handler(req, res) {
 
   const apiKey = process.env.RESEND_API_KEY
   // Someone who unsubscribed earlier still gets the download, but no mails.
-  if (!apiKey || unsubscribed) {
+  if (!apiKey || unsubscribed || repeat) {
     if (!apiKey) console.log(`[trial] (no Resend key) ${email}`)
     return res.status(200).json({ ok: true })
   }

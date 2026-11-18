@@ -96,9 +96,8 @@ function startMail(unsubUrl) {
     'Hey, Robin here. Your TagoClip Pro download should be running.',
     'To start the 7-day trial:',
     '1. Run the installer (Mac .pkg or Windows Setup.exe). The download page also lists the manual, that one is just the PDF.',
-    '2. Open TagoClip Pro in your DAW and click Activate.',
-    '3. Your browser opens. Pick Start free trial there and enter your email. No card, no account.',
-    'Until the trial runs, the plugin drops out for 3 seconds every 30 seconds. If you hear that, step 3 is still missing.',
+    '2. Open TagoClip Pro in your DAW. A small box opens by itself, click Start 7-day trial. No card, no account, no second email. If the box is gone, click the Unlicensed badge next to the wordmark.',
+    'Until the trial runs, the plugin drops out for 3 seconds every 30 seconds. If you hear that, step 2 is still missing.',
     'On Windows the installer isn\'t signed yet, so SmartScreen asks once. Click More info, then Run anyway.',
     'Stuck anywhere? Just reply to this mail, it reaches me directly.',
   ]
@@ -112,7 +111,7 @@ function startMail(unsubUrl) {
 function tipsMail(unsubUrl) {
   const lines = [
     'Hey, Robin here. You grabbed the TagoClip Pro trial yesterday.',
-    'In case it isn\'t running yet: open the plugin, click Activate and pick the free trial, that starts the 7 days. On Windows the installer isn\'t signed yet, so SmartScreen asks once. Click More info, then Run anyway.',
+    'In case it isn\'t running yet: open the plugin and click Start 7-day trial, that starts the 7 days. On Windows the installer isn\'t signed yet, so SmartScreen asks once. Click More info, then Run anyway.',
     'Three things worth trying first:',
     '1. Put it on your 808 or drum bus, pick FRUITY and push the drive. Then hit LINK, so you compare the clipping and not just the extra loudness.',
     '2. Set the true peak ceiling to -1.0 on your master and push hard. Whatever you do before it, nothing gets past.',

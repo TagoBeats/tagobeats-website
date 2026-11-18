@@ -53,7 +53,7 @@
 
   var ACTIONS = {
     buy: function () { Moonbase.purchase({ product_id: PRODUCT }); },
-    // The trial starts inside the plugin (Activate, then Start trial), so the
+    // The trial starts inside the plugin (Start 7-day trial button, one click), so the
     // page only has to deliver the installer.
     trial: function () { Moonbase.download_product({ product_id: PRODUCT }); },
     download: function () { Moonbase.download_product({ product_id: PRODUCT }); }
@@ -113,7 +113,7 @@
           '<button type="button" class="tbg-x" aria-label="Close">×</button>' +
           '<div class="tbg-eb">7-DAY FREE TRIAL</div>' +
           "<h3>Try TagoClip Pro</h3>" +
-          "<p>Every feature, no account, no card. Drop your email and the download starts right away. After installing, open the plugin, click Activate and pick the free trial.</p>" +
+          "<p>Every feature, no account, no card. Drop your email and the download starts right away. After installing, open the plugin and click Start 7-day trial.</p>" +
           '<input type="email" name="email" required autocomplete="email" placeholder="your@email.com" aria-label="Email">' +
           '<input type="text" name="website" class="tbg-hp" tabindex="-1" autocomplete="off" aria-hidden="true">' +
           '<button type="submit" class="tbg-go">START MY TRIAL →</button>' +

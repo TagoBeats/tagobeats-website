@@ -15,6 +15,14 @@
   // Names the date instead of counting days, same as js/tagoclip-pro-cta.js.
   var daysText = left <= 86400000 ? "LAST DAY" : "ENDS DEC 4";
 
+  // UTM tags so Vercel Analytics (UTM Parameters tab) shows which placement
+  // sends people to the Pro page. Same scheme as the "while-you-wait" link on
+  // /tagoclip: source = the page they were on, campaign = the placement.
+  var page = location.pathname.replace(/^\/+|\/+$/g, "").replace(/\.html$/, "") || "home";
+  function pro(campaign) {
+    return "/tagoclip-pro?utm_source=" + encodeURIComponent(page) + "-page&utm_medium=site&utm_campaign=" + campaign;
+  }
+
   var css = [
     ".tbt-bar{position:fixed;top:0;left:0;right:0;z-index:60;height:38px;display:flex;align-items:center;justify-content:center;gap:12px;padding:0 16px;background:#0E0D0C;border-bottom:1px solid rgba(0,253,220,0.28);font:500 11px/1 'Space Mono','Martian Mono',ui-monospace,monospace;letter-spacing:0.16em;color:#ECE7DE;text-decoration:none;white-space:nowrap;overflow:hidden}",
     ".tbt-bar:hover .tbt-arrow{transform:translateX(4px)}",
@@ -78,7 +86,7 @@
   // Bar
   var bar = document.createElement("a");
   bar.className = "tbt-bar";
-  bar.href = "/tagoclip-pro";
+  bar.href = pro("bar");
   bar.innerHTML =
     '<span class="tbt-new">NEW</span>' +
     '<span>TAGOCLIP PRO IS OUT<span class="tbt-long tbt-dim"> · THE FL CLIPPER, EVERYWHERE</span></span>' +
@@ -96,7 +104,7 @@
   if (slot) {
     var variant = slot.getAttribute("data-tb-pro-teaser");
     slot.outerHTML =
-      '<a class="tbt-card" href="/tagoclip-pro" aria-label="TagoClip Pro, the FL clipper, everywhere">' +
+      '<a class="tbt-card" href="' + pro("card") + '" aria-label="TagoClip Pro, the FL clipper, everywhere">' +
         '<div class="tbt-ui"><iframe data-tb-pro-demo src="demos/tagoclip-pro-ui/index.html?embed=1" title="TagoClip Pro interface" tabindex="-1" aria-hidden="true" loading="lazy"></iframe></div>' +
         '<div class="tbt-copy">' +
           '<div class="tbt-eb">NEW · TAGO PLUGINS · PRO</div>' +
